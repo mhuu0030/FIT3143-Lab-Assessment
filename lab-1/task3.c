@@ -1,6 +1,6 @@
 /**
- * FIT3143 Parallel Computing - Lab 1, Task 1
- * Serial code to find prime numbers strictly less than an integer n.
+ * FIT3143 Parallel Computing - Lab 1, Task 3
+ * OpenMP parallel code to find prime numbers strictly less than an integer n.
  */
 
 #include <stdio.h>
@@ -8,6 +8,7 @@
 #include <stdbool.h>
 #include <math.h>
 #include <time.h>
+#include <omp.h> // Include OpenMP library
 
 /**
  * Checks if a given integer is a prime number.
@@ -16,20 +17,11 @@
  * @return true if k is prime, false otherwise.
  */
 bool is_prime(int k) {
-    // 0 and 1 are not prime numbers
     if (k <= 1) return false;
-    
-    // 2 is the only even prime number
     if (k == 2) return true;
-    
-    // Eliminate all other even numbers immediately
     if (k % 2 == 0) return false;
 
-    // Optimization: We only need to check for factors up to the square root of k.
-    // If m * n = k, and m > sqrt(k), then n must be < sqrt(k).
     int limit = (int)sqrt((double)k);
-    
-    // Check odd divisors from 3 up to the square root of k
     for (int i = 3; i <= limit; i += 2) {
         if (k % i == 0) {
             return false;
@@ -41,7 +33,6 @@ bool is_prime(int k) {
 int main(int argc, char *argv[]) {
     int n;
 
-    // Prompt user for input
     printf("Enter an integer n (program will find primes strictly less than n): ");
     if (scanf("%d", &n) != 1 || n <= 0) {
         printf("Error: Please enter a valid positive integer.\n");
@@ -49,52 +40,63 @@ int main(int argc, char *argv[]) {
     }
 
     FILE *file = NULL;
-    
-    // Determine output destination based on the size of n
     if (n >= 100) {
-        file = fopen("task1primes.txt", "w");
+        file = fopen("task3primes.txt", "w");
         if (file == NULL) {
-            printf("Error: Could not open task1primes.txt for writing.\n");
+            printf("Error: Could not open task3primes.txt for writing.\n");
             return 1;
         }
-        printf("Calculating... Output will be written to task1primes.txt\n");
+        printf("Calculating with OpenMP... Output will be written to task3primes.txt\n");
     } else {
         printf("Prime numbers strictly less than %d are:\n", n);
     }
 
-    // Start time measurement
+    // Allocate a boolean array to keep track of primes. 
+    // This allows threads to flag primes independently without locking or printing out of order.
+    bool *prime_flags = (bool *)calloc(n, sizeof(bool));
+    if (prime_flags == NULL) {
+        printf("Error: Memory allocation failed.\n");
+        if (file) fclose(file);
+        return 1;
+    }
+
     struct timespec start_time, end_time;
     clock_gettime(CLOCK_MONOTONIC, &start_time);
 
-    // Search for prime numbers strictly less than n
-    // Checking from 2 incrementally naturally sorts the output in ascending order
+    // OPENMP PARALLEL REGION
+    // We use dynamic scheduling because checking larger numbers takes slightly longer.
+    // Dynamic scheduling ensures a balanced workload distribution among threads.
+    #pragma omp parallel for schedule(dynamic, 128)
     for (int i = 2; i < n; i++) {
         if (is_prime(i)) {
+            prime_flags[i] = true; // Mark as prime
+        }
+    }
+
+    clock_gettime(CLOCK_MONOTONIC, &end_time);
+
+    // Serial I/O Loop to guarantee sorted ascending order
+    for (int i = 2; i < n; i++) {
+        if (prime_flags[i]) {
             if (n < 100) {
-                // Standard output for small n values
                 printf("%d ", i);
             } else {
-                // Text file output for larger n values
                 fprintf(file, "%d\n", i);
             }
         }
     }
 
-    // End time measurement
-    clock_gettime(CLOCK_MONOTONIC, &end_time);
-
-    // Close the file if it was opened
     if (file != NULL) {
         fclose(file);
     } else {
-        printf("\n"); // Add a newline if we printed to terminal
+        printf("\n"); 
     }
 
-    // Calculate execution time in seconds
+    free(prime_flags); // Clean up memory
+
     double time_taken = (end_time.tv_sec - start_time.tv_sec) + 
                         (end_time.tv_nsec - start_time.tv_nsec) / 1e9;
 
-    // Print the execution time
     printf("Execution time: %f seconds\n", time_taken);
 
     return 0;
