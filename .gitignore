@@ -1,0 +1,7 @@
+# Ignore all text files (e.g., primes.txt, task3primes.txt)
+*.txt
+
+# Ignore standard C compiled output files
+*.out
+*.exe
+
