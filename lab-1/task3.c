@@ -1,7 +1,10 @@
 /**
  * FIT3143 Parallel Computing - Lab 1, Task 3
  * OpenMP parallel code to find prime numbers strictly less than an integer n.
+ * Includes per-thread CPU computation time tracking and odd-number loop optimization.
  */
+
+#define _POSIX_C_SOURCE 199309L // Required to expose CLOCK_MONOTONIC and CLOCK_THREAD_CPUTIME_ID
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +16,7 @@
 /**
  * Checks if a given integer is a prime number.
  * Utilizes the square root optimization to eliminate unnecessary computations.
- * * @param k The integer to check for primality.
+ * @param k The integer to check for primality.
  * @return true if k is prime, false otherwise.
  */
 bool is_prime(int k) {
@@ -52,7 +55,6 @@ int main(int argc, char *argv[]) {
     }
 
     // Allocate a boolean array to keep track of primes. 
-    // This allows threads to flag primes independently without locking or printing out of order.
     bool *prime_flags = (bool *)calloc(n, sizeof(bool));
     if (prime_flags == NULL) {
         printf("Error: Memory allocation failed.\n");
@@ -60,18 +62,48 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    // Measure overall wall-clock time
     struct timespec start_time, end_time;
     clock_gettime(CLOCK_MONOTONIC, &start_time);
 
-    // OPENMP PARALLEL REGION
-    // We use dynamic scheduling because checking larger numbers takes slightly longer.
-    // Dynamic scheduling ensures a balanced workload distribution among threads.
-    #pragma omp parallel for schedule(dynamic, 128)
-    for (int i = 2; i < n; i++) {
-        if (is_prime(i)) {
-            prime_flags[i] = true; // Mark as prime
-        }
+    // 2 is the only even prime number, so handle it sequentially before opening threads
+    if (n > 2) {
+        prime_flags[2] = true;
     }
+
+    // OPENMP PARALLEL REGION
+    #pragma omp parallel 
+    {
+        // Each thread gets its own thread ID and local timing variables
+        int tid = omp_get_thread_num();
+        struct timespec threadStart, threadEnd;
+        double threadTime;
+
+        // Start measuring CPU time used by this specific thread
+        clock_gettime(CLOCK_THREAD_CPUTIME_ID, &threadStart);
+
+        // Work-sharing construct: dynamically distribute the loop iterations
+        // OPTIMIZATION: Start at 3 and increment by 2 to skip all even numbers
+        #pragma omp for schedule(dynamic, 128)
+        for (int i = 3; i < n; i += 2) {
+            if (is_prime(i)) {
+                prime_flags[i] = true; // Mark as prime
+            }
+        }
+
+        // End measuring CPU time for this thread
+        clock_gettime(CLOCK_THREAD_CPUTIME_ID, &threadEnd);
+        
+        // Calculate per-thread execution time
+        threadTime = (threadEnd.tv_sec - threadStart.tv_sec) + 
+                     (threadEnd.tv_nsec - threadStart.tv_nsec) / 1e9;
+
+        // Print the individual thread's CPU time safely
+        #pragma omp critical
+        {
+            printf("Thread %d CPU time (s): %f\n", tid, threadTime);
+        }
+    } // End of parallel region
 
     clock_gettime(CLOCK_MONOTONIC, &end_time);
 
@@ -94,10 +126,11 @@ int main(int argc, char *argv[]) {
 
     free(prime_flags); // Clean up memory
 
+    // Calculate total overall wall-clock execution time
     double time_taken = (end_time.tv_sec - start_time.tv_sec) + 
                         (end_time.tv_nsec - start_time.tv_nsec) / 1e9;
 
-    printf("Execution time: %f seconds\n", time_taken);
+    printf("\nOverall Execution time: %f seconds\n", time_taken);
 
     return 0;
 }
