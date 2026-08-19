@@ -51,76 +51,76 @@ int main(int argc, char *argv[]) {
         printf("Error: Please enter a valid positive number of threads.\n");
         return 1;
     }
+    // This ensures file I/O setup and memory allocation are included in total time
+    struct timespec start_time, end_time;
+    clock_gettime(CLOCK_MONOTONIC, &start_time);
 
     FILE *file = NULL;
-
     if (n >= 100) {
         file = fopen("task3primes.txt", "w");
-
         if (file == NULL) {
             printf("Error: Could not open task3primes.txt for writing.\n");
             return 1;
         }
-
         printf("Calculating with OpenMP... Output will be written to task3primes.txt\n");
     } else {
         printf("Prime numbers strictly less than %d are:\n", n);
     }
 
-    // Allocate a boolean array to keep track of primes.
+    // Allocate the boolean array for primes
     bool *prime_flags = (bool *)calloc(n, sizeof(bool));
-
     if (prime_flags == NULL) {
         printf("Error: Memory allocation failed.\n");
-
         if (file) fclose(file);
-
         return 1;
     }
+    
+    // --> FIX 2: PRE-ALLOCATE THREAD TIMING ARRAY <--
+    // Get the maximum number of threads OpenMP will use to size our array
+    int max_threads = omp_get_max_threads();
+    double *thread_times = (double *)calloc(max_threads, sizeof(double));
 
-    // Measure overall wall-clock time
-    struct timespec start_time, end_time;
-    clock_gettime(CLOCK_MONOTONIC, &start_time);
-
-    // 2 is the only even prime number, so handle it sequentially before opening threads
     if (n > 2) {
         prime_flags[2] = true;
     }
 
     // OPENMP PARALLEL REGION
-    #pragma omp parallel num_threads(num_threads)
+    #pragma omp parallel 
     {
-        // Each thread gets its own thread ID and local timing variables
         int tid = omp_get_thread_num();
         struct timespec threadStart, threadEnd;
-        double threadTime;
 
-        // Start measuring CPU time used by this specific thread
+        // Start measuring CPU time for this thread
         clock_gettime(CLOCK_THREAD_CPUTIME_ID, &threadStart);
 
         // Work-sharing construct: dynamically distribute the loop iterations
-        // OPTIMIZATION: Start at 3 and increment by 2 to skip all even numbers
         #pragma omp for schedule(dynamic, 128)
         for (int i = 3; i < n; i += 2) {
             if (is_prime(i)) {
-                prime_flags[i] = true; // Mark as prime
+                prime_flags[i] = true;
             }
         }
 
         // End measuring CPU time for this thread
         clock_gettime(CLOCK_THREAD_CPUTIME_ID, &threadEnd);
 
-        // Calculate per-thread execution time
-        threadTime = (threadEnd.tv_sec - threadStart.tv_sec) +
-                     (threadEnd.tv_nsec - threadStart.tv_nsec) / 1e9;
-
-        // Print the individual thread's CPU time safely
-        #pragma omp critical
-        {
-            printf("Thread %d CPU time (s): %f\n", tid, threadTime);
-        }
+        // Save the time to the array INSTEAD of printing it. 
+        // No #pragma omp critical needed! Lock-free and blazing fast.
+        thread_times[tid] = (threadEnd.tv_sec - threadStart.tv_sec) + 
+                            (threadEnd.tv_nsec - threadStart.tv_nsec) / 1e9;
 
     } // End of parallel region
+
+    // --> FIX 3: PRINT THREAD TIMES SEQUENTIALLY <--
+    // The parallel region is closed, so printing here doesn't bottleneck computation
+    for (int i = 0; i < max_threads; i++) {
+        if (thread_times[i] > 0.0) { // Only print if the thread was actually utilized
+            printf("Thread %d CPU time (s): %f\n", i, thread_times[i]);
+        }
+    }
+    
+    // Clean up the profiling array
+    free(thread_times);
 
     // Serial I/O Loop to guarantee sorted ascending order
     for (int i = 2; i < n; i++) {
@@ -139,13 +139,13 @@ int main(int argc, char *argv[]) {
         printf("\n");
     }
 
-    free(prime_flags); // Clean up memory
+    free(prime_flags); 
 
     // End overall wall-clock time AFTER output
     clock_gettime(CLOCK_MONOTONIC, &end_time);
 
     // Calculate total overall wall-clock execution time
-    double time_taken = (end_time.tv_sec - start_time.tv_sec) +
+    double time_taken = (end_time.tv_sec - start_time.tv_sec) + 
                         (end_time.tv_nsec - start_time.tv_nsec) / 1e9;
 
     printf("\nOverall Execution time: %f seconds\n", time_taken);
