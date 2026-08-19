@@ -51,6 +51,9 @@ int main(int argc, char *argv[]) {
         printf("Error: Please enter a valid positive number of threads.\n");
         return 1;
     }
+
+    omp_set_num_threads(num_threads);
+    
     // This ensures file I/O setup and memory allocation are included in total time
     struct timespec start_time, end_time;
     clock_gettime(CLOCK_MONOTONIC, &start_time);
