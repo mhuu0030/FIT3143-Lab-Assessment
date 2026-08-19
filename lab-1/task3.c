@@ -25,16 +25,19 @@ bool is_prime(int k) {
     if (k % 2 == 0) return false;
 
     int limit = (int)sqrt((double)k);
+
     for (int i = 3; i <= limit; i += 2) {
         if (k % i == 0) {
             return false;
         }
     }
+
     return true;
 }
 
 int main(int argc, char *argv[]) {
     int n;
+    int num_threads;
 
     printf("Enter an integer n (program will find primes strictly less than n): ");
     if (scanf("%d", &n) != 1 || n <= 0) {
@@ -42,23 +45,36 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    // Prompt user for number of threads
+    printf("Enter the number of threads: ");
+    if (scanf("%d", &num_threads) != 1 || num_threads <= 0) {
+        printf("Error: Please enter a valid positive number of threads.\n");
+        return 1;
+    }
+
     FILE *file = NULL;
+
     if (n >= 100) {
         file = fopen("task3primes.txt", "w");
+
         if (file == NULL) {
             printf("Error: Could not open task3primes.txt for writing.\n");
             return 1;
         }
+
         printf("Calculating with OpenMP... Output will be written to task3primes.txt\n");
     } else {
         printf("Prime numbers strictly less than %d are:\n", n);
     }
 
-    // Allocate a boolean array to keep track of primes. 
+    // Allocate a boolean array to keep track of primes.
     bool *prime_flags = (bool *)calloc(n, sizeof(bool));
+
     if (prime_flags == NULL) {
         printf("Error: Memory allocation failed.\n");
+
         if (file) fclose(file);
+
         return 1;
     }
 
@@ -72,7 +88,7 @@ int main(int argc, char *argv[]) {
     }
 
     // OPENMP PARALLEL REGION
-    #pragma omp parallel 
+    #pragma omp parallel num_threads(num_threads)
     {
         // Each thread gets its own thread ID and local timing variables
         int tid = omp_get_thread_num();
@@ -93,9 +109,9 @@ int main(int argc, char *argv[]) {
 
         // End measuring CPU time for this thread
         clock_gettime(CLOCK_THREAD_CPUTIME_ID, &threadEnd);
-        
+
         // Calculate per-thread execution time
-        threadTime = (threadEnd.tv_sec - threadStart.tv_sec) + 
+        threadTime = (threadEnd.tv_sec - threadStart.tv_sec) +
                      (threadEnd.tv_nsec - threadStart.tv_nsec) / 1e9;
 
         // Print the individual thread's CPU time safely
@@ -103,9 +119,8 @@ int main(int argc, char *argv[]) {
         {
             printf("Thread %d CPU time (s): %f\n", tid, threadTime);
         }
-    } // End of parallel region
 
-    clock_gettime(CLOCK_MONOTONIC, &end_time);
+    } // End of parallel region
 
     // Serial I/O Loop to guarantee sorted ascending order
     for (int i = 2; i < n; i++) {
@@ -121,13 +136,16 @@ int main(int argc, char *argv[]) {
     if (file != NULL) {
         fclose(file);
     } else {
-        printf("\n"); 
+        printf("\n");
     }
 
     free(prime_flags); // Clean up memory
 
+    // End overall wall-clock time AFTER output
+    clock_gettime(CLOCK_MONOTONIC, &end_time);
+
     // Calculate total overall wall-clock execution time
-    double time_taken = (end_time.tv_sec - start_time.tv_sec) + 
+    double time_taken = (end_time.tv_sec - start_time.tv_sec) +
                         (end_time.tv_nsec - start_time.tv_nsec) / 1e9;
 
     printf("\nOverall Execution time: %f seconds\n", time_taken);
