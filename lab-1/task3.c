@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     
-    // --> FIX 2: PRE-ALLOCATE THREAD TIMING ARRAY <--
+    // PRE-ALLOCATE THREAD TIMING ARRAY 
     // Get the maximum number of threads OpenMP will use to size our array
     int max_threads = omp_get_max_threads();
     double *thread_times = (double *)calloc(max_threads, sizeof(double));
@@ -114,7 +114,7 @@ int main(int argc, char *argv[]) {
 
     } // End of parallel region
 
-    // --> FIX 3: PRINT THREAD TIMES SEQUENTIALLY <--
+    // PRINT THREAD TIMES SEQUENTIALLY
     // The parallel region is closed, so printing here doesn't bottleneck computation
     for (int i = 0; i < max_threads; i++) {
         if (thread_times[i] > 0.0) { // Only print if the thread was actually utilized
