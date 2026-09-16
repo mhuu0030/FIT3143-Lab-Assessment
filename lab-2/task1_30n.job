@@ -1,0 +1,74 @@
+#!/bin/bash
+
+#SBATCH --job-name=task1_30n
+#SBATCH --time=00:10:00
+#SBATCH --mem=16G
+#SBATCH --ntasks=16
+#SBATCH --cpus-per-task=1
+#SBATCH --ntasks-per-node=16
+#SBATCH --partition=defq
+#SBATCH --output=task1_30n_%j.out
+
+module load openmpi/4.1.5-gcc-11.2.0-ux65npg
+
+echo "========================================"
+echo "FIT3143 Lab 2 - Task 1 MPI Benchmark"
+echo "MPI processes: 16"
+echo "Block size: 1000"
+echo "========================================"
+echo
+
+
+N_VALUES=(
+10000000
+12000000
+14000000
+16000000
+18000000
+20000000
+22000000
+24000000
+26000000
+28000000
+30000000
+32000000
+34000000
+36000000
+38000000
+40000000
+42000000
+44000000
+46000000
+48000000
+50000000
+52000000
+54000000
+56000000
+58000000
+60000000
+62000000
+64000000
+66000000
+68000000
+)
+
+
+for n in "${N_VALUES[@]}"
+do
+
+    echo
+    echo "========================================"
+    echo "Testing n = $n"
+    echo "========================================"
+
+    srun ./task1_blockcyclic "$n"
+
+    echo "Finished n = $n"
+
+done
+
+
+echo
+echo "========================================"
+echo "All 30 tests completed."
+echo "========================================"
