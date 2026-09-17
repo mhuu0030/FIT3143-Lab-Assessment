@@ -1,4 +1,5 @@
 Scheme,Processes,Comp_Time,Total_Time
-task1_contiguous,16,0.725517,0.998063
-task1_cyclic,16,0.724230,1.061379
-task1_blockcyclic,16,0.516390,0.838553
+task1_contiguous,16,0.839322,1.121156
+task1_cyclic,16,0.515989,0.827714
+task1_blockcyclic,16,0.515617
+0.515825,0.803832

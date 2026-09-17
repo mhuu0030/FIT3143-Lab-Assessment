@@ -1,18 +1,17 @@
 #!/bin/bash
 #SBATCH --job-name=task2_scaling
-#SBATCH --time=00:10:00               # 10 minutes max per CAAS policy
+#SBATCH --time=00:10:00
 #SBATCH --mem=16G
-#SBATCH --nodes=2                     # Spread across 2 compute nodes
-#SBATCH --ntasks=16                   # Max processes allocated
-#SBATCH --ntasks-per-node=8           # 8 per node (well within 16 cores/node)
-#SBATCH --cpus-per-task=2             # 2 CPUs per task (total 32 cores across 2 nodes)
+#SBATCH --nodes=2
+#SBATCH --ntasks=16
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=2
 #SBATCH --partition=defq
 #SBATCH --output=task2_scaling_%j.out
 #SBATCH --error=task2_scaling_%j.err
 
 module load openmpi/4.1.5-gcc-11.2.0-ux65npg
 
-# Ensure task2 executable exists
 if [ ! -f ./task2 ]; then
     mpicc -Wall -O2 -fopenmp task2.c -o task2 -lm
 fi
@@ -21,29 +20,25 @@ N_FIXED=30000000
 CSV="task2_scaling_results.csv"
 echo "Processes,Threads,Total_Workers,Comp_Time,Comm_Time,Serial_Time,Total_Time" > $CSV
 
-# Dimension 1: Scaling OpenMP Threads at fixed 2 MPI processes (For Graph 4)
-# Stays on 1 node: 2 processes * th threads <= 16 cores
 echo "=== Scaling Threads (Fixed 2 MPI Processes) ==="
 for th in 1 2 4 8; do
     export OMP_NUM_THREADS=$th
-    OUT=$(srun --nodes=1 --ntasks=2 --cpus-per-task=$th ./task2 $N_FIXED $th)
-    comp_t=$(echo "$OUT" | grep "Parallel Computation Time" | awk '{print $(NF-1)}')
-    comm_t=$(echo "$OUT" | grep "MPI Communication Time" | awk '{print $(NF-1)}')
-    serial_t=$(echo "$OUT" | grep "Serial Setup, I/O & Overhead" | awk '{print $(NF-1)}')
-    total_t=$(echo "$OUT" | grep "Total Wall-Clock Time" | awk '{print $(NF-1)}')
+    OUT=$(srun --nodes=1 --ntasks=2 --cpus-per-task=$th --cpu-bind=none ./task2 $N_FIXED $th)
+    comp_t=$(echo "$OUT" | grep -E "Parallel phase time \(Tp\):|Parallel Computation Time" | awk '{print $(NF-1)}')
+    serial_t=$(echo "$OUT" | grep -E "Serial/fabric time \(Ts\):|Serial Setup, I/O & Overhead" | awk '{print $(NF-1)}')
+    total_t=$(echo "$OUT" | grep -E "Total execution time:|Total Wall-Clock Time" | awk '{print $(NF-1)}')
+    comm_t=$serial_t
     echo "2,$th,$((2 * th)),$comp_t,$comm_t,$serial_t,$total_t" >> $CSV
 done
 
-# Dimension 2: Scaling MPI Processes at fixed 2 OpenMP threads (For Graphs 5 & 7)
-# For np=1,2,4,8: total cores = np * 2 (max 16 cores across 2 nodes)
 echo "=== Scaling Processes (Fixed 2 Threads per Process) ==="
 for np in 1 2 4 8; do
     export OMP_NUM_THREADS=2
-    OUT=$(srun --ntasks=$np --cpus-per-task=2 ./task2 $N_FIXED 2)
-    comp_t=$(echo "$OUT" | grep "Parallel Computation Time" | awk '{print $(NF-1)}')
-    comm_t=$(echo "$OUT" | grep "MPI Communication Time" | awk '{print $(NF-1)}')
-    serial_t=$(echo "$OUT" | grep "Serial Setup, I/O & Overhead" | awk '{print $(NF-1)}')
-    total_t=$(echo "$OUT" | grep "Total Wall-Clock Time" | awk '{print $(NF-1)}')
+    OUT=$(srun --ntasks=$np --cpus-per-task=2 --cpu-bind=none ./task2 $N_FIXED 2)
+    comp_t=$(echo "$OUT" | grep -E "Parallel phase time \(Tp\):|Parallel Computation Time" | awk '{print $(NF-1)}')
+    serial_t=$(echo "$OUT" | grep -E "Serial/fabric time \(Ts\):|Serial Setup, I/O & Overhead" | awk '{print $(NF-1)}')
+    total_t=$(echo "$OUT" | grep -E "Total execution time:|Total Wall-Clock Time" | awk '{print $(NF-1)}')
+    comm_t=$serial_t
     echo "$np,2,$((np * 2)),$comp_t,$comm_t,$serial_t,$total_t" >> $CSV
 done
 

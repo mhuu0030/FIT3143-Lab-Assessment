@@ -7,8 +7,13 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --partition=defq
 #SBATCH --output=mpi_scaling_%j.out
+#SBATCH --error=mpi_scaling_%j.err
 
 module load openmpi/4.1.5-gcc-11.2.0-ux65npg
+
+if [ ! -f ./task1_blockcyclic ]; then
+    mpicc -Wall -O2 task1_blockcyclic.c -o task1_blockcyclic -lm
+fi
 
 N_FIXED=30000000
 CSV="mpi_scaling_results.csv"
@@ -16,7 +21,7 @@ echo "Processes,Comp_Time,Total_Time" > $CSV
 
 for p in 1 2 4 8 16; do
     OUT=$(srun --ntasks=$p ./task1_blockcyclic $N_FIXED)
-    comp_t=$(echo "$OUT" | grep "Computational time (slowest process):" | awk '{print $(NF-1)}')
+    comp_t=$(echo "$OUT" | grep -E "Parallel phase time \(Tp\):|Slowest rank computation time:|Computational time \(slowest process\):" | awk '{print $(NF-1)}')
     total_t=$(echo "$OUT" | grep "Total execution time:" | awk '{print $(NF-1)}')
     echo "$p,$comp_t,$total_t" >> $CSV
 done

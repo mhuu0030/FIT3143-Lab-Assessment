@@ -1,16 +1,15 @@
 #!/bin/bash
 #SBATCH --job-name=task2_alt_sweep_job
-#SBATCH --time=00:10:00               
-#SBATCH --mem=16G                     
-#SBATCH --ntasks=4                    
-#SBATCH --cpus-per-task=4             
-#SBATCH --ntasks-per-node=2           
-#SBATCH --partition=defq              
-#SBATCH --output=task2_alt_sweep_%j.out 
-#SBATCH --error=task2_alt_sweep_%j.err    
+#SBATCH --time=00:10:00
+#SBATCH --mem=16G
+#SBATCH --ntasks=4
+#SBATCH --cpus-per-task=4
+#SBATCH --ntasks-per-node=2
+#SBATCH --partition=defq
+#SBATCH --output=task2_alt_sweep_%j.out
+#SBATCH --error=task2_alt_sweep_%j.err
 
 module load openmpi/4.1.5-gcc-11.2.0-ux65npg
-
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
 if [ ! -f ./task2_alt ]; then
@@ -26,11 +25,9 @@ echo "=========================================================="
 
 for n in $(seq 10000000 2000000 68000000); do
     echo "[Task 2 Alt] Executing N = $n ..."
-    RUN_OUTPUT=$(srun ./task2_alt $n $SLURM_CPUS_PER_TASK)
-    
+    RUN_OUTPUT=$(srun --cpu-bind=none ./task2_alt $n $SLURM_CPUS_PER_TASK)
     comp_t=$(echo "$RUN_OUTPUT" | grep -oP '(?<=CompTime: )[^ s]+')
     total_t=$(echo "$RUN_OUTPUT" | grep -oP '(?<=TotalTime: )[^ s]+')
-    
     echo "$n,$SLURM_NTASKS,$SLURM_CPUS_PER_TASK,$((SLURM_NTASKS * SLURM_CPUS_PER_TASK)),$comp_t,$total_t" >> $CSV_OUT
 done
 

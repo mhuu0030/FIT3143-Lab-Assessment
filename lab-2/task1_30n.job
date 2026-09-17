@@ -30,7 +30,7 @@ N_VALUES=(
 
 for n in "${N_VALUES[@]}"; do
     RUN_OUTPUT=$(srun ./task1_blockcyclic "$n")
-    comp_t=$(echo "$RUN_OUTPUT" | grep "Computational time (slowest process):" | awk '{print $(NF-1)}')
+    comp_t=$(echo "$RUN_OUTPUT" | grep -E "Parallel phase time \(Tp\):|Slowest rank computation time:|Computational time \(slowest process\):" | awk '{print $(NF-1)}')
     total_t=$(echo "$RUN_OUTPUT" | grep "Total execution time:" | awk '{print $(NF-1)}')
     echo "$n,$SLURM_NTASKS,$comp_t,$total_t" >> $CSV_OUT
 done

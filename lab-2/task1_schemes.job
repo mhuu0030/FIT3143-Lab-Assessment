@@ -8,8 +8,13 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --partition=defq
 #SBATCH --output=task1_schemes_%j.out
+#SBATCH --error=task1_schemes_%j.err
 
 module load openmpi/4.1.5-gcc-11.2.0-ux65npg
+
+[ ! -f ./task1_contiguous ] && mpicc -Wall -O2 task1_contiguous.c -o task1_contiguous -lm
+[ ! -f ./task1_cyclic ] && mpicc -Wall -O2 task1_cyclic.c -o task1_cyclic -lm
+[ ! -f ./task1_blockcyclic ] && mpicc -Wall -O2 task1_blockcyclic.c -o task1_blockcyclic -lm
 
 N_TEST=30000000
 CSV="task1_schemes_results.csv"
@@ -17,7 +22,7 @@ echo "Scheme,Processes,Comp_Time,Total_Time" > $CSV
 
 for bin in task1_contiguous task1_cyclic task1_blockcyclic; do
     OUT=$(srun ./$bin $N_TEST)
-    comp_t=$(echo "$OUT" | grep "Computational time (slowest process):" | awk '{print $(NF-1)}')
+    comp_t=$(echo "$OUT" | grep -E "Parallel phase time \(Tp\):|Slowest rank computation time:|Computational time \(slowest process\):" | awk '{print $(NF-1)}')
     total_t=$(echo "$OUT" | grep "Total execution time:" | awk '{print $(NF-1)}')
     echo "$bin,16,$comp_t,$total_t" >> $CSV
 done

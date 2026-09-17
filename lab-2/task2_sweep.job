@@ -1,16 +1,15 @@
 #!/bin/bash
 #SBATCH --job-name=task2_sweep_job
-#SBATCH --time=00:10:00               # CAAS limit: max 10 minutes
-#SBATCH --mem=16G                     
-#SBATCH --ntasks=4                    # 4 MPI processes
-#SBATCH --cpus-per-task=4             # 4 OpenMP threads per process (16 cores total)
-#SBATCH --ntasks-per-node=2           # 2 processes per node across 2 nodes
-#SBATCH --partition=defq              
-#SBATCH --output=task2_sweep_%j.out   
-#SBATCH --error=task2_sweep_%j.err    
+#SBATCH --time=00:10:00
+#SBATCH --mem=16G
+#SBATCH --ntasks=4
+#SBATCH --cpus-per-task=4
+#SBATCH --ntasks-per-node=2
+#SBATCH --partition=defq
+#SBATCH --output=task2_sweep_%j.out
+#SBATCH --error=task2_sweep_%j.err
 
 module load openmpi/4.1.5-gcc-11.2.0-ux65npg
-
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
 if [ ! -f ./task2 ]; then
@@ -26,12 +25,12 @@ echo "=========================================================="
 
 for n in $(seq 10000000 2000000 68000000); do
     echo "[Task 2] Executing N = $n ..."
-    RUN_OUTPUT=$(srun ./task2 $n $SLURM_CPUS_PER_TASK)
+    RUN_OUTPUT=$(srun --cpu-bind=none ./task2 $n $SLURM_CPUS_PER_TASK)
     
-    comp_t=$(echo "$RUN_OUTPUT" | grep "Parallel Computation Time" | awk '{print $(NF-1)}')
-    comm_t=$(echo "$RUN_OUTPUT" | grep "MPI Communication Time" | awk '{print $(NF-1)}')
-    serial_t=$(echo "$RUN_OUTPUT" | grep "Serial Setup, I/O & Overhead" | awk '{print $(NF-1)}')
-    total_t=$(echo "$RUN_OUTPUT" | grep "Total Wall-Clock Time" | awk '{print $(NF-1)}')
+    comp_t=$(echo "$RUN_OUTPUT" | grep -E "Parallel phase time \(Tp\):|Parallel Computation Time" | awk '{print $(NF-1)}')
+    serial_t=$(echo "$RUN_OUTPUT" | grep -E "Serial/fabric time \(Ts\):|Serial Setup, I/O & Overhead" | awk '{print $(NF-1)}')
+    total_t=$(echo "$RUN_OUTPUT" | grep -E "Total execution time:|Total Wall-Clock Time" | awk '{print $(NF-1)}')
+    comm_t=$serial_t
     
     echo "$n,$SLURM_NTASKS,$SLURM_CPUS_PER_TASK,$((SLURM_NTASKS * SLURM_CPUS_PER_TASK)),$comp_t,$comm_t,$serial_t,$total_t" >> $CSV_OUT
 done

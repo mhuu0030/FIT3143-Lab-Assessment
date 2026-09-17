@@ -5,7 +5,7 @@
 #SBATCH --nodes=2                     # Spread across 2 compute nodes
 #SBATCH --ntasks=24                   # Accommodates max 24 MPI processes
 #SBATCH --ntasks-per-node=12          # 12 processes per node (fits 16-core CAAS nodes)
-#SBATCH --cpus-per-task=1             # 1 core per MPI task
+#SBATCH --cpus-per-task=1             # Base core allocation
 #SBATCH --partition=defq              # Default CAAS queue partition
 #SBATCH --output=task3_eval_%j.out    # Standard output log
 #SBATCH --error=task3_eval_%j.err     # Standard error log
@@ -13,18 +13,18 @@
 # Load Open MPI module on CAAS
 module load openmpi/4.1.5-gcc-11.2.0-ux65npg
 
-# Compile binaries with compiler optimization flags
+# Recompile binaries with optimization flags to guarantee latest version
 mpicc -Wall -O2 task1_blockcyclic.c -o task1_blockcyclic -lm
 mpicc -Wall -O2 -fopenmp task2.c -o task2 -lm
 
 # Fixed workload for strong-scaling Amdahl's Law evaluation
 N_FIXED=30000000
 
-# -------------------------------------------------------------
-# Part A: Task 1 (Open MPI) Scaling (Required for Graph 3 & 6)
-# -------------------------------------------------------------
+# =============================================================
+# Part A: Task 1 (Open MPI) Scaling (Required for Graphs 3 & 6)
+# =============================================================
 CSV_T1="task3_amdahl_task1.csv"
-echo "Processes,T_comp,T_total,T_serial,s,p" > $CSV_T1
+echo "Processes,T_parallel,T_serial,T_total,s,p,Theoretical_Speedup" > $CSV_T1
 echo "=========================================================="
 echo "Starting Task 1 Process Scaling Benchmark (N = $N_FIXED)"
 echo "=========================================================="
@@ -49,37 +49,52 @@ for p in "${PROCESS_COUNTS[@]}"; do
     echo "Running Task 1 with $p MPI processes..."
     OUT=$(srun --ntasks=$p --cpus-per-task=1 ./task1_blockcyclic $N_FIXED)
     
-    t_comp=$(echo "$OUT" | grep "Computational time (slowest process):" | awk '{print $(NF-1)}')
+    # Extract timing and fraction metrics from program output
+    t_comp=$(echo "$OUT" | grep -E "Parallel phase time \(Tp\):|Computational time \(slowest process\):" | awk '{print $(NF-1)}')
     t_tot=$(echo "$OUT" | grep "Total execution time:" | awk '{print $(NF-1)}')
+    t_serial=$(echo "$OUT" | grep -E "Serial/fabric time \(Ts\):" | awk '{print $(NF-1)}')
+    s_frac=$(echo "$OUT" | grep -E "Serial fraction \(s\):" | awk '{print $(NF)}')
+    p_frac=$(echo "$OUT" | grep -E "Parallel fraction \(p\):" | awk '{print $(NF)}')
+    theo_spd=$(echo "$OUT" | grep -E "Theoretical Amdahl speedup" | awk '{print $(NF)}')
     
-    metrics=$(awk -v tc="$t_comp" -v tt="$t_tot" 'BEGIN {
-        ts = tt - tc;
-        if (ts < 0) ts = 0;
-        s_frac = ts / tt;
-        p_frac = tc / tt;
-        printf "%.6f,%.6f,%.6f", ts, s_frac, p_frac;
+    # Robust fallback calculation if fractions were not printed directly
+    record=$(awk -v tc="$t_comp" -v tt="$t_tot" -v ts="$t_serial" -v sf="$s_frac" -v pf="$p_frac" -v th="$theo_spd" -v proc="$p" 'BEGIN {
+        if (ts == "") {
+            ts = tt - tc;
+            if (ts < 0) ts = 0;
+        }
+        if (sf == "" && tt > 0) sf = ts / tt;
+        if (pf == "" && tt > 0) pf = tc / tt;
+        if (th == "" && (sf + pf / proc) > 0) th = 1.0 / (sf + (pf / proc));
+        printf "%.6f,%.6f,%.6f,%.6f,%.6f,%.6f", tc, ts, tt, sf, pf, th;
     }')
     
-    echo "$p,$t_comp,$t_tot,$metrics" >> $CSV_T1
+    echo "$p,$record" >> $CSV_T1
 done
 
-# -------------------------------------------------------------
-# Part B: Task 2 (Hybrid MPI+OpenMP) Scaling (Required for Graph 4, 5 & 7)
-# -------------------------------------------------------------
+# =============================================================
+# Part B: Task 2 (Hybrid MPI+OpenMP) Scaling (Required for Graphs 4, 5 & 7)
+# =============================================================
 CSV_T2="task3_amdahl_task2.csv"
-echo "Processes,Threads,Total_Workers,T_comp,T_comm,T_serial_io,T_total,s,p" > $CSV_T2
+echo "Processes,Threads,Total_Workers,T_parallel,T_serial,T_total,s,p,Theoretical_Speedup" > $CSV_T2
 echo "=========================================================="
 echo "Starting Task 2 Hybrid Scaling Benchmark (N = $N_FIXED)"
 echo "=========================================================="
 
 # Configurations format: "MPI_Processes OpenMP_Threads"
-# Scaled to fit within the 24 allocated cores: (1x1), (2x1), (2x2), (4x2), (4x4)
+# Worker counts: 1, 2, 4, 8, 16
+# Configurations format: "MPI_Processes OpenMP_Threads"
+# Total workers: 1, 2, 4, 6, 8, 12, 16, 20, 24
 CONFIGS=(
-    "1 1"
-    "2 1"
-    "2 2"
-    "4 2"
-    "4 4"
+    "1 1"   # 1 worker   (1 on Node 1)
+    "2 1"   # 2 workers  (1 per node x 1 thread  = 1 core/node)
+    "2 2"   # 4 workers  (1 per node x 2 threads = 2 cores/node)
+    "2 3"   # 6 workers  (1 per node x 3 threads = 3 cores/node)
+    "4 2"   # 8 workers  (2 per node x 2 threads = 4 cores/node)
+    "4 3"   # 12 workers (2 per node x 3 threads = 6 cores/node)
+    "4 4"   # 16 workers (2 per node x 4 threads = 8 cores/node)
+    "4 5"   # 20 workers (2 per node x 5 threads = 10 cores/node)
+    "4 6"   # 24 workers (2 per node x 6 threads = 12 cores/node - 100% capacity)
 )
 
 for cfg in "${CONFIGS[@]}"; do
@@ -90,22 +105,29 @@ for cfg in "${CONFIGS[@]}"; do
     
     echo "Running Task 2 with $np MPI processes and $th OpenMP threads (Total workers: $workers)..."
     export OMP_NUM_THREADS=$th
-    OUT=$(srun --ntasks=$np --cpus-per-task=$th ./task2 $N_FIXED $th)
+    OUT=$(srun --ntasks=$np --cpus-per-task=$th --cpu-bind=none ./task2 $N_FIXED $th)
     
-    t_comp=$(echo "$OUT" | grep "Parallel Computation Time" | awk '{print $(NF-1)}')
-    t_comm=$(echo "$OUT" | grep "MPI Communication Time" | awk '{print $(NF-1)}')
-    t_serial_io=$(echo "$OUT" | grep "Serial Setup, I/O & Overhead" | awk '{print $(NF-1)}')
-    t_tot=$(echo "$OUT" | grep "Total Wall-Clock Time" | awk '{print $(NF-1)}')
+    # Extract timing and fraction metrics from updated Task 2 output
+    t_comp=$(echo "$OUT" | grep -E "Parallel phase time \(Tp\):|Parallel Computation Time" | awk '{print $(NF-1)}')
+    t_tot=$(echo "$OUT" | grep -E "Total execution time:|Total Wall-Clock Time" | awk '{print $(NF-1)}')
+    t_serial=$(echo "$OUT" | grep -E "Serial/fabric time \(Ts\):|Serial Setup, I/O & Overhead" | awk '{print $(NF-1)}')
+    s_frac=$(echo "$OUT" | grep -E "Serial fraction \(s\):" | awk '{print $(NF)}')
+    p_frac=$(echo "$OUT" | grep -E "Parallel fraction \(p\):" | awk '{print $(NF)}')
+    theo_spd=$(echo "$OUT" | grep -E "Theoretical Amdahl speedup" | awk '{print $(NF)}')
     
-    metrics=$(awk -v tc="$t_comp" -v tt="$t_tot" 'BEGIN {
-        ts = tt - tc;
-        if (ts < 0) ts = 0;
-        s_frac = ts / tt;
-        p_frac = tc / tt;
-        printf "%.6f,%.6f", s_frac, p_frac;
+    # Robust fallback calculation for hybrid metrics
+    record=$(awk -v tc="$t_comp" -v tt="$t_tot" -v ts="$t_serial" -v sf="$s_frac" -v pf="$p_frac" -v th="$theo_spd" -v w="$workers" 'BEGIN {
+        if (ts == "") {
+            ts = tt - tc;
+            if (ts < 0) ts = 0;
+        }
+        if (sf == "" && tt > 0) sf = ts / tt;
+        if (pf == "" && tt > 0) pf = tc / tt;
+        if (th == "" && (sf + pf / w) > 0) th = 1.0 / (sf + (pf / w));
+        printf "%.6f,%.6f,%.6f,%.6f,%.6f,%.6f", tc, ts, tt, sf, pf, th;
     }')
     
-    echo "$np,$th,$workers,$t_comp,$t_comm,$t_serial_io,$t_tot,$metrics" >> $CSV_T2
+    echo "$np,$th,$workers,$record" >> $CSV_T2
 done
 
 echo "=========================================================="
