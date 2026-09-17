@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH --job-name=mpi_scaling
+#SBATCH --time=00:10:00
+#SBATCH --mem=16G
+#SBATCH --nodes=2
+#SBATCH --ntasks=16
+#SBATCH --cpus-per-task=1
+#SBATCH --partition=defq
+#SBATCH --output=mpi_scaling_%j.out
+
+module load openmpi/4.1.5-gcc-11.2.0-ux65npg
+
+N_FIXED=30000000
+CSV="mpi_scaling_results.csv"
+echo "Processes,Comp_Time,Total_Time" > $CSV
+
+# Scale MPI processes
+for p in 1 2 4 8 16; do
+    OUT=$(srun --ntasks=$p ./task1_blockcyclic $N_FIXED)
+    comp_t=$(echo "$OUT" | grep "Computational time (slowest process):" | awk '{print $5}')
+    total_t=$(echo "$OUT" | grep "Total execution time:" | awk '{print $4}')
+    echo "$p,$comp_t,$total_t" >> $CSV
+done
