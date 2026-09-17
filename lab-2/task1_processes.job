@@ -1,0 +1,105 @@
+#!/bin/bash
+
+#SBATCH --job-name=task1_process_test
+#SBATCH --time=00:10:00
+#SBATCH --nodes=2
+#SBATCH --ntasks=24
+#SBATCH --ntasks-per-node=16
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=16G
+#SBATCH --partition=defq
+#SBATCH --output=task1_process_test_%j.out
+
+module load openmpi/4.1.5-gcc-11.2.0-ux65npg
+
+
+# ----------------------------------------------------------
+# FIT3143 Lab 2 - Task 1
+#
+# Test increasing numbers of MPI processes.
+#
+# Problem size is fixed at:
+# n = 38,000,000
+#
+# Process counts match the Week 4 thread counts.
+# ----------------------------------------------------------
+
+N=38000000
+
+PROCESS_COUNTS=(
+1
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+22
+24
+)
+
+
+echo "=================================================="
+echo "FIT3143 Lab 2 - Task 1 MPI Process Scaling Test"
+echo "n = $N"
+echo "Block size = 1000"
+echo "=================================================="
+echo
+
+
+for p in "${PROCESS_COUNTS[@]}"
+do
+
+    echo
+    echo "=================================================="
+    echo "MPI PROCESSES = $p"
+    echo "n = $N"
+    echo "=================================================="
+
+
+    # ------------------------------------------------------
+    # 1-16 processes:
+    # Run on one CAAS compute node.
+    # ------------------------------------------------------
+
+    if [ "$p" -le 16 ]
+    then
+
+        srun \
+            --nodes=1 \
+            --ntasks="$p" \
+            --cpus-per-task=1 \
+            ./task1_blockcyclic "$N"
+
+
+    # ------------------------------------------------------
+    # More than 16 processes:
+    # Requires two CAAS compute nodes because each
+    # CAAS node has 16 CPU cores.
+    # ------------------------------------------------------
+
+    else
+
+        srun \
+            --nodes=2 \
+            --ntasks="$p" \
+            --cpus-per-task=1 \
+            ./task1_blockcyclic "$N"
+
+    fi
+
+
+    echo
+    echo "Finished test with $p MPI processes"
+
+done
+
+
+echo
+echo "=================================================="
+echo "All MPI process-count tests completed."
+echo "=================================================="
