@@ -1,0 +1,114 @@
+#!/bin/bash
+#SBATCH --job-name=task3_eval
+#SBATCH --time=00:10:00               # CAAS limit: 10 minutes maximum
+#SBATCH --mem=16G                     # Total job memory
+#SBATCH --nodes=2                     # Spread across 2 compute nodes
+#SBATCH --ntasks=24                   # Accommodates max 24 MPI processes
+#SBATCH --ntasks-per-node=12          # 12 processes per node (fits 16-core CAAS nodes)
+#SBATCH --cpus-per-task=1             # 1 core per MPI task
+#SBATCH --partition=defq              # Default CAAS queue partition
+#SBATCH --output=task3_eval_%j.out    # Standard output log
+#SBATCH --error=task3_eval_%j.err     # Standard error log
+
+# Load Open MPI module on CAAS
+module load openmpi/4.1.5-gcc-11.2.0-ux65npg
+
+# Compile binaries with compiler optimization flags
+mpicc -Wall -O2 task1_blockcyclic.c -o task1_blockcyclic -lm
+mpicc -Wall -O2 -fopenmp task2.c -o task2 -lm
+
+# Fixed workload for strong-scaling Amdahl's Law evaluation
+N_FIXED=30000000
+
+# -------------------------------------------------------------
+# Part A: Task 1 (Open MPI) Scaling (Required for Graph 3 & 6)
+# -------------------------------------------------------------
+CSV_T1="task3_amdahl_task1.csv"
+echo "Processes,T_comp,T_total,T_serial,s,p" > $CSV_T1
+echo "=========================================================="
+echo "Starting Task 1 Process Scaling Benchmark (N = $N_FIXED)"
+echo "=========================================================="
+
+PROCESS_COUNTS=(
+    1
+    2
+    4
+    6
+    8
+    10
+    12
+    14
+    16
+    18
+    20
+    22
+    24
+)
+
+for p in "${PROCESS_COUNTS[@]}"; do
+    echo "Running Task 1 with $p MPI processes..."
+    OUT=$(srun --ntasks=$p --cpus-per-task=1 ./task1_blockcyclic $N_FIXED)
+    
+    t_comp=$(echo "$OUT" | grep "Computational time (slowest process):" | awk '{print $(NF-1)}')
+    t_tot=$(echo "$OUT" | grep "Total execution time:" | awk '{print $(NF-1)}')
+    
+    metrics=$(awk -v tc="$t_comp" -v tt="$t_tot" 'BEGIN {
+        ts = tt - tc;
+        if (ts < 0) ts = 0;
+        s_frac = ts / tt;
+        p_frac = tc / tt;
+        printf "%.6f,%.6f,%.6f", ts, s_frac, p_frac;
+    }')
+    
+    echo "$p,$t_comp,$t_tot,$metrics" >> $CSV_T1
+done
+
+# -------------------------------------------------------------
+# Part B: Task 2 (Hybrid MPI+OpenMP) Scaling (Required for Graph 4, 5 & 7)
+# -------------------------------------------------------------
+CSV_T2="task3_amdahl_task2.csv"
+echo "Processes,Threads,Total_Workers,T_comp,T_comm,T_serial_io,T_total,s,p" > $CSV_T2
+echo "=========================================================="
+echo "Starting Task 2 Hybrid Scaling Benchmark (N = $N_FIXED)"
+echo "=========================================================="
+
+# Configurations format: "MPI_Processes OpenMP_Threads"
+# Scaled to fit within the 24 allocated cores: (1x1), (2x1), (2x2), (4x2), (4x4)
+CONFIGS=(
+    "1 1"
+    "2 1"
+    "2 2"
+    "4 2"
+    "4 4"
+)
+
+for cfg in "${CONFIGS[@]}"; do
+    set -- $cfg
+    np=$1
+    th=$2
+    workers=$((np * th))
+    
+    echo "Running Task 2 with $np MPI processes and $th OpenMP threads (Total workers: $workers)..."
+    export OMP_NUM_THREADS=$th
+    OUT=$(srun --ntasks=$np --cpus-per-task=$th ./task2 $N_FIXED $th)
+    
+    t_comp=$(echo "$OUT" | grep "Parallel Computation Time" | awk '{print $(NF-1)}')
+    t_comm=$(echo "$OUT" | grep "MPI Communication Time" | awk '{print $(NF-1)}')
+    t_serial_io=$(echo "$OUT" | grep "Serial Setup, I/O & Overhead" | awk '{print $(NF-1)}')
+    t_tot=$(echo "$OUT" | grep "Total Wall-Clock Time" | awk '{print $(NF-1)}')
+    
+    metrics=$(awk -v tc="$t_comp" -v tt="$t_tot" 'BEGIN {
+        ts = tt - tc;
+        if (ts < 0) ts = 0;
+        s_frac = ts / tt;
+        p_frac = tc / tt;
+        printf "%.6f,%.6f", s_frac, p_frac;
+    }')
+    
+    echo "$np,$th,$workers,$t_comp,$t_comm,$t_serial_io,$t_tot,$metrics" >> $CSV_T2
+done
+
+echo "=========================================================="
+echo "Task 3 Benchmarking Complete."
+echo "Results logged to $CSV_T1 and $CSV_T2"
+echo "=========================================================="

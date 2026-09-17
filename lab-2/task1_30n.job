@@ -1,35 +1,24 @@
 #!/bin/bash
 #SBATCH --job-name=task1_30n
-#SBATCH --time=00:10:00               # CAAS maximum 10-minute limit
-#SBATCH --mem=16G                     # Total allocated memory
-#SBATCH --nodes=2                     # Spread across 2 compute nodes
-#SBATCH --ntasks=16                   # 16 MPI processes
-#SBATCH --ntasks-per-node=8           # 8 processes per node (multi-node execution)
-#SBATCH --cpus-per-task=1             # 1 CPU core per MPI process
-#SBATCH --partition=defq              # Default CAAS partition
-#SBATCH --output=task1_30n_%j.out     # Standard output log
-#SBATCH --error=task1_30n_%j.err      # Standard error log
+#SBATCH --time=00:10:00
+#SBATCH --mem=16G
+#SBATCH --nodes=2
+#SBATCH --ntasks=16
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=1
+#SBATCH --partition=defq
+#SBATCH --output=task1_30n_%j.out
+#SBATCH --error=task1_30n_%j.err
 
-# Load Open MPI module on CAAS
 module load openmpi/4.1.5-gcc-11.2.0-ux65npg
 
-# Compile task1_blockcyclic if binary is not present
 if [ ! -f ./task1_blockcyclic ]; then
     mpicc -Wall -O2 task1_blockcyclic.c -o task1_blockcyclic -lm
 fi
 
-# Define CSV file to store benchmark results
 CSV_OUT="task1_results.csv"
 echo "N,MPI_Processes,Comp_Time,Total_Time" > $CSV_OUT
 
-echo "========================================"
-echo "FIT3143 Lab 2 - Task 1 MPI Benchmark"
-echo "MPI processes: $SLURM_NTASKS"
-echo "Nodes allocated: $SLURM_NNODES"
-echo "Block size: 1000"
-echo "========================================"
-
-# Array of 30 N values (10M to 68M)
 N_VALUES=(
     10000000 12000000 14000000 16000000 18000000
     20000000 22000000 24000000 26000000 28000000
@@ -39,27 +28,9 @@ N_VALUES=(
     60000000 62000000 64000000 66000000 68000000
 )
 
-# Loop across all 30 values of N
 for n in "${N_VALUES[@]}"; do
-    echo "========================================"
-    echo "Testing n = $n"
-    echo "========================================"
-    
-    # Run Task 1 via srun and capture terminal output
     RUN_OUTPUT=$(srun ./task1_blockcyclic "$n")
-    echo "$RUN_OUTPUT"
-    
-    # Extract times printed by task1_blockcyclic.c:
-    # "Computational time (slowest process): %f seconds"
-    # "Total execution time: %f seconds"
-    comp_t=$(echo "$RUN_OUTPUT" | grep "Computational time (slowest process):" | awk '{print $5}')
-    total_t=$(echo "$RUN_OUTPUT" | grep "Total execution time:" | awk '{print $4}')
-    
-    # Log to CSV
+    comp_t=$(echo "$RUN_OUTPUT" | grep "Computational time (slowest process):" | awk '{print $(NF-1)}')
+    total_t=$(echo "$RUN_OUTPUT" | grep "Total execution time:" | awk '{print $(NF-1)}')
     echo "$n,$SLURM_NTASKS,$comp_t,$total_t" >> $CSV_OUT
-    echo "Finished n = $n"
 done
-
-echo "========================================"
-echo "All 30 tests completed. Data logged to $CSV_OUT"
-echo "========================================"

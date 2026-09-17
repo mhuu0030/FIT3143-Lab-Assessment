@@ -1,49 +1,36 @@
 #!/bin/bash
 #SBATCH --job-name=task2_alt_sweep_job
-#SBATCH --time=00:10:00               # CAAS limit: max 10 minutes per job
-#SBATCH --mem=16G                     # Memory limit across allocated cores
-#SBATCH --ntasks=4                    # 4 MPI processes
-#SBATCH --cpus-per-task=4             # 4 OpenMP threads per process (16 total cores)
-#SBATCH --ntasks-per-node=2           # 2 processes per node across 2 compute nodes
-#SBATCH --partition=defq              # Default CAAS partition
-#SBATCH --output=task2_alt_sweep_%j.out
-#SBATCH --error=task2_alt_sweep_%j.err
+#SBATCH --time=00:10:00               
+#SBATCH --mem=16G                     
+#SBATCH --ntasks=4                    
+#SBATCH --cpus-per-task=4             
+#SBATCH --ntasks-per-node=2           
+#SBATCH --partition=defq              
+#SBATCH --output=task2_alt_sweep_%j.out 
+#SBATCH --error=task2_alt_sweep_%j.err    
 
-# Load Open MPI module available on CAAS
 module load openmpi/4.1.5-gcc-11.2.0-ux65npg
 
-# Bind OpenMP threads directly to SLURM cpus-per-task allocation
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
-# Compile task2_alt.c if the binary doesn't exist
 if [ ! -f ./task2_alt ]; then
     mpicc -Wall -O2 -fopenmp task2_alt.c -o task2_alt -lm
 fi
 
-# Define CSV output file
 CSV_OUT="task2_alt_results.csv"
 echo "N,MPI_Processes,OpenMP_Threads,Total_Workers,Comp_Time,Total_Time" > $CSV_OUT
 
 echo "=========================================================="
 echo "Starting Task 2 Alt Benchmark Sweep (Block + Static)"
-echo "Allocation: $SLURM_NTASKS MPI processes, $SLURM_CPUS_PER_TASK OpenMP threads/rank"
 echo "=========================================================="
 
-# Internal loop across the 30 specified values of N (10M to 68M with step 2M)
 for n in $(seq 10000000 2000000 68000000); do
     echo "[Task 2 Alt] Executing N = $n ..."
-
-    # Execute alternative program via srun
     RUN_OUTPUT=$(srun ./task2_alt $n $SLURM_CPUS_PER_TASK)
-
-    echo "$RUN_OUTPUT"
-
-    # Extract metrics from task2_alt single-line log format:
-    # [task2_alt] Procs: %d, Threads: %d, N: %d, CompTime: %f s, TotalTime: %f s
+    
     comp_t=$(echo "$RUN_OUTPUT" | grep -oP '(?<=CompTime: )[^ s]+')
     total_t=$(echo "$RUN_OUTPUT" | grep -oP '(?<=TotalTime: )[^ s]+')
-
-    # Append row to CSV
+    
     echo "$n,$SLURM_NTASKS,$SLURM_CPUS_PER_TASK,$((SLURM_NTASKS * SLURM_CPUS_PER_TASK)),$comp_t,$total_t" >> $CSV_OUT
 done
 
