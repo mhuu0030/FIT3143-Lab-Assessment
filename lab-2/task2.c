@@ -1,16 +1,16 @@
 /**
  * FIT3143 Parallel Computing - Lab 2, Task 2
  * Hybrid Open MPI + OpenMP Prime Search (strictly less than n)
+ * Instrumented for Amdahl's Law Performance Analysis (Task 3).
  *
  * Compilation:
  *   mpicc -Wall -O2 -fopenmp task2.c -o task2 -lm
  *
  * Execution:
  *   mpirun -np <num_procs> ./task2 <n> [threads_per_process]
- *   Example: mpirun -np 4 ./task2 10000000 4
  */
 
-#define _POSIX_C_SOURCE 199309L // Expose CLOCK_MONOTONIC and CLOCK_THREAD_CPUTIME_ID
+#define _POSIX_C_SOURCE 199309L
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,10 +22,7 @@
 
 /**
  * Checks if a given integer is a prime number.
- * Utilizes the square root optimization and eliminates even divisors.
- *
- * @param k The integer to check for primality.
- * @return true if k is prime, false otherwise.
+ * Utilizes the square root optimization and checks odd divisors only.
  */
 bool is_prime(int k) {
     if (k <= 1) return false;
@@ -45,7 +42,7 @@ int main(int argc, char *argv[]) {
     int rank, size;
     int provided;
 
-    // Initialize MPI with thread support (MPI calls made by the main thread only)
+    // Initialize MPI with thread support (MPI calls restricted to main thread)
     MPI_Init_thread(&argc, &argv, MPI_THREAD_FUNNELED, &provided);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
@@ -53,15 +50,8 @@ int main(int argc, char *argv[]) {
     int n = 0;
     int num_threads = 4; // Default OpenMP thread count per MPI process
 
-    // High-resolution timers for Amdahl's Law serial vs parallel decomposition
-    double t_start_total = 0.0, t_end_total = 0.0;
-    double t_start_comp = 0.0, t_end_comp = 0.0;
-    double t_start_comm = 0.0, t_end_comm = 0.0;
-
-    // Root process setup and command-line argument validation
+    // Parse command line arguments on root rank
     if (rank == 0) {
-        t_start_total = MPI_Wtime();
-
         if (argc < 2) {
             fprintf(stderr, "Usage: mpirun -np <procs> %s <n> [threads_per_process]\n", argv[0]);
             MPI_Abort(MPI_COMM_WORLD, 1);
@@ -79,18 +69,21 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    // Disseminate n and num_threads to all MPI worker ranks
+    // Synchronize all ranks before starting total wall-clock timer
+    MPI_Barrier(MPI_COMM_WORLD);
+    double start_total = MPI_Wtime();
+
+    // Broadcast input parameters to all ranks (included in total time)
     MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
     MPI_Bcast(&num_threads, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
-    // Configure thread pool for OpenMP
+    // Set thread concurrency for this MPI rank
     omp_set_num_threads(num_threads);
 
-    // Distributed Workload: Cyclic stride across odd integers
+    // Cyclic workload distribution across odd candidate integers
     int mpi_step = 2 * size;
     int mpi_first = 3 + (2 * rank);
 
-    // Local buffer capacity for primes handled by this process
     int local_capacity = (n > mpi_first) ? ((n - mpi_first) / mpi_step + 2) : 1;
     bool *local_flags = (bool *)calloc(local_capacity, sizeof(bool));
     int *local_primes = (int *)malloc(local_capacity * sizeof(int));
@@ -100,25 +93,24 @@ int main(int argc, char *argv[]) {
         MPI_Abort(MPI_COMM_WORLD, 1);
     }
 
-    // Thread-level profiling array (from task3.c)
+    // Array to record OpenMP thread CPU times for load balance diagnostics
     double *thread_times = (double *)calloc(num_threads, sizeof(double));
 
-    // Barrier to synchronize start of computation across nodes
+    /* =========================================================
+     * TASK 3: RIGOROUS PARALLEL PHASE MEASUREMENT
+     * Barrier ensures all processes enter computation simultaneously.
+     * ========================================================= */
     MPI_Barrier(MPI_COMM_WORLD);
-    t_start_comp = MPI_Wtime();
+    double start_parallel_phase = MPI_Wtime();
 
-    // ==========================================
-    // HYBRID OPENMP PARALLEL REGION
-    // ==========================================
     #pragma omp parallel
     {
         int tid = omp_get_thread_num();
         struct timespec t_start_thread, t_end_thread;
 
-        // Measure individual thread CPU time
         clock_gettime(CLOCK_THREAD_CPUTIME_ID, &t_start_thread);
 
-        // Dynamic work-sharing schedule to absorb non-linear O(sqrt(k)) variance
+        // Dynamic work-sharing schedule
         #pragma omp for schedule(dynamic, 128)
         for (int i = mpi_first; i < n; i += mpi_step) {
             if (is_prime(i)) {
@@ -132,7 +124,7 @@ int main(int argc, char *argv[]) {
                             (t_end_thread.tv_nsec - t_start_thread.tv_nsec) / 1e9;
     }
 
-    // Sequentially pack discovered primes into local_primes buffer
+    // Pack discovered primes into sequential local buffer
     int local_count = 0;
     for (int i = mpi_first; i < n; i += mpi_step) {
         int idx = (i - mpi_first) / mpi_step;
@@ -141,14 +133,16 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    t_end_comp = MPI_Wtime();
+    // Barrier ensures the parallel phase duration accounts for the slowest worker rank
+    MPI_Barrier(MPI_COMM_WORLD);
+    double end_parallel_phase = MPI_Wtime();
+    double local_parallel_duration = end_parallel_phase - start_parallel_phase;
+
     free(local_flags);
 
-    // ==========================================
-    // COMMUNICATION & GATHER PHASE (MPI)
-    // ==========================================
-    t_start_comm = MPI_Wtime();
-
+    /* =========================================================
+     * COMMUNICATION & GATHER PHASE (SERIAL / FABRIC OVERHEAD)
+     * ========================================================= */
     int *recvcounts = NULL;
     int *displs = NULL;
     int *all_primes_gathered = NULL;
@@ -157,9 +151,13 @@ int main(int argc, char *argv[]) {
     if (rank == 0) {
         recvcounts = (int *)malloc(size * sizeof(int));
         displs = (int *)malloc(size * sizeof(int));
+        if (recvcounts == NULL || displs == NULL) {
+            fprintf(stderr, "[Rank 0] Error: Memory allocation failed.\n");
+            MPI_Abort(MPI_COMM_WORLD, 1);
+        }
     }
 
-    // Gather count of primes found by each MPI rank
+    // Gather count of primes discovered by each rank
     MPI_Gather(&local_count, 1, MPI_INT, recvcounts, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
     if (rank == 0) {
@@ -172,46 +170,30 @@ int main(int argc, char *argv[]) {
 
         all_primes_gathered = (int *)malloc(total_gathered_primes * sizeof(int));
         if (all_primes_gathered == NULL && total_gathered_primes > 0) {
-            fprintf(stderr, "[Rank 0] Error: Memory allocation failed for gather buffer.\n");
+            fprintf(stderr, "[Rank 0] Error: Memory allocation failed.\n");
             MPI_Abort(MPI_COMM_WORLD, 1);
         }
     }
 
-    // Variable gather of local prime arrays into root rank
+    // Gather prime arrays into root process
     MPI_Gatherv(local_primes, local_count, MPI_INT,
                 all_primes_gathered, recvcounts, displs, MPI_INT,
                 0, MPI_COMM_WORLD);
 
-    t_end_comm = MPI_Wtime();
     free(local_primes);
 
-    // Sequential output of thread timings per rank
-    for (int p = 0; p < size; p++) {
-        if (rank == p) {
-            printf("[Rank %d] OpenMP Thread CPU Times:\n", rank);
-            for (int t = 0; t < num_threads; t++) {
-                printf("   -- Thread %d CPU time: %f s\n", t, thread_times[t]);
-            }
-            fflush(stdout);
-        }
-        MPI_Barrier(MPI_COMM_WORLD);
-    }
-    free(thread_times);
-
-    // ==========================================
-    // SERIAL I/O & ORDERING VERIFICATION (Rank 0)
-    // ==========================================
+    /* =========================================================
+     * ROOT SERIAL WORK (SORTING & FILE OUTPUT)
+     * ========================================================= */
     if (rank == 0) {
         bool *final_map = (bool *)calloc(n, sizeof(bool));
         if (final_map == NULL) {
-            fprintf(stderr, "[Rank 0] Error: Memory allocation failed for output sorting.\n");
+            fprintf(stderr, "[Rank 0] Error: Memory allocation failed.\n");
             MPI_Abort(MPI_COMM_WORLD, 1);
         }
 
-        // Account for prime 2
         if (n > 2) final_map[2] = true;
 
-        // Map gathered primes into sequential index space
         for (int i = 0; i < total_gathered_primes; i++) {
             int prime_val = all_primes_gathered[i];
             if (prime_val < n) {
@@ -226,7 +208,6 @@ int main(int argc, char *argv[]) {
                 fprintf(stderr, "Error: Could not open task2primes.txt for writing.\n");
                 MPI_Abort(MPI_COMM_WORLD, 1);
             }
-            printf("\nWriting sorted primes to task2primes.txt...\n");
         } else {
             printf("\nPrime numbers strictly less than %d are:\n", n);
         }
@@ -251,27 +232,56 @@ int main(int argc, char *argv[]) {
         if (all_primes_gathered) free(all_primes_gathered);
         free(recvcounts);
         free(displs);
-
-        t_end_total = MPI_Wtime();
-
-        // Print Amdahl's Law metrics for Task 3 benchmarking
-        double comp_time = t_end_comp - t_start_comp;
-        double comm_time = t_end_comm - t_start_comm;
-        double total_time = t_end_total - t_start_total;
-        double serial_time = total_time - comp_time;
-
-        printf("\n================ Performance Metrics ================\n");
-        printf("MPI Processes (Nodes)        : %d\n", size);
-        printf("OpenMP Threads per Process   : %d\n", num_threads);
-        printf("Total Computational Workers  : %d\n", size * num_threads);
-        printf("Search Space Bound (n)       : %d\n", n);
-        printf("Parallel Computation Time    : %f seconds\n", comp_time);
-        printf("MPI Communication Time       : %f seconds\n", comm_time);
-        printf("Serial Setup, I/O & Overhead : %f seconds\n", serial_time);
-        printf("Total Wall-Clock Time        : %f seconds\n", total_time);
-        printf("=====================================================\n");
     }
 
+    // Synchronize to record true overall program completion
+    MPI_Barrier(MPI_COMM_WORLD);
+    double end_total = MPI_Wtime();
+    double local_total_time = end_total - start_total;
+
+    /* =========================================================
+     * GLOBAL REDUCTION FOR RIGOROUS AMDAHL METRICS
+     * ========================================================= */
+    double parallel_time = 0.0;
+    MPI_Reduce(&local_parallel_duration, &parallel_time, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
+
+    double total_time = 0.0;
+    MPI_Reduce(&local_total_time, &total_time, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
+
+    if (rank == 0) {
+        // Rigorous Amdahl decomposition
+        double serial_time = total_time - parallel_time;
+        if (serial_time < 0.0) serial_time = 0.0;
+
+        double p = parallel_time / total_time;
+        double s = serial_time / total_time;
+        int total_workers = size * num_threads;
+
+        double theoretical_speedup = 1.0 / (s + (p / (double)total_workers));
+        double max_theoretical_speedup = (s > 0.0) ? (1.0 / s) : 0.0;
+
+        printf("\n========================================\n");
+        printf("TASK 2 - HYBRID AMDAHL PERFORMANCE ANALYSIS\n");
+        printf("========================================\n");
+        printf("n: %d\n", n);
+        printf("MPI processes: %d\n", size);
+        printf("OpenMP threads per process: %d\n", num_threads);
+        printf("Total computational workers: %d\n", total_workers);
+        printf("----------------------------------------\n");
+        printf("Parallel phase time (Tp): %f seconds\n", parallel_time);
+        printf("Serial/fabric time (Ts): %f seconds\n", serial_time);
+        printf("Total execution time: %f seconds\n", total_time);
+        printf("----------------------------------------\n");
+        printf("Parallel fraction (p): %f\n", p);
+        printf("Serial fraction (s): %f\n", s);
+        printf("Check s + p: %f\n", s + p);
+        printf("----------------------------------------\n");
+        printf("Theoretical Amdahl speedup (%d workers): %f\n", total_workers, theoretical_speedup);
+        printf("Maximum theoretical speedup (1/s): %f\n", max_theoretical_speedup);
+        printf("========================================\n");
+    }
+
+    free(thread_times);
     MPI_Finalize();
     return 0;
 }
