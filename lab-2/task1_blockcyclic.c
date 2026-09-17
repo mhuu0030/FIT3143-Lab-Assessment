@@ -1,10 +1,24 @@
 /**
- * FIT3143 Parallel Computing - Lab 2, Task 1
- * Parallel code to find prime numbers strictly less than an integer n
- * using Open MPI.
+ * FIT3143 Parallel Computing - Lab 2, Task 3
+ *
+ * Task 1 Open MPI prime search instrumented for
+ * Amdahl's Law performance analysis.
  *
  * Workload distribution:
- * Block round-robin / block-cyclic distribution.
+ * Block round-robin / block-cyclic.
+ *
+ * Task 3 measurements:
+ *
+ * T_total    = overall wall-clock execution time
+ * T_parallel = wall-clock duration of parallel prime-search phase
+ * T_serial   = T_total - T_parallel
+ *
+ * p = T_parallel / T_total
+ * s = T_serial   / T_total
+ *
+ * Amdahl:
+ *
+ * Speedup(N) = 1 / (s + p/N)
  */
 
 #include <stdio.h>
@@ -15,30 +29,27 @@
 
 #define BLOCK_SIZE 1000
 
+
 /**
- * Checks if a given integer is a prime number.
- * Utilizes the square root optimization to eliminate unnecessary computations.
- *
- * @param k The integer to check for primality.
- * @return true if k is prime, false otherwise.
+ * Check whether k is prime.
  */
-bool is_prime(int k) {
+bool is_prime(int k)
+{
+    if (k <= 1)
+        return false;
 
-    // 0 and 1 are not prime numbers
-    if (k <= 1) return false;
+    if (k == 2)
+        return true;
 
-    // 2 is the only even prime number
-    if (k == 2) return true;
+    if (k % 2 == 0)
+        return false;
 
-    // Eliminate all other even numbers immediately
-    if (k % 2 == 0) return false;
-
-    // Only need to check factors up to sqrt(k)
     int limit = (int)sqrt((double)k);
 
-    // Check odd divisors only
-    for (int i = 3; i <= limit; i += 2) {
-        if (k % i == 0) {
+    for (int i = 3; i <= limit; i += 2)
+    {
+        if (k % i == 0)
+        {
             return false;
         }
     }
@@ -48,63 +59,81 @@ bool is_prime(int k) {
 
 
 /**
- * Comparison function used by qsort().
+ * Comparison function for qsort().
  */
-int compare_ints(const void *a, const void *b) {
-
+int compare_ints(const void *a, const void *b)
+{
     int x = *(const int *)a;
     int y = *(const int *)b;
 
-    if (x < y) return -1;
-    if (x > y) return 1;
+    if (x < y)
+        return -1;
+
+    if (x > y)
+        return 1;
 
     return 0;
 }
 
 
-int main(int argc, char *argv[]) {
-
+int main(int argc, char *argv[])
+{
     int rank;
     int num_processes;
+
     int n = 0;
     int valid_input = 1;
 
-    /*
-     * Start MPI environment.
+
+    /* =========================================================
+     * INITIALISE MPI
+     * =========================================================
      */
+
     MPI_Init(&argc, &argv);
 
-    /*
-     * Get:
-     * rank          = ID of this MPI process
-     * num_processes = total number of MPI processes
+    MPI_Comm_rank(
+        MPI_COMM_WORLD,
+        &rank
+    );
+
+    MPI_Comm_size(
+        MPI_COMM_WORLD,
+        &num_processes
+    );
+
+
+    /* =========================================================
+     * ROOT READS N
+     * =========================================================
      */
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    MPI_Comm_size(MPI_COMM_WORLD, &num_processes);
 
+    if (rank == 0)
+    {
+        if (argc != 2)
+        {
+            printf(
+                "Usage: %s <n>\n",
+                argv[0]
+            );
 
-    /*
-     * Only the root process reads n.
-     *
-     * Example:
-     * srun ./task1 10000000
-     */
-    if (rank == 0) {
-
-        if (argc != 2) {
-
-            printf("Usage: %s <n>\n", argv[0]);
-            printf("Example: %s 10000000\n", argv[0]);
+            printf(
+                "Example: %s 50000000\n",
+                argv[0]
+            );
 
             valid_input = 0;
-
-        } else {
-
+        }
+        else
+        {
             n = atoi(argv[1]);
 
-            if (n <= 0) {
+            if (n <= 0)
+            {
+                printf(
+                    "Error: Please enter a valid positive integer.\n"
+                );
 
-                printf("Error: Please enter a valid positive integer.\n");
                 valid_input = 0;
             }
         }
@@ -112,7 +141,10 @@ int main(int argc, char *argv[]) {
 
 
     /*
-     * Tell every MPI process whether the input was valid.
+     * Tell every process whether input is valid.
+     *
+     * This happens before our total timer,
+     * same as the original Task 1 design.
      */
     MPI_Bcast(
         &valid_input,
@@ -123,29 +155,28 @@ int main(int argc, char *argv[]) {
     );
 
 
-    if (!valid_input) {
-
+    if (!valid_input)
+    {
         MPI_Finalize();
         return 1;
     }
 
 
-    /*
-     * Synchronize all processes before timing.
+    /* =========================================================
+     * TOTAL EXECUTION TIMER
+     * =========================================================
+     *
+     * Synchronise first so all processes begin the measured
+     * program at approximately the same point.
      */
+
     MPI_Barrier(MPI_COMM_WORLD);
 
-    /*
-     * Start total execution time.
-     *
-     * This is before MPI_Bcast(n), so communication is included
-     * in the total MPI execution time.
-     */
-    double start_time = MPI_Wtime();
+    double start_total = MPI_Wtime();
 
 
     /*
-     * Root process sends n to every MPI process.
+     * n communication is therefore INCLUDED in total time.
      */
     MPI_Bcast(
         &n,
@@ -156,82 +187,72 @@ int main(int argc, char *argv[]) {
     );
 
 
-    /*
-     * Local array used by each process to store the primes
-     * that it discovers.
-     *
-     * Start with a small array and increase it when required.
+    /* =========================================================
+     * LOCAL STORAGE
+     * =========================================================
      */
+
     int local_capacity = 1024;
     int local_count = 0;
 
     int *local_primes =
-        (int *)malloc(local_capacity * sizeof(int));
+        (int *)malloc(
+            local_capacity * sizeof(int)
+        );
 
 
-    if (local_primes == NULL) {
-
+    if (local_primes == NULL)
+    {
         printf(
             "Process %d: Memory allocation failed.\n",
             rank
         );
 
-        MPI_Abort(MPI_COMM_WORLD, 1);
+        MPI_Abort(
+            MPI_COMM_WORLD,
+            1
+        );
     }
 
 
-    /*
-     * Start measuring the computational section.
+    /* =========================================================
+     * TASK 3: PARALLEL PHASE MEASUREMENT
+     * =========================================================
+     *
+     * The barrier creates a common starting point.
+     *
+     * This is NOT required for the normal Task 1 algorithm.
+     * It is added here specifically so we can measure the
+     * wall-clock duration of the complete parallel phase.
      */
-    double start_comp = MPI_Wtime();
+
+    MPI_Barrier(MPI_COMM_WORLD);
+
+    double start_parallel_phase =
+        MPI_Wtime();
 
 
     /*
-     * ==========================================================
-     * BLOCK ROUND-ROBIN / BLOCK-CYCLIC WORKLOAD DISTRIBUTION
-     * ==========================================================
+     * Also measure how long this individual rank spends
+     * performing actual computation.
      *
-     * Example:
-     *
-     * BLOCK_SIZE = 10
-     * num_processes = 3
-     *
-     * Rank 0:
-     *      1 - 10
-     *     31 - 40
-     *     61 - 70
-     *     ...
-     *
-     * Rank 1:
-     *     11 - 20
-     *     41 - 50
-     *     71 - 80
-     *     ...
-     *
-     * Rank 2:
-     *     21 - 30
-     *     51 - 60
-     *     81 - 90
-     *     ...
-     *
-     *
-     * Each MPI process starts from its own block number:
-     *
-     * block = rank
-     *
-     * and jumps by:
-     *
-     * block += num_processes
-     *
-     * This distributes blocks in round-robin order.
+     * This is useful for workload balance diagnostics.
+     */
+    double start_local_compute =
+        MPI_Wtime();
+
+
+    /* =========================================================
+     * BLOCK-CYCLIC WORKLOAD DISTRIBUTION
+     * =========================================================
      */
 
     for (long long block = rank;
          ;
-         block += num_processes) {
-
+         block += num_processes)
+    {
         /*
-         * Calculate the beginning and end of this block.
+         * Beginning and end of this block.
          */
         long long start =
             (block * BLOCK_SIZE) + 1;
@@ -241,67 +262,68 @@ int main(int argc, char *argv[]) {
 
 
         /*
-         * Stop when this process has gone beyond n.
+         * Stop when this rank has no more blocks.
          */
-        if (start >= n) {
+        if (start >= n)
+        {
             break;
         }
 
 
         /*
-         * The program finds primes strictly LESS THAN n.
+         * Find primes strictly less than n.
          */
-        if (end >= n) {
+        if (end >= n)
+        {
             end = n - 1;
         }
 
 
         /*
-         * 2 will be handled separately by the root later.
-         *
-         * Start checking from at least 3.
+         * 2 is handled separately.
          */
-        if (start < 3) {
+        if (start < 3)
+        {
             start = 3;
         }
 
 
         /*
-         * We already know all even numbers > 2 are not prime.
-         *
-         * Therefore, make sure the first candidate is odd.
+         * Skip even candidate numbers.
          */
-        if (start % 2 == 0) {
+        if (start % 2 == 0)
+        {
             start++;
         }
 
 
         /*
-         * Search only odd candidates in this block.
+         * Check only odd candidates.
          */
         for (long long i = start;
              i <= end;
-             i += 2) {
-
-            if (is_prime((int)i)) {
-
+             i += 2)
+        {
+            if (is_prime((int)i))
+            {
                 /*
-                 * If local array becomes full,
-                 * double its size.
+                 * Expand result array if necessary.
                  */
-                if (local_count == local_capacity) {
-
+                if (local_count ==
+                    local_capacity)
+                {
                     local_capacity *= 2;
 
                     int *temp =
                         (int *)realloc(
                             local_primes,
-                            local_capacity * sizeof(int)
+                            local_capacity *
+                            sizeof(int)
                         );
 
 
-                    if (temp == NULL) {
-
+                    if (temp == NULL)
+                    {
                         printf(
                             "Process %d: Memory reallocation failed.\n",
                             rank
@@ -316,14 +338,13 @@ int main(int argc, char *argv[]) {
                     }
 
 
-                    local_primes = temp;
+                    local_primes =
+                        temp;
                 }
 
 
-                /*
-                 * Save the prime found by this process.
-                 */
-                local_primes[local_count] = (int)i;
+                local_primes[local_count] =
+                    (int)i;
 
                 local_count++;
             }
@@ -332,37 +353,61 @@ int main(int argc, char *argv[]) {
 
 
     /*
-     * End computational timing for this MPI process.
+     * Individual rank computation ends here.
      */
-    double end_comp = MPI_Wtime();
+    double end_local_compute =
+        MPI_Wtime();
 
-    double local_comp_time =
-        end_comp - start_comp;
+
+    double local_compute_time =
+        end_local_compute -
+        start_local_compute;
 
 
     /*
-     * ==========================================================
-     * COLLECT RESULTS FROM ALL MPI PROCESSES
-     * ==========================================================
+     * =========================================================
+     * IMPORTANT TASK 3 BARRIER
+     * =========================================================
      *
-     * Different MPI processes may find different numbers
-     * of prime numbers.
+     * Faster processes wait here until the slowest process
+     * completes its prime-search workload.
      *
-     * First gather how many primes each process found.
+     * Therefore the parallel phase represents how long the
+     * whole application must wait for parallel computation
+     * to complete.
+     */
+
+    MPI_Barrier(MPI_COMM_WORLD);
+
+
+    double end_parallel_phase =
+        MPI_Wtime();
+
+
+    double local_parallel_phase_time =
+        end_parallel_phase -
+        start_parallel_phase;
+
+
+    /* =========================================================
+     * COLLECT RESULTS
+     * =========================================================
      */
 
     int *recv_counts = NULL;
 
-    if (rank == 0) {
 
+    if (rank == 0)
+    {
         recv_counts =
             (int *)malloc(
-                num_processes * sizeof(int)
+                num_processes *
+                sizeof(int)
             );
 
 
-        if (recv_counts == NULL) {
-
+        if (recv_counts == NULL)
+        {
             printf(
                 "Error: Memory allocation failed.\n"
             );
@@ -375,6 +420,16 @@ int main(int argc, char *argv[]) {
     }
 
 
+    /*
+     * Fabric / MPI communication.
+     *
+     * This is NOT part of T_parallel.
+     *
+     * Because it is inside T_total, it will automatically
+     * be included in T_serial when:
+     *
+     * T_serial = T_total - T_parallel
+     */
     MPI_Gather(
         &local_count,
         1,
@@ -389,29 +444,23 @@ int main(int argc, char *argv[]) {
     );
 
 
-    /*
-     * Root determines:
-     *
-     * 1. Total number of primes found
-     * 2. Where each process's results should be placed
-     */
     int *displacements = NULL;
+    int *all_primes = NULL;
 
     int total_count = 0;
 
-    int *all_primes = NULL;
 
-
-    if (rank == 0) {
-
+    if (rank == 0)
+    {
         displacements =
             (int *)malloc(
-                num_processes * sizeof(int)
+                num_processes *
+                sizeof(int)
             );
 
 
-        if (displacements == NULL) {
-
+        if (displacements == NULL)
+        {
             printf(
                 "Error: Memory allocation failed.\n"
             );
@@ -428,31 +477,33 @@ int main(int argc, char *argv[]) {
 
         for (int i = 0;
              i < num_processes;
-             i++) {
+             i++)
+        {
+            total_count +=
+                recv_counts[i];
 
-            total_count += recv_counts[i];
 
-            if (i > 0) {
-
+            if (i > 0)
+            {
                 displacements[i] =
-                    displacements[i - 1]
-                    + recv_counts[i - 1];
+                    displacements[i - 1] +
+                    recv_counts[i - 1];
             }
         }
 
 
         /*
-         * +1 leaves space for prime number 2.
+         * +1 for prime number 2.
          */
         all_primes =
             (int *)malloc(
-                (total_count + 1)
-                * sizeof(int)
+                (total_count + 1) *
+                sizeof(int)
             );
 
 
-        if (all_primes == NULL) {
-
+        if (all_primes == NULL)
+        {
             printf(
                 "Error: Memory allocation failed.\n"
             );
@@ -466,7 +517,8 @@ int main(int argc, char *argv[]) {
 
 
     /*
-     * Gather variable-sized prime arrays from all MPI processes.
+     * Fabric / communication time is again outside
+     * the parallel prime-search phase.
      */
     MPI_Gatherv(
         local_primes,
@@ -483,27 +535,29 @@ int main(int argc, char *argv[]) {
     );
 
 
-    /*
-     * ==========================================================
-     * ROOT PROCESS COMBINES, SORTS AND OUTPUTS RESULTS
-     * ==========================================================
+    /* =========================================================
+     * ROOT SERIAL WORK
+     * =========================================================
      */
-    if (rank == 0) {
 
+    if (rank == 0)
+    {
         /*
-         * 2 is the only even prime number.
+         * Add prime number 2.
          */
-        if (n > 2) {
+        if (n > 2)
+        {
+            all_primes[total_count] =
+                2;
 
-            all_primes[total_count] = 2;
             total_count++;
         }
 
 
         /*
-         * Because block round-robin distribution means the
-         * gathered results are not globally ordered,
-         * sort all primes before output.
+         * Sorting is root-only work.
+         *
+         * Therefore it becomes part of the serial fraction.
          */
         qsort(
             all_primes,
@@ -516,11 +570,8 @@ int main(int argc, char *argv[]) {
         FILE *file = NULL;
 
 
-        /*
-         * Same output behaviour as your Week 4 programs.
-         */
-        if (n >= 100) {
-
+        if (n >= 100)
+        {
             file =
                 fopen(
                     "task1primes.txt",
@@ -528,8 +579,8 @@ int main(int argc, char *argv[]) {
                 );
 
 
-            if (file == NULL) {
-
+            if (file == NULL)
+            {
                 printf(
                     "Error: Could not open task1primes.txt for writing.\n"
                 );
@@ -545,9 +596,9 @@ int main(int argc, char *argv[]) {
                 "Calculating complete. "
                 "Output written to task1primes.txt\n"
             );
-
-        } else {
-
+        }
+        else
+        {
             printf(
                 "Prime numbers strictly less than %d are:\n",
                 n
@@ -556,21 +607,21 @@ int main(int argc, char *argv[]) {
 
 
         /*
-         * Output sorted prime numbers.
+         * File output is also root-only / serial work.
          */
         for (int i = 0;
              i < total_count;
-             i++) {
-
-            if (n < 100) {
-
+             i++)
+        {
+            if (n < 100)
+            {
                 printf(
                     "%d ",
                     all_primes[i]
                 );
-
-            } else {
-
+            }
+            else
+            {
                 fprintf(
                     file,
                     "%d\n",
@@ -580,52 +631,95 @@ int main(int argc, char *argv[]) {
         }
 
 
-        if (file != NULL) {
-
+        if (file != NULL)
+        {
             fclose(file);
-
-        } else {
-
+        }
+        else
+        {
             printf("\n");
         }
     }
 
 
-    /*
-     * The overall timer ends AFTER:
+    /* =========================================================
+     * END TOTAL TIMER
+     * =========================================================
      *
-     * - broadcasting n
-     * - computation
-     * - MPI communication
-     * - gathering
-     * - sorting
-     * - file writing
-     *
-     * This is important for the assignment's empirical speedup.
+     * Rank 0 performs the final sorting and file output,
+     * so its elapsed time represents the complete program
+     * path that we want to analyse.
      */
-    double end_time = MPI_Wtime();
+
+    double end_total =
+        MPI_Wtime();
+
+
+    double local_total_time =
+        end_total -
+        start_total;
+
+
+    /* =========================================================
+     * TASK 3 DIAGNOSTIC COMMUNICATION
+     *
+     * Everything below happens AFTER the measured program.
+     * It therefore does not affect T_total.
+     * =========================================================
+     */
 
 
     /*
-     * Gather computational time from every MPI process.
+     * Obtain the largest parallel-phase duration.
      *
-     * This occurs AFTER the overall timing so this diagnostic
-     * operation does not affect the measured total execution time.
+     * We use MPI_MAX because the parallel program cannot
+     * progress faster than its slowest participating rank.
+     */
+    double parallel_time = 0.0;
+
+
+    MPI_Reduce(
+        &local_parallel_phase_time,
+        &parallel_time,
+        1,
+        MPI_DOUBLE,
+        MPI_MAX,
+        0,
+        MPI_COMM_WORLD
+    );
+
+
+    /*
+     * Gather individual computation times for diagnostics.
      */
     double *process_times = NULL;
 
-    if (rank == 0) {
 
+    if (rank == 0)
+    {
         process_times =
             (double *)malloc(
-                num_processes
-                * sizeof(double)
+                num_processes *
+                sizeof(double)
             );
+
+
+        if (process_times == NULL)
+        {
+            printf(
+                "Error: Memory allocation failed.\n"
+            );
+
+            MPI_Abort(
+                MPI_COMM_WORLD,
+                1
+            );
+        }
     }
 
 
     MPI_Gather(
-        &local_comp_time,
+        &local_compute_time,
         1,
         MPI_DOUBLE,
 
@@ -639,17 +733,129 @@ int main(int argc, char *argv[]) {
 
 
     /*
-     * Root displays timing information.
+     * Gather total elapsed time from all processes.
+     *
+     * Rank 0 performs sorting/output and should normally
+     * have the longest total duration.
+     *
+     * MPI_MAX makes the definition robust.
      */
-    if (rank == 0) {
+    double total_time = 0.0;
 
-        double max_comp_time = 0.0;
+
+    MPI_Reduce(
+        &local_total_time,
+        &total_time,
+        1,
+        MPI_DOUBLE,
+        MPI_MAX,
+        0,
+        MPI_COMM_WORLD
+    );
+
+
+    /* =========================================================
+     * TASK 3 AMDahl ANALYSIS
+     * =========================================================
+     */
+
+    if (rank == 0)
+    {
+        /*
+         * Anything outside the measured parallel prime-search
+         * phase is classified as the serial fraction.
+         *
+         * This therefore includes:
+         *
+         * - MPI communication / fabric time
+         * - result gathering
+         * - root calculations
+         * - sorting
+         * - file output
+         */
+        double serial_time =
+            total_time -
+            parallel_time;
+
+
+        /*
+         * Prevent tiny floating-point errors producing
+         * a negative result.
+         */
+        if (serial_time < 0.0)
+        {
+            serial_time = 0.0;
+        }
+
+
+        double parallel_fraction =
+            parallel_time /
+            total_time;
+
+
+        double serial_fraction =
+            serial_time /
+            total_time;
+
+
+        /*
+         * Amdahl's Law:
+         *
+         * S(N) = 1 / (s + p/N)
+         */
+        double theoretical_speedup =
+            1.0 /
+            (
+                serial_fraction +
+                (
+                    parallel_fraction /
+                    num_processes
+                )
+            );
+
+
+        /*
+         * Maximum possible Amdahl speedup as N approaches
+         * infinity:
+         *
+         * S_max = 1 / s
+         */
+        double max_theoretical_speedup =
+            0.0;
+
+
+        if (serial_fraction > 0.0)
+        {
+            max_theoretical_speedup =
+                1.0 /
+                serial_fraction;
+        }
 
 
         printf(
-            "\nNumber of MPI processes: %d\n",
+            "\n========================================\n"
+        );
+
+        printf(
+            "TASK 3 - AMDahl PERFORMANCE ANALYSIS\n"
+        );
+
+        printf(
+            "========================================\n"
+        );
+
+
+        printf(
+            "n: %d\n",
+            n
+        );
+
+
+        printf(
+            "MPI processes: %d\n",
             num_processes
         );
+
 
         printf(
             "Block size: %d\n",
@@ -657,53 +863,115 @@ int main(int argc, char *argv[]) {
         );
 
 
+        printf(
+            "\nIndividual rank computation times:\n"
+        );
+
+
+        double max_local_compute = 0.0;
+
+
         for (int i = 0;
              i < num_processes;
-             i++) {
-
+             i++)
+        {
             printf(
-                "Process %d computational time: %f seconds\n",
+                "Process %d computation time: %f seconds\n",
                 i,
                 process_times[i]
             );
 
 
-            if (process_times[i] > max_comp_time) {
-
-                max_comp_time =
+            if (process_times[i] >
+                max_local_compute)
+            {
+                max_local_compute =
                     process_times[i];
             }
         }
 
 
-        /*
-         * The slowest process determines how long
-         * the parallel computation takes.
-         */
         printf(
-            "Computational time (slowest process): %f seconds\n",
-            max_comp_time
+            "\n----------------------------------------\n"
+        );
+
+        printf(
+            "Slowest rank computation time: %f seconds\n",
+            max_local_compute
+        );
+
+
+        printf(
+            "Parallel phase time (Tp): %f seconds\n",
+            parallel_time
+        );
+
+
+        printf(
+            "Serial/fabric time (Ts): %f seconds\n",
+            serial_time
         );
 
 
         printf(
             "Total execution time: %f seconds\n",
-            end_time - start_time
+            total_time
+        );
+
+
+        printf(
+            "\n----------------------------------------\n"
+        );
+
+
+        printf(
+            "Parallel fraction (p): %f\n",
+            parallel_fraction
+        );
+
+
+        printf(
+            "Serial fraction (s): %f\n",
+            serial_fraction
+        );
+
+
+        printf(
+            "Check s + p: %f\n",
+            serial_fraction +
+            parallel_fraction
+        );
+
+
+        printf(
+            "\n----------------------------------------\n"
+        );
+
+
+        printf(
+            "Theoretical Amdahl speedup for %d processes: %f\n",
+            num_processes,
+            theoretical_speedup
+        );
+
+
+        printf(
+            "Maximum theoretical speedup (1/s): %f\n",
+            max_theoretical_speedup
+        );
+
+
+        printf(
+            "========================================\n"
         );
     }
 
 
-    /*
-     * Free local memory.
-     */
     free(local_primes);
 
 
-    /*
-     * Root-only memory.
-     */
-    if (rank == 0) {
-
+    if (rank == 0)
+    {
         free(recv_counts);
         free(displacements);
         free(all_primes);
@@ -711,9 +979,6 @@ int main(int argc, char *argv[]) {
     }
 
 
-    /*
-     * Shut down MPI.
-     */
     MPI_Finalize();
 
     return 0;
