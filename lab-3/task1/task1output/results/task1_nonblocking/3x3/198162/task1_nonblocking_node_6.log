@@ -1,0 +1,95 @@
+Implementation: NONBLOCKING MPI
+World rank: 6
+Cartesian rank: 5
+Coordinates: (1,2)
+Neighbour count: 3
+Neighbour 0 = world rank 3
+Neighbour 1 = world rank 9
+Neighbour 2 = world rank 5
+
+[2026-10-22 03:18:36.052] CYCLE 0
+Available: 0/6
+Responded to node 5: 0 free
+Responded to node 9: 0 free
+Responded to node 3: 0 free
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 6
+Neighbour bytes: 24
+Exchange time: 0.006891807 s
+BASE STATION RESPONSE: 0 candidates
+Responded to node 9: 0 free
+Responded to node 5: 0 free
+
+[2026-10-22 03:18:37.059] CYCLE 1
+Available: 0/6
+Responded to node 3: 0 free
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 6
+Neighbour bytes: 24
+Exchange time: 0.001132329 s
+BASE STATION RESPONSE: 0 candidates
+Responded to node 9: 0 free
+Responded to node 5: 0 free
+Responded to node 3: 0 free
+
+[2026-10-22 03:18:38.059] CYCLE 2
+Available: 2/6
+Responded to node 9: 2 free
+Responded to node 3: 2 free
+
+[2026-10-22 03:18:39.060] CYCLE 3
+Available: 1/6
+LOCAL REDIRECTION
+Selected node: 5
+Available ports: 2
+Exchange time: 0.001140374 s
+Responded to node 5: 1 free
+Responded to node 3: 1 free
+
+[2026-10-22 03:18:40.061] CYCLE 4
+Available: 0/6
+LOCAL REDIRECTION
+Selected node: 9
+Available ports: 2
+Exchange time: 0.001127390 s
+Responded to node 9: 0 free
+Responded to node 5: 0 free
+Responded to node 3: 0 free
+
+[2026-10-22 03:18:41.062] CYCLE 5
+Available: 4/6
+Responded to node 9: 4 free
+Responded to node 5: 4 free
+Responded to node 3: 4 free
+
+[2026-10-22 03:18:42.062] CYCLE 6
+Available: 1/6
+CONGESTION ALERT SENT
+Free ports: 1/6
+Neighbour messages: 6
+Neighbour bytes: 24
+Exchange time: 0.001122861 s
+BASE STATION RESPONSE: 0 candidates
+Responded to node 9: 1 free
+Responded to node 5: 1 free
+Responded to node 3: 1 free
+
+[2026-10-22 03:18:43.063] CYCLE 7
+Available: 1/6
+CONGESTION ALERT SENT
+Free ports: 1/6
+Neighbour messages: 6
+Neighbour bytes: 24
+Exchange time: 0.001117260 s
+BASE STATION RESPONSE: 0 candidates
+All local cycles completed.
+Waiting for termination.
+
+NODE SUMMARY
+Cycles: 8
+Neighbour requests sent: 18
+Neighbour responses sent: 22
+Congestion reports sent: 4
+Graceful shutdown completed.

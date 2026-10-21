@@ -1,0 +1,17 @@
+[BASE OPT] Completed. Alerts=96 Time=7.030 s
+[NODE 2 OPT] Cycles=8 Alerts=7 Requests=9 Skipped=12
+[NODE 6 OPT] Cycles=8 Alerts=8 Requests=12 Skipped=20
+[NODE 14 OPT] Cycles=8 Alerts=6 Requests=9 Skipped=15
+[NODE 8 OPT] Cycles=8 Alerts=8 Requests=9 Skipped=15
+[NODE 12 OPT] Cycles=8 Alerts=8 Requests=9 Skipped=15
+[NODE 16 OPT] Cycles=8 Alerts=5 Requests=6 Skipped=4
+[NODE 10 OPT] Cycles=8 Alerts=8 Requests=12 Skipped=20
+[NODE 5 OPT] Cycles=8 Alerts=6 Requests=9 Skipped=9
+[NODE 1 OPT] Cycles=8 Alerts=4 Requests=8 Skipped=8
+[NODE 9 OPT] Cycles=8 Alerts=4 Requests=9 Skipped=9
+[NODE 4 OPT] Cycles=8 Alerts=4 Requests=6 Skipped=8
+[NODE 15 OPT] Cycles=8 Alerts=4 Requests=9 Skipped=12
+[NODE 11 OPT] Cycles=8 Alerts=5 Requests=12 Skipped=16
+[NODE 3 OPT] Cycles=8 Alerts=5 Requests=9 Skipped=12
+[NODE 13 OPT] Cycles=8 Alerts=7 Requests=6 Skipped=8
+[NODE 7 OPT] Cycles=8 Alerts=7 Requests=12 Skipped=16

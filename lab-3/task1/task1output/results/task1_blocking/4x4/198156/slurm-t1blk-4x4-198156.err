@@ -1,0 +1,1 @@
+srun: Warning: can't honor --ntasks-per-node set to 2 which doesn't match the requested tasks 17 with the number of requested nodes 9. Ignoring --ntasks-per-node.

@@ -2,7 +2,5 @@
 *.txt
 
 # Ignore standard C compiled output files
-*.out
 *.exe
-*.log
 

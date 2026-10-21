@@ -1,0 +1,101 @@
+Implementation: NONBLOCKING MPI
+World rank: 2
+Cartesian rank: 1
+Coordinates: (0,1)
+Neighbour count: 3
+Neighbour 0 = world rank 6
+Neighbour 1 = world rank 1
+Neighbour 2 = world rank 3
+
+[2026-10-22 03:18:54.479] CYCLE 0
+Available: 0/6
+Responded to node 1: 0 free
+Responded to node 3: 0 free
+Responded to node 6: 0 free
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 6
+Neighbour bytes: 24
+Exchange time: 0.003757496 s
+BASE STATION RESPONSE: 0 candidates
+Responded to node 1: 0 free
+Responded to node 6: 0 free
+
+[2026-10-22 03:18:55.480] CYCLE 1
+Available: 2/6
+Responded to node 3: 2 free
+Responded to node 1: 2 free
+Responded to node 6: 2 free
+
+[2026-10-22 03:18:56.480] CYCLE 2
+Available: 0/6
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 6
+Neighbour bytes: 24
+Exchange time: 0.001124591 s
+Responded to node 3: 0 free
+BASE STATION RESPONSE: 0 candidates
+Responded to node 1: 0 free
+Responded to node 6: 0 free
+
+[2026-10-22 03:18:57.480] CYCLE 3
+Available: 0/6
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 6
+Neighbour bytes: 24
+Exchange time: 0.001126464 s
+BASE STATION RESPONSE: 0 candidates
+Responded to node 3: 0 free
+Responded to node 1: 0 free
+Responded to node 6: 0 free
+
+[2026-10-22 03:18:58.481] CYCLE 4
+Available: 0/6
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 6
+Neighbour bytes: 24
+Exchange time: 0.001128829 s
+BASE STATION RESPONSE: 0 candidates
+Responded to node 3: 0 free
+Responded to node 1: 0 free
+Responded to node 6: 0 free
+
+[2026-10-22 03:18:59.482] CYCLE 5
+Available: 2/6
+Responded to node 3: 2 free
+Responded to node 1: 2 free
+Responded to node 6: 2 free
+
+[2026-10-22 03:19:00.483] CYCLE 6
+Available: 0/6
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 6
+Neighbour bytes: 24
+Exchange time: 0.001125643 s
+BASE STATION RESPONSE: 0 candidates
+Responded to node 3: 0 free
+Responded to node 1: 0 free
+Responded to node 6: 0 free
+
+[2026-10-22 03:19:01.484] CYCLE 7
+Available: 0/6
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 6
+Neighbour bytes: 24
+Exchange time: 0.002214506 s
+BASE STATION RESPONSE: 0 candidates
+All local cycles completed.
+Waiting for termination.
+Responded to node 3: 0 free
+
+NODE SUMMARY
+Cycles: 8
+Neighbour requests sent: 18
+Neighbour responses sent: 24
+Congestion reports sent: 6
+Graceful shutdown completed.

@@ -1,0 +1,90 @@
+World rank: 2
+Cartesian rank: 1
+Coordinates: (0,1)
+Neighbour count: 2
+Neighbour 0 = world rank 4
+Neighbour 1 = world rank 1
+
+[2026-10-22 01:35:18.243] CYCLE 0
+Available: 0/6
+Responded to node 1: 0 free, cycle 0
+Responded to node 4: 0 free, cycle 0
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 4
+Neighbour bytes: 24
+Exchange time: 0.003213039 s
+BASE RESPONSE: 0 candidates
+No nearby alternative found.
+
+[2026-10-22 01:35:19.244] CYCLE 1
+Available: 2/6
+Responded to node 4: 2 free, cycle 1
+Responded to node 1: 2 free, cycle 1
+
+[2026-10-22 01:35:20.244] CYCLE 2
+Available: 0/6
+Responded to node 4: 0 free, cycle 2
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 4
+Neighbour bytes: 24
+Exchange time: 0.002135984 s
+BASE RESPONSE: 0 candidates
+No nearby alternative found.
+
+[2026-10-22 01:35:21.244] CYCLE 3
+Available: 0/6
+LOCAL REDIRECTION
+Selected node: 1
+Available ports: 2
+Exchange time: 0.002140712 s
+
+[2026-10-22 01:35:22.244] CYCLE 4
+Available: 0/6
+Responded to node 1: 0 free, cycle 4
+LOCAL REDIRECTION
+Selected node: 4
+Available ports: 2
+Exchange time: 0.002142186 s
+Responded to node 4: 0 free, cycle 4
+
+[2026-10-22 01:35:23.245] CYCLE 5
+Available: 0/6
+Responded to node 1: 0 free, cycle 5
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 4
+Neighbour bytes: 24
+Exchange time: 0.002144610 s
+Responded to node 4: 0 free, cycle 5
+BASE RESPONSE: 0 candidates
+No nearby alternative found.
+
+[2026-10-22 01:35:24.246] CYCLE 6
+Available: 1/6
+CONGESTION ALERT SENT
+Free ports: 1/6
+Neighbour messages: 4
+Neighbour bytes: 24
+Exchange time: 0.001073117 s
+BASE RESPONSE: 0 candidates
+No nearby alternative found.
+
+[2026-10-22 01:35:25.246] CYCLE 7
+Available: 1/6
+Responded to node 1: 1 free, cycle 7
+LOCAL REDIRECTION
+Selected node: 4
+Available ports: 2
+Exchange time: 0.002169888 s
+DONE sent; waiting for termination.
+Responded to node 4: 1 free, cycle 7
+
+NODE SUMMARY
+Completed cycles: 8
+Status updates sent: 8
+Neighbour requests sent: 14
+Neighbour responses sent: 11
+Congestion reports sent: 4
+Graceful shutdown completed.

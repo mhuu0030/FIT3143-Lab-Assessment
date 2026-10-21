@@ -1,0 +1,286 @@
+========================================
+FIT3143 LAB 3 - TASK 2 BASE STATION
+========================================
+Grid: 2 x 2
+EV nodes: 4
+Ports per node: 6
+Simulation cycles: 8
+Update interval: 1000 ms
+Threshold: 1
+Report history period: 2000 ms
+
+----------------------------------------
+INCIDENT 1
+Timestamp: 2026-10-22 01:35:18.243
+Sender: 4
+Report valid: YES
+Cycle: 0
+Coordinates: (1,1)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.003227245 s
+Neighbour 2: 0 free (cycle 0)
+Neighbour 3: 0 free (cycle 0)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=insufficient free ports
+Processing time: 0.000012143 s
+
+----------------------------------------
+INCIDENT 2
+Timestamp: 2026-10-22 01:35:18.243
+Sender: 1
+Report valid: YES
+Cycle: 0
+Coordinates: (0,0)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.003234549 s
+Neighbour 3: 0 free (cycle 0)
+Neighbour 2: 0 free (cycle 0)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=4 reason=insufficient free ports
+Processing time: 0.000000761 s
+
+----------------------------------------
+INCIDENT 3
+Timestamp: 2026-10-22 01:35:18.243
+Sender: 3
+Report valid: YES
+Cycle: 0
+Coordinates: (1,0)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.003212938 s
+Neighbour 1: 0 free (cycle 0)
+Neighbour 4: 0 free (cycle 0)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=2 reason=all immediate neighbours reported
+Processing time: 0.000000461 s
+
+----------------------------------------
+INCIDENT 4
+Timestamp: 2026-10-22 01:35:18.243
+Sender: 2
+Report valid: YES
+Cycle: 0
+Coordinates: (0,1)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.003213039 s
+Neighbour 4: 0 free (cycle 0)
+Neighbour 1: 0 free (cycle 0)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=3 reason=all immediate neighbours reported
+Processing time: 0.000000511 s
+
+----------------------------------------
+INCIDENT 5
+Timestamp: 2026-10-22 01:35:20.244
+Sender: 2
+Report valid: YES
+Cycle: 2
+Coordinates: (0,1)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002135984 s
+Neighbour 4: 0 free (cycle 1)
+Neighbour 1: 1 free (cycle 2)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=3 reason=all immediate neighbours reported
+Processing time: 0.000001393 s
+
+----------------------------------------
+INCIDENT 6
+Timestamp: 2026-10-22 01:35:20.245
+Sender: 3
+Report valid: YES
+Cycle: 2
+Coordinates: (1,0)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002134030 s
+Neighbour 1: 1 free (cycle 2)
+Neighbour 4: 1 free (cycle 2)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=2 reason=all immediate neighbours reported
+Processing time: 0.000000551 s
+
+----------------------------------------
+INCIDENT 7
+Timestamp: 2026-10-22 01:35:20.245
+Sender: 4
+Report valid: YES
+Cycle: 2
+Coordinates: (1,1)
+Local availability: 1/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002139260 s
+Neighbour 2: 0 free (cycle 2)
+Neighbour 3: 0 free (cycle 2)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+Processing time: 0.000000831 s
+
+----------------------------------------
+INCIDENT 8
+Timestamp: 2026-10-22 01:35:22.247
+Sender: 4
+Report valid: YES
+Cycle: 4
+Coordinates: (1,1)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.001067626 s
+Neighbour 2: 0 free (cycle 4)
+Neighbour 3: 0 free (cycle 4)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=insufficient free ports
+Processing time: 0.000001623 s
+
+----------------------------------------
+INCIDENT 9
+Timestamp: 2026-10-22 01:35:22.245
+Sender: 1
+Report valid: YES
+Cycle: 4
+Coordinates: (0,0)
+Local availability: 1/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.003218288 s
+Neighbour 3: 1 free (cycle 3)
+Neighbour 2: 0 free (cycle 4)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=4 reason=insufficient free ports
+Processing time: 0.000001202 s
+
+----------------------------------------
+INCIDENT 10
+Timestamp: 2026-10-22 01:35:23.245
+Sender: 2
+Report valid: YES
+Cycle: 5
+Coordinates: (0,1)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002144610 s
+Neighbour 4: 0 free (cycle 4)
+Neighbour 1: 1 free (cycle 4)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=3 reason=all immediate neighbours reported
+Processing time: 0.000001573 s
+
+----------------------------------------
+INCIDENT 11
+Timestamp: 2026-10-22 01:35:23.245
+Sender: 1
+Report valid: YES
+Cycle: 5
+Coordinates: (0,0)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002155491 s
+Neighbour 3: 0 free (cycle 4)
+Neighbour 2: 0 free (cycle 5)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=4 reason=insufficient free ports
+Processing time: 0.000000752 s
+
+----------------------------------------
+INCIDENT 12
+Timestamp: 2026-10-22 01:35:24.246
+Sender: 2
+Report valid: YES
+Cycle: 6
+Coordinates: (0,1)
+Local availability: 1/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.001073117 s
+Neighbour 4: 1 free (cycle 5)
+Neighbour 1: 0 free (cycle 5)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=3 reason=all immediate neighbours reported
+Processing time: 0.000001613 s
+
+DONE node=3 (1/4)
+DONE node=2 (2/4)
+----------------------------------------
+INCIDENT 13
+Timestamp: 2026-10-22 01:35:25.247
+Sender: 1
+Report valid: YES
+Cycle: 7
+Coordinates: (0,0)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002158947 s
+Neighbour 3: 1 free (cycle 6)
+Neighbour 2: 1 free (cycle 7)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=4 reason=insufficient free ports
+Processing time: 0.000002214 s
+
+DONE node=4 (3/4)
+DONE node=1 (4/4)
+
+========================================
+SIMULATION SUMMARY
+========================================
+Simulation time: 7.010528830 s
+EV nodes: 4
+Completed nodes: 4
+Status updates: 32
+Congestion alerts: 13
+Invalid reports: 0
+Reports with candidates: 0
+Reports without candidates: 13
+DONE messages: 4
+Redirect count messages: 13
+Redirect list messages: 0
+Termination messages: 4
+Messages received: 49
+Messages sent: 17
+Total base-station messages: 66
+Payload bytes received: 1752
+Payload bytes sent: 68
+Total payload bytes: 1820
+Total processing time: 0.000025628 s
+Average processing time per alert: 0.000001971 s

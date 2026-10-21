@@ -1,0 +1,13 @@
+[NODE 4 BLOCKING] Cycles=8 Alerts=5 AvgExchange=0.000252 s
+[NODE 1 BLOCKING] Cycles=8 Alerts=5 AvgExchange=0.002204 s
+[NODE 9 BLOCKING] Cycles=8 Alerts=4 AvgExchange=0.002392 s
+[NODE 6 BLOCKING] Cycles=8 Alerts=5 AvgExchange=0.002627 s
+[NODE 3 BLOCKING] Cycles=8 Alerts=3 AvgExchange=0.001286 s
+[NODE 10 BLOCKING] Cycles=8 Alerts=4 AvgExchange=0.000324 s
+[NODE 12 BLOCKING] Cycles=8 Alerts=7 AvgExchange=0.001602 s
+[BASE BLOCKING] Completed. Alerts=55 Time=7.044 s
+[NODE 11 BLOCKING] Cycles=8 Alerts=6 AvgExchange=0.002226 s
+[NODE 7 BLOCKING] Cycles=8 Alerts=4 AvgExchange=0.002268 s
+[NODE 8 BLOCKING] Cycles=8 Alerts=4 AvgExchange=0.002555 s
+[NODE 5 BLOCKING] Cycles=8 Alerts=3 AvgExchange=0.001389 s
+[NODE 2 BLOCKING] Cycles=8 Alerts=5 AvgExchange=0.001229 s

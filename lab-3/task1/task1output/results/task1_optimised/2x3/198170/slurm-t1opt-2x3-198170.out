@@ -1,0 +1,7 @@
+[BASE OPT] Completed. Alerts=34 Time=7.019 s
+[NODE 2 OPT] Cycles=8 Alerts=4 Requests=9 Skipped=12
+[NODE 4 OPT] Cycles=8 Alerts=6 Requests=8 Skipped=8
+[NODE 6 OPT] Cycles=8 Alerts=5 Requests=6 Skipped=8
+[NODE 1 OPT] Cycles=8 Alerts=7 Requests=8 Skipped=6
+[NODE 3 OPT] Cycles=8 Alerts=5 Requests=6 Skipped=10
+[NODE 5 OPT] Cycles=8 Alerts=7 Requests=9 Skipped=12

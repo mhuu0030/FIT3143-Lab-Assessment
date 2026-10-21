@@ -1,0 +1,91 @@
+Implementation: NONBLOCKING MPI
+World rank: 7
+Cartesian rank: 6
+Coordinates: (2,0)
+Neighbour count: 2
+Neighbour 0 = world rank 4
+Neighbour 1 = world rank 8
+
+[2026-10-22 03:18:36.050] CYCLE 0
+Available: 0/6
+Responded to node 8: 0 free
+Responded to node 4: 0 free
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 4
+Neighbour bytes: 16
+Exchange time: 0.007889873 s
+BASE STATION RESPONSE: 0 candidates
+
+[2026-10-22 03:18:37.051] CYCLE 1
+Available: 1/6
+CONGESTION ALERT SENT
+Free ports: 1/6
+Neighbour messages: 4
+Neighbour bytes: 16
+Exchange time: 0.001115457 s
+Responded to node 8: 1 free
+BASE STATION RESPONSE: 0 candidates
+Responded to node 4: 1 free
+
+[2026-10-22 03:18:38.051] CYCLE 2
+Available: 1/6
+CONGESTION ALERT SENT
+Free ports: 1/6
+Neighbour messages: 4
+Neighbour bytes: 16
+Exchange time: 0.001118332 s
+BASE STATION RESPONSE: 0 candidates
+
+[2026-10-22 03:18:39.052] CYCLE 3
+Available: 0/6
+LOCAL REDIRECTION
+Selected node: 4
+Available ports: 2
+Exchange time: 0.002213241 s
+Responded to node 4: 0 free
+
+[2026-10-22 03:18:40.053] CYCLE 4
+Available: 0/6
+Responded to node 8: 0 free
+LOCAL REDIRECTION
+Selected node: 8
+Available ports: 2
+Exchange time: 0.002248617 s
+Responded to node 4: 0 free
+
+[2026-10-22 03:18:41.054] CYCLE 5
+Available: 3/6
+Responded to node 8: 3 free
+Responded to node 4: 3 free
+
+[2026-10-22 03:18:42.055] CYCLE 6
+Available: 0/6
+Responded to node 8: 0 free
+Responded to node 4: 0 free
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 4
+Neighbour bytes: 16
+Exchange time: 0.005446137 s
+BASE STATION RESPONSE: 0 candidates
+
+[2026-10-22 03:18:43.056] CYCLE 7
+Available: 0/6
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 4
+Neighbour bytes: 16
+Exchange time: 0.002187702 s
+Responded to node 8: 0 free
+BASE STATION RESPONSE: 0 candidates
+All local cycles completed.
+Waiting for termination.
+Responded to node 4: 0 free
+
+NODE SUMMARY
+Cycles: 8
+Neighbour requests sent: 14
+Neighbour responses sent: 13
+Congestion reports sent: 5
+Graceful shutdown completed.

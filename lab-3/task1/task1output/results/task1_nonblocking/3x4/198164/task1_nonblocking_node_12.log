@@ -1,0 +1,92 @@
+Implementation: NONBLOCKING MPI
+World rank: 12
+Cartesian rank: 11
+Coordinates: (2,3)
+Neighbour count: 2
+Neighbour 0 = world rank 8
+Neighbour 1 = world rank 11
+
+[2026-10-22 03:18:46.002] CYCLE 0
+Available: 0/6
+Responded to node 11: 0 free
+Responded to node 8: 0 free
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 4
+Neighbour bytes: 16
+Exchange time: 0.017160512 s
+BASE STATION RESPONSE: 0 candidates
+
+[2026-10-22 03:18:47.002] CYCLE 1
+Available: 0/6
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 4
+Neighbour bytes: 16
+Exchange time: 0.001135926 s
+BASE STATION RESPONSE: 0 candidates
+Responded to node 11: 0 free
+Responded to node 8: 0 free
+
+[2026-10-22 03:18:48.003] CYCLE 2
+Available: 0/6
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 4
+Neighbour bytes: 16
+Exchange time: 0.001129945 s
+BASE STATION RESPONSE: 0 candidates
+Responded to node 11: 0 free
+Responded to node 8: 0 free
+
+[2026-10-22 03:18:49.004] CYCLE 3
+Available: 0/6
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 4
+Neighbour bytes: 16
+Exchange time: 0.002192771 s
+BASE STATION RESPONSE: 0 candidates
+Responded to node 11: 0 free
+Responded to node 8: 0 free
+
+[2026-10-22 03:18:50.005] CYCLE 4
+Available: 2/6
+Responded to node 8: 2 free
+
+[2026-10-22 03:18:51.006] CYCLE 5
+Available: 0/6
+LOCAL REDIRECTION
+Selected node: 11
+Available ports: 2
+Exchange time: 0.001127189 s
+Responded to node 8: 0 free
+
+[2026-10-22 03:18:52.006] CYCLE 6
+Available: 0/6
+LOCAL REDIRECTION
+Selected node: 11
+Available ports: 3
+Exchange time: 0.002215354 s
+Responded to node 11: 0 free
+Responded to node 8: 0 free
+
+[2026-10-22 03:18:53.006] CYCLE 7
+Available: 0/6
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 4
+Neighbour bytes: 16
+Exchange time: 0.001114215 s
+BASE STATION RESPONSE: 0 candidates
+All local cycles completed.
+Waiting for termination.
+Responded to node 11: 0 free
+Responded to node 8: 0 free
+
+NODE SUMMARY
+Cycles: 8
+Neighbour requests sent: 14
+Neighbour responses sent: 14
+Congestion reports sent: 5
+Graceful shutdown completed.
