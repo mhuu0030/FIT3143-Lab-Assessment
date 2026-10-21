@@ -1334,7 +1334,7 @@ static void run_charging_node(
     snprintf(
         filename,
         sizeof(filename),
-        "task1_node_%d.log",
+        "task2_node_%d.log",
         rank
     );
 
