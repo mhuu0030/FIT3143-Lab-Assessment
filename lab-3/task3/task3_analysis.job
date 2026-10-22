@@ -1,0 +1,99 @@
+#!/bin/bash
+#SBATCH --job-name=task3_analysis
+#SBATCH --partition=defq
+#SBATCH --time=00:30:00
+#SBATCH --nodes=16
+#SBATCH --ntasks=32
+#SBATCH --ntasks-per-node=2
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=200M
+#SBATCH --output=task3-analysis-%j.out
+#SBATCH --error=task3-analysis-%j.err
+
+set -euo pipefail
+
+module purge
+module load openmpi/4.1.5-gcc-11.2.0-ux65npg
+
+RESULT_DIR="newtask3output/$SLURM_JOB_ID"
+mkdir -p "$RESULT_DIR"
+
+echo "========================================"
+echo "TASK 3 - COMMUNICATION ANALYSIS"
+echo "Job ID: $SLURM_JOB_ID"
+echo "MPI tasks: $SLURM_NTASKS"
+echo "Nodes: $SLURM_JOB_NUM_NODES"
+echo "Result directory: $RESULT_DIR"
+echo "========================================"
+
+echo
+echo "=== COMPILING ==="
+mpicc -O2 -std=c11 -Wall -Wextra -pedantic \
+    task3_communication_analysis.c -lm \
+    -o task3_communication_analysis
+
+echo "Compilation successful."
+echo
+echo "=== MPI LIBRARY ==="
+mpirun --version
+echo
+echo "=== TASK PLACEMENT ==="
+srun hostname | sort | uniq -c
+
+echo
+echo "=== RUNNING 30 GRID + 30 LINE CASES ==="
+srun ./task3_communication_analysis 100 20 "$RESULT_DIR" 0
+
+echo
+echo "=== VALIDATING DATASET SHAPE ==="
+grid_lines=$(wc -l < "$RESULT_DIR/task3_grid_results.csv")
+line_lines=$(wc -l < "$RESULT_DIR/task3_line_results.csv")
+
+# Header + (30 topology cases x 9 message types) = 271 lines.
+if [ "$grid_lines" -ne 271 ] || [ "$line_lines" -ne 271 ]; then
+    echo "ERROR: incomplete Task 3 dataset" >&2
+    echo "Grid CSV lines: $grid_lines (expected 271)" >&2
+    echo "Line CSV lines: $line_lines (expected 271)" >&2
+    exit 1
+fi
+
+validate_csv() {
+    awk -F, '
+        NR == 1 {
+            if (NF != 14 || $1 != "topology" || $6 != "message_type")
+                valid = 0
+            else
+                valid = 1
+            next
+        }
+        {
+            if (NF != 14 || $8 <= 0 || $9 != 100 || $10 <= 0 ||
+                $11 < 0 || $12 < 0 || $13 < 0 || $14 < 0)
+                valid = 0
+            count[$6]++
+        }
+        END {
+            types = 0
+            for (message in count) {
+                types++
+                if (count[message] != 30)
+                    valid = 0
+            }
+            if (types != 9)
+                valid = 0
+            exit(valid ? 0 : 1)
+        }
+    ' "$1"
+}
+
+validate_csv "$RESULT_DIR/task3_grid_results.csv"
+validate_csv "$RESULT_DIR/task3_line_results.csv"
+
+cp "task3-analysis-$SLURM_JOB_ID.out" "$RESULT_DIR/" 2>/dev/null || true
+cp "task3-analysis-$SLURM_JOB_ID.err" "$RESULT_DIR/" 2>/dev/null || true
+
+echo "Grid CSV lines: $grid_lines"
+echo "Line CSV lines: $line_lines"
+echo "Dataset field and completeness checks: passed"
+echo
+echo "Results saved to: $RESULT_DIR"
