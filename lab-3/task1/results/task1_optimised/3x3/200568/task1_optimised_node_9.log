@@ -1,0 +1,150 @@
+IMPLEMENTATION: OPTIMISED NON-BLOCKING MPI
+Deterministic seed: 3143
+World rank: 9
+Cartesian rank: 8
+Coordinates: (2,2)
+Neighbour count: 2
+Cache TTL: 2000 ms
+Neighbour 0 = world rank 6
+Neighbour 1 = world rank 8
+
+[2026-10-23 02:14:35.869] CYCLE 0
+Available: 0/6
+PARTIAL NON-BLOCKING QUERY STARTED
+Queried neighbours: 2/2
+Requests avoided via cache: 0
+Responded asynchronously to node 8: 0 free at cycle 0
+Responded asynchronously to node 6: 0 free at cycle 0
+CONGESTION ALERT SENT
+Free ports: 0/6
+Actually queried neighbours: 2/2
+Actual neighbour messages: 4
+Actual neighbour bytes: 24
+Exchange time: 0.005637342 s
+BASE STATION RESPONSE: 0 candidates
+
+[2026-10-23 02:14:36.870] CYCLE 1
+Available: 1/6
+PARTIAL NON-BLOCKING QUERY STARTED
+Queried neighbours: 2/2
+Requests avoided via cache: 0
+CONGESTION ALERT SENT
+Free ports: 1/6
+Actually queried neighbours: 2/2
+Actual neighbour messages: 4
+Actual neighbour bytes: 24
+Exchange time: 0.001102353 s
+Responded asynchronously to node 6: 1 free at cycle 1
+Responded asynchronously to node 8: 1 free at cycle 1
+BASE STATION RESPONSE: 0 candidates
+
+[2026-10-23 02:14:37.870] CYCLE 2
+Available: 0/6
+PARTIAL NON-BLOCKING QUERY STARTED
+Queried neighbours: 2/2
+Requests avoided via cache: 0
+CONGESTION ALERT SENT
+Free ports: 0/6
+Actually queried neighbours: 2/2
+Actual neighbour messages: 4
+Actual neighbour bytes: 24
+Exchange time: 0.001103686 s
+Responded asynchronously to node 6: 0 free at cycle 2
+Responded asynchronously to node 8: 0 free at cycle 2
+BASE STATION RESPONSE: 0 candidates
+
+[2026-10-23 02:14:38.870] CYCLE 3
+Available: 0/6
+PARTIAL NON-BLOCKING QUERY STARTED
+Queried neighbours: 2/2
+Requests avoided via cache: 0
+CONGESTION ALERT SENT
+Free ports: 0/6
+Actually queried neighbours: 2/2
+Actual neighbour messages: 4
+Actual neighbour bytes: 24
+Exchange time: 0.001104968 s
+Responded asynchronously to node 6: 0 free at cycle 3
+BASE STATION RESPONSE: 0 candidates
+
+[2026-10-23 02:14:39.871] CYCLE 4
+Available: 0/6
+PARTIAL NON-BLOCKING QUERY STARTED
+Queried neighbours: 2/2
+Requests avoided via cache: 0
+LOCAL REDIRECTION AFTER PARTIAL QUERY
+Selected node: 8
+Available ports: 3
+Queried neighbours: 2/2
+Exchange time: 0.001104037 s
+Responded asynchronously to node 6: 0 free at cycle 4
+
+[2026-10-23 02:14:40.872] CYCLE 5
+Available: 1/6
+PARTIAL NON-BLOCKING QUERY STARTED
+Queried neighbours: 2/2
+Requests avoided via cache: 0
+Responded asynchronously to node 6: 1 free at cycle 5
+LOCAL REDIRECTION AFTER PARTIAL QUERY
+Selected node: 8
+Available ports: 2
+Queried neighbours: 2/2
+Exchange time: 0.002185981 s
+Responded asynchronously to node 8: 1 free at cycle 5
+
+[2026-10-23 02:14:41.873] CYCLE 6
+Available: 1/6
+PARTIAL NON-BLOCKING QUERY STARTED
+Queried neighbours: 2/2
+Requests avoided via cache: 0
+CONGESTION ALERT SENT
+Free ports: 1/6
+Actually queried neighbours: 2/2
+Actual neighbour messages: 4
+Actual neighbour bytes: 24
+Exchange time: 0.001101792 s
+Responded asynchronously to node 6: 1 free at cycle 6
+Responded asynchronously to node 8: 1 free at cycle 6
+BASE STATION RESPONSE: 0 candidates
+
+[2026-10-23 02:14:42.874] CYCLE 7
+Available: 1/6
+PARTIAL NON-BLOCKING QUERY STARTED
+Queried neighbours: 2/2
+Requests avoided via cache: 0
+Responded asynchronously to node 6: 1 free at cycle 7
+CONGESTION ALERT SENT
+Free ports: 1/6
+Actually queried neighbours: 2/2
+Actual neighbour messages: 4
+Actual neighbour bytes: 24
+Exchange time: 0.001119696 s
+Responded asynchronously to node 8: 1 free at cycle 7
+BASE STATION RESPONSE: 0 candidates
+All local cycles completed.
+Waiting for termination.
+
+========================================
+NODE SUMMARY
+========================================
+Implementation: OPTIMISED NON-BLOCKING MPI
+Cycles: 8
+Cache TTL: 2000 ms
+Neighbour requests sent: 16
+Neighbour responses sent: 14
+Total actual neighbour messages: 30
+Neighbour payload bytes sent: 176
+Neighbour payload bytes received: 128
+Total neighbour payload bytes: 304
+Requests skipped because cache was fresh: 0
+Cache-only local redirections: 0
+Cache-only congestion reports: 0
+All local redirections: 2
+Congestion reports sent: 6
+Completed MPI neighbour queries: 8
+Total neighbour-query time: 0.014459855 s
+Average neighbour-query time: 0.001807482 s
+Minimum neighbour-query time: 0.001101792 s
+Maximum neighbour-query time: 0.005637342 s
+Node simulation time: 7.020627878 s
+Graceful shutdown completed.

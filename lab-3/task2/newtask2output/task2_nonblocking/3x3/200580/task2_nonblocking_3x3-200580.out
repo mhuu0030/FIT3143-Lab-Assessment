@@ -1,0 +1,33 @@
+========================================
+TASK 2 NONBLOCKING - 3x3
+Job ID: 200580
+MPI tasks: 10
+CPUs per task: 6
+Result directory: newtask2output/task2_nonblocking/3x3/200580
+========================================
+
+=== COMPILING ===
+Compilation successful.
+
+=== TASK PLACEMENT ===
+      2 student-caas-n01
+      2 student-caas-n02
+      2 student-caas-n05
+      1 student-caas-n12
+      1 student-caas-n13
+      2 student-caas-n14
+
+=== RUNNING 3x3 ===
+rows=3 cols=3 ports=6 cycles=8 interval=1000 threshold=1 force_low=1 report_period=2000 seed=3143
+[BASE] Alerts=61 Status=72 Completed=9/9 Time=7.016 s
+[NODE 9] Cycles=8 Alerts=6
+[NODE 3] Cycles=8 Alerts=8
+[NODE 7] Cycles=8 Alerts=5
+[NODE 4] Cycles=8 Alerts=7
+[NODE 6] Cycles=8 Alerts=8
+[NODE 1] Cycles=8 Alerts=8
+[NODE 2] Cycles=8 Alerts=7
+[NODE 8] Cycles=8 Alerts=6
+[NODE 5] Cycles=8 Alerts=6
+
+=== COPYING LOGS ===

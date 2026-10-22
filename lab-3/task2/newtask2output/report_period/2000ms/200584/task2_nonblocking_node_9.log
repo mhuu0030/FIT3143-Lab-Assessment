@@ -1,0 +1,128 @@
+Implementation: NONBLOCKING MPI
+Deterministic seed: 3143
+OpenMP threads / charging ports: 6
+World rank: 9
+Cartesian rank: 8
+Coordinates: (2,0)
+Neighbour count: 3
+Neighbour 0 = world rank 5
+Neighbour 1 = world rank 13
+Neighbour 2 = world rank 10
+
+[2026-10-23 02:24:24.467] CYCLE 0
+Available: 0/6
+Responded to node 13: 0 free, cycle 0
+Responded to node 5: 0 free, cycle 0
+Responded to node 10: 0 free, cycle 0
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 6
+Neighbour bytes: 36
+Exchange time: 0.006525124 s
+BASE RESPONSE: 0 candidates
+No nearby alternative found.
+
+[2026-10-23 02:24:25.467] CYCLE 1
+Available: 1/6
+Responded to node 13: 1 free, cycle 1
+Responded to node 5: 1 free, cycle 1
+LOCAL REDIRECTION
+Selected node: 10
+Available ports: 2
+Exchange time: 0.003337413 s
+
+[2026-10-23 02:24:26.467] CYCLE 2
+Available: 0/6
+LOCAL REDIRECTION
+Selected node: 10
+Available ports: 2
+Exchange time: 0.001111449 s
+Responded to node 10: 0 free, cycle 2
+Responded to node 13: 0 free, cycle 2
+Responded to node 5: 0 free, cycle 2
+
+[2026-10-23 02:24:27.468] CYCLE 3
+Available: 0/6
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 6
+Neighbour bytes: 36
+Exchange time: 0.001118212 s
+Responded to node 10: 0 free, cycle 3
+Responded to node 13: 0 free, cycle 3
+BASE RESPONSE: 0 candidates
+No nearby alternative found.
+Responded to node 5: 0 free, cycle 3
+
+[2026-10-23 02:24:28.468] CYCLE 4
+Available: 0/6
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 6
+Neighbour bytes: 36
+Exchange time: 0.001117210 s
+Responded to node 10: 0 free, cycle 4
+Responded to node 13: 0 free, cycle 4
+BASE RESPONSE: 0 candidates
+No nearby alternative found.
+Responded to node 5: 0 free, cycle 4
+
+[2026-10-23 02:24:29.469] CYCLE 5
+Available: 1/6
+Responded to node 10: 1 free, cycle 5
+CONGESTION ALERT SENT
+Free ports: 1/6
+Neighbour messages: 6
+Neighbour bytes: 36
+Exchange time: 0.002205475 s
+Responded to node 13: 1 free, cycle 5
+Responded to node 5: 1 free, cycle 5
+BASE RESPONSE: 1 candidates
+Alternative node: 14
+
+[2026-10-23 02:24:30.470] CYCLE 6
+Available: 1/6
+Responded to node 13: 1 free, cycle 6
+Responded to node 5: 1 free, cycle 6
+Responded to node 10: 1 free, cycle 6
+CONGESTION ALERT SENT
+Free ports: 1/6
+Neighbour messages: 6
+Neighbour bytes: 36
+Exchange time: 0.004368460 s
+BASE RESPONSE: 0 candidates
+No nearby alternative found.
+
+[2026-10-23 02:24:31.471] CYCLE 7
+Available: 1/6
+Responded to node 5: 1 free, cycle 7
+Responded to node 10: 1 free, cycle 7
+LOCAL REDIRECTION
+Selected node: 13
+Available ports: 2
+Exchange time: 0.004381696 s
+DONE sent; waiting for termination.
+
+========================================
+NODE SUMMARY
+========================================
+Implementation: NONBLOCKING MPI
+Completed cycles: 8
+OpenMP threads / charging ports: 6
+Seed: 3143
+Report history period: 2000 ms
+Status updates sent: 8
+Neighbour requests sent: 24
+Neighbour responses sent: 22
+Total neighbour messages: 46
+Neighbour payload bytes: 272
+Status payload bytes: 96
+Congestion report payload bytes: 520
+Completed neighbour queries: 8
+Local redirections: 3
+Congestion reports sent: 5
+Total neighbour exchange time: 0.024165039 s
+Average neighbour exchange time: 0.003020630 s
+Minimum neighbour exchange time: 0.001111449 s
+Maximum neighbour exchange time: 0.006525124 s
+Graceful shutdown completed.

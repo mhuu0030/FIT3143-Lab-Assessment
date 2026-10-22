@@ -1,0 +1,2239 @@
+========================================
+FIT3143 LAB 3 - TASK 2 BASE STATION
+Implementation: NONBLOCKING MPI
+========================================
+Grid: 3 x 4
+EV nodes: 12
+Ports per node: 6
+Simulation cycles: 8
+Update interval: 1000 ms
+Threshold: 1
+Report history period: 2000 ms
+Deterministic seed: 3143
+
+----------------------------------------
+INCIDENT 1
+Timestamp: 2026-10-23 02:19:37.509
+Sender: 5
+Report valid: YES
+Cycle: 0
+Coordinates: (1,0)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.004398007 s
+Neighbour 1: 0 free (cycle 0)
+Neighbour 9: 0 free (cycle 0)
+Neighbour 6: 0 free (cycle 0)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=2 reason=unknown availability
+REJECT node=3 reason=insufficient free ports
+REJECT node=4 reason=insufficient free ports
+REJECT node=7 reason=insufficient free ports
+REJECT node=8 reason=unknown availability
+REJECT node=10 reason=insufficient free ports
+REJECT node=11 reason=insufficient free ports
+REJECT node=12 reason=insufficient free ports
+Processing time: 0.000014067 s
+
+----------------------------------------
+INCIDENT 2
+Timestamp: 2026-10-23 02:19:37.510
+Sender: 4
+Report valid: YES
+Cycle: 0
+Coordinates: (0,3)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.005374892 s
+Neighbour 8: 0 free (cycle 0)
+Neighbour 3: 0 free (cycle 0)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=insufficient free ports
+REJECT node=2 reason=insufficient free ports
+REJECT node=5 reason=insufficient free ports
+REJECT node=6 reason=insufficient free ports
+REJECT node=7 reason=insufficient free ports
+REJECT node=9 reason=insufficient free ports
+REJECT node=10 reason=insufficient free ports
+REJECT node=11 reason=insufficient free ports
+REJECT node=12 reason=insufficient free ports
+Processing time: 0.000012825 s
+
+----------------------------------------
+INCIDENT 3
+Timestamp: 2026-10-23 02:19:37.512
+Sender: 7
+Report valid: YES
+Cycle: 0
+Coordinates: (1,2)
+Local availability: 0/6
+Neighbour messages: 8
+Neighbour payload bytes: 48
+Neighbour exchange: 0.004486142 s
+Neighbour 3: 0 free (cycle 0)
+Neighbour 11: 0 free (cycle 0)
+Neighbour 6: 0 free (cycle 0)
+Neighbour 8: 0 free (cycle 0)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=insufficient free ports
+REJECT node=2 reason=insufficient free ports
+REJECT node=4 reason=insufficient free ports
+REJECT node=5 reason=insufficient free ports
+REJECT node=9 reason=insufficient free ports
+REJECT node=10 reason=insufficient free ports
+REJECT node=12 reason=insufficient free ports
+Processing time: 0.000017874 s
+
+----------------------------------------
+INCIDENT 4
+Timestamp: 2026-10-23 02:19:37.512
+Sender: 9
+Report valid: YES
+Cycle: 0
+Coordinates: (2,0)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.007724980 s
+Neighbour 5: 0 free (cycle 0)
+Neighbour 10: 0 free (cycle 0)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=insufficient free ports
+REJECT node=2 reason=insufficient free ports
+REJECT node=3 reason=insufficient free ports
+REJECT node=4 reason=insufficient free ports
+REJECT node=6 reason=insufficient free ports
+REJECT node=7 reason=insufficient free ports
+REJECT node=8 reason=insufficient free ports
+REJECT node=11 reason=insufficient free ports
+REJECT node=12 reason=insufficient free ports
+Processing time: 0.000010600 s
+
+----------------------------------------
+INCIDENT 5
+Timestamp: 2026-10-23 02:19:37.512
+Sender: 11
+Report valid: YES
+Cycle: 0
+Coordinates: (2,2)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.007660920 s
+Neighbour 7: 0 free (cycle 0)
+Neighbour 10: 0 free (cycle 0)
+Neighbour 12: 0 free (cycle 0)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=insufficient free ports
+REJECT node=2 reason=insufficient free ports
+REJECT node=3 reason=insufficient free ports
+REJECT node=4 reason=insufficient free ports
+REJECT node=5 reason=insufficient free ports
+REJECT node=6 reason=insufficient free ports
+REJECT node=8 reason=insufficient free ports
+REJECT node=9 reason=insufficient free ports
+Processing time: 0.000009107 s
+
+----------------------------------------
+INCIDENT 6
+Timestamp: 2026-10-23 02:19:37.512
+Sender: 12
+Report valid: YES
+Cycle: 0
+Coordinates: (2,3)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.007565876 s
+Neighbour 8: 0 free (cycle 0)
+Neighbour 11: 0 free (cycle 0)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=insufficient free ports
+REJECT node=2 reason=insufficient free ports
+REJECT node=3 reason=insufficient free ports
+REJECT node=4 reason=insufficient free ports
+REJECT node=5 reason=insufficient free ports
+REJECT node=6 reason=insufficient free ports
+REJECT node=7 reason=insufficient free ports
+REJECT node=9 reason=insufficient free ports
+REJECT node=10 reason=insufficient free ports
+Processing time: 0.000009649 s
+
+----------------------------------------
+INCIDENT 7
+Timestamp: 2026-10-23 02:19:37.512
+Sender: 1
+Report valid: YES
+Cycle: 0
+Coordinates: (0,0)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.007558096 s
+Neighbour 5: 0 free (cycle 0)
+Neighbour 2: 0 free (cycle 0)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=3 reason=insufficient free ports
+REJECT node=4 reason=insufficient free ports
+REJECT node=6 reason=insufficient free ports
+REJECT node=7 reason=insufficient free ports
+REJECT node=8 reason=insufficient free ports
+REJECT node=9 reason=insufficient free ports
+REJECT node=10 reason=insufficient free ports
+REJECT node=11 reason=insufficient free ports
+REJECT node=12 reason=insufficient free ports
+Processing time: 0.000000802 s
+
+----------------------------------------
+INCIDENT 8
+Timestamp: 2026-10-23 02:19:37.513
+Sender: 8
+Report valid: YES
+Cycle: 0
+Coordinates: (1,3)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.004420934 s
+Neighbour 4: 0 free (cycle 0)
+Neighbour 12: 0 free (cycle 0)
+Neighbour 7: 0 free (cycle 0)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+Processing time: 0.000012224 s
+
+----------------------------------------
+INCIDENT 9
+Timestamp: 2026-10-23 02:19:37.514
+Sender: 10
+Report valid: YES
+Cycle: 0
+Coordinates: (2,1)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.006507081 s
+Neighbour 6: 0 free (cycle 0)
+Neighbour 9: 0 free (cycle 0)
+Neighbour 11: 0 free (cycle 0)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=insufficient free ports
+REJECT node=2 reason=insufficient free ports
+REJECT node=3 reason=insufficient free ports
+REJECT node=4 reason=insufficient free ports
+REJECT node=5 reason=insufficient free ports
+REJECT node=7 reason=insufficient free ports
+REJECT node=8 reason=insufficient free ports
+REJECT node=12 reason=insufficient free ports
+Processing time: 0.000012874 s
+
+----------------------------------------
+INCIDENT 10
+Timestamp: 2026-10-23 02:19:37.515
+Sender: 2
+Report valid: YES
+Cycle: 0
+Coordinates: (0,1)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.004445775 s
+Neighbour 6: 0 free (cycle 0)
+Neighbour 1: 0 free (cycle 0)
+Neighbour 3: 0 free (cycle 0)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=4 reason=insufficient free ports
+REJECT node=5 reason=insufficient free ports
+REJECT node=7 reason=insufficient free ports
+REJECT node=8 reason=insufficient free ports
+REJECT node=9 reason=insufficient free ports
+REJECT node=10 reason=insufficient free ports
+REJECT node=11 reason=insufficient free ports
+REJECT node=12 reason=insufficient free ports
+Processing time: 0.000011241 s
+
+----------------------------------------
+INCIDENT 11
+Timestamp: 2026-10-23 02:19:37.514
+Sender: 3
+Report valid: YES
+Cycle: 0
+Coordinates: (0,2)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.006991457 s
+Neighbour 7: 0 free (cycle 0)
+Neighbour 2: 0 free (cycle 0)
+Neighbour 4: 0 free (cycle 0)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000012543 s
+
+----------------------------------------
+INCIDENT 12
+Timestamp: 2026-10-23 02:19:37.515
+Sender: 6
+Report valid: YES
+Cycle: 0
+Coordinates: (1,1)
+Local availability: 0/6
+Neighbour messages: 8
+Neighbour payload bytes: 48
+Neighbour exchange: 0.007382646 s
+Neighbour 2: 0 free (cycle 0)
+Neighbour 10: 0 free (cycle 0)
+Neighbour 5: 0 free (cycle 0)
+Neighbour 7: 0 free (cycle 0)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000011020 s
+
+----------------------------------------
+INCIDENT 13
+Timestamp: 2026-10-23 02:19:38.507
+Sender: 1
+Report valid: YES
+Cycle: 1
+Coordinates: (0,0)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002226575 s
+Neighbour 5: 1 free (cycle 1)
+Neighbour 2: 0 free (cycle 0)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000001202 s
+
+----------------------------------------
+INCIDENT 14
+Timestamp: 2026-10-23 02:19:38.506
+Sender: 5
+Report valid: YES
+Cycle: 1
+Coordinates: (1,0)
+Local availability: 1/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001139252 s
+Neighbour 1: 0 free (cycle 1)
+Neighbour 9: 1 free (cycle 1)
+Neighbour 6: 1 free (cycle 1)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000013456 s
+
+----------------------------------------
+INCIDENT 15
+Timestamp: 2026-10-23 02:19:38.508
+Sender: 6
+Report valid: YES
+Cycle: 1
+Coordinates: (1,1)
+Local availability: 1/6
+Neighbour messages: 8
+Neighbour payload bytes: 48
+Neighbour exchange: 0.003347164 s
+Neighbour 2: 0 free (cycle 0)
+Neighbour 10: 0 free (cycle 0)
+Neighbour 5: 1 free (cycle 1)
+Neighbour 7: 0 free (cycle 1)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000012274 s
+
+----------------------------------------
+INCIDENT 16
+Timestamp: 2026-10-23 02:19:38.507
+Sender: 3
+Report valid: YES
+Cycle: 1
+Coordinates: (0,2)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.002283056 s
+Neighbour 7: 0 free (cycle 1)
+Neighbour 2: 0 free (cycle 0)
+Neighbour 4: 0 free (cycle 1)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000009438 s
+
+----------------------------------------
+INCIDENT 17
+Timestamp: 2026-10-23 02:19:38.511
+Sender: 4
+Report valid: YES
+Cycle: 1
+Coordinates: (0,3)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.005427491 s
+Neighbour 8: 0 free (cycle 0)
+Neighbour 3: 0 free (cycle 1)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000011792 s
+
+----------------------------------------
+INCIDENT 18
+Timestamp: 2026-10-23 02:19:38.513
+Sender: 7
+Report valid: YES
+Cycle: 1
+Coordinates: (1,2)
+Local availability: 0/6
+Neighbour messages: 8
+Neighbour payload bytes: 48
+Neighbour exchange: 0.007668345 s
+Neighbour 3: 0 free (cycle 1)
+Neighbour 11: 0 free (cycle 1)
+Neighbour 6: 1 free (cycle 1)
+Neighbour 8: 0 free (cycle 1)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000011182 s
+
+----------------------------------------
+INCIDENT 19
+Timestamp: 2026-10-23 02:19:38.513
+Sender: 8
+Report valid: YES
+Cycle: 1
+Coordinates: (1,3)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.002239086 s
+Neighbour 4: 0 free (cycle 1)
+Neighbour 12: 0 free (cycle 1)
+Neighbour 7: 0 free (cycle 1)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+Processing time: 0.000010660 s
+
+----------------------------------------
+INCIDENT 20
+Timestamp: 2026-10-23 02:19:38.514
+Sender: 12
+Report valid: YES
+Cycle: 1
+Coordinates: (2,3)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.008674847 s
+Neighbour 8: 0 free (cycle 1)
+Neighbour 11: 0 free (cycle 0)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+Processing time: 0.000011031 s
+
+----------------------------------------
+INCIDENT 21
+Timestamp: 2026-10-23 02:19:38.514
+Sender: 2
+Report valid: YES
+Cycle: 1
+Coordinates: (0,1)
+Local availability: 1/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.002206853 s
+Neighbour 6: 1 free (cycle 1)
+Neighbour 1: 0 free (cycle 1)
+Neighbour 3: 0 free (cycle 1)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000010319 s
+
+----------------------------------------
+INCIDENT 22
+Timestamp: 2026-10-23 02:19:39.507
+Sender: 1
+Report valid: YES
+Cycle: 2
+Coordinates: (0,0)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002228830 s
+Neighbour 5: 0 free (cycle 2)
+Neighbour 2: 1 free (cycle 1)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000001042 s
+
+----------------------------------------
+INCIDENT 23
+Timestamp: 2026-10-23 02:19:39.507
+Sender: 3
+Report valid: YES
+Cycle: 2
+Coordinates: (0,2)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001158194 s
+Neighbour 7: 0 free (cycle 2)
+Neighbour 2: 1 free (cycle 1)
+Neighbour 4: 1 free (cycle 2)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000013846 s
+
+----------------------------------------
+INCIDENT 24
+Timestamp: 2026-10-23 02:19:39.508
+Sender: 9
+Report valid: YES
+Cycle: 2
+Coordinates: (2,0)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002240719 s
+Neighbour 5: 1 free (cycle 1)
+Neighbour 10: 0 free (cycle 2)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000011732 s
+
+----------------------------------------
+INCIDENT 25
+Timestamp: 2026-10-23 02:19:39.508
+Sender: 10
+Report valid: YES
+Cycle: 2
+Coordinates: (2,1)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001133501 s
+Neighbour 6: 0 free (cycle 2)
+Neighbour 9: 0 free (cycle 2)
+Neighbour 11: 0 free (cycle 2)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000009127 s
+
+----------------------------------------
+INCIDENT 26
+Timestamp: 2026-10-23 02:19:39.509
+Sender: 11
+Report valid: YES
+Cycle: 2
+Coordinates: (2,2)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.003343875 s
+Neighbour 7: 0 free (cycle 2)
+Neighbour 10: 0 free (cycle 2)
+Neighbour 12: 0 free (cycle 2)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+Processing time: 0.000012243 s
+
+----------------------------------------
+INCIDENT 27
+Timestamp: 2026-10-23 02:19:39.509
+Sender: 12
+Report valid: YES
+Cycle: 2
+Coordinates: (2,3)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.003287991 s
+Neighbour 8: 0 free (cycle 1)
+Neighbour 11: 0 free (cycle 2)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+Processing time: 0.000009147 s
+
+----------------------------------------
+INCIDENT 28
+Timestamp: 2026-10-23 02:19:39.508
+Sender: 4
+Report valid: YES
+Cycle: 2
+Coordinates: (0,3)
+Local availability: 1/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002197200 s
+Neighbour 8: 0 free (cycle 1)
+Neighbour 3: 0 free (cycle 2)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000009218 s
+
+----------------------------------------
+INCIDENT 29
+Timestamp: 2026-10-23 02:19:39.508
+Sender: 5
+Report valid: YES
+Cycle: 2
+Coordinates: (1,0)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.002197160 s
+Neighbour 1: 0 free (cycle 2)
+Neighbour 9: 0 free (cycle 2)
+Neighbour 6: 0 free (cycle 2)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000010139 s
+
+----------------------------------------
+INCIDENT 30
+Timestamp: 2026-10-23 02:19:39.508
+Sender: 7
+Report valid: YES
+Cycle: 2
+Coordinates: (1,2)
+Local availability: 0/6
+Neighbour messages: 8
+Neighbour payload bytes: 48
+Neighbour exchange: 0.003373633 s
+Neighbour 3: 0 free (cycle 1)
+Neighbour 11: 0 free (cycle 1)
+Neighbour 6: 1 free (cycle 1)
+Neighbour 8: 0 free (cycle 1)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000008866 s
+
+----------------------------------------
+INCIDENT 31
+Timestamp: 2026-10-23 02:19:39.512
+Sender: 8
+Report valid: YES
+Cycle: 2
+Coordinates: (1,3)
+Local availability: 1/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001124653 s
+Neighbour 4: 1 free (cycle 2)
+Neighbour 12: 0 free (cycle 2)
+Neighbour 7: 0 free (cycle 2)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+Processing time: 0.000012484 s
+
+----------------------------------------
+INCIDENT 32
+Timestamp: 2026-10-23 02:19:39.514
+Sender: 2
+Report valid: YES
+Cycle: 2
+Coordinates: (0,1)
+Local availability: 1/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001130763 s
+Neighbour 6: 0 free (cycle 2)
+Neighbour 1: 0 free (cycle 2)
+Neighbour 3: 0 free (cycle 2)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000025488 s
+
+----------------------------------------
+INCIDENT 33
+Timestamp: 2026-10-23 02:19:40.507
+Sender: 1
+Report valid: YES
+Cycle: 3
+Coordinates: (0,0)
+Local availability: 1/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.001148419 s
+Neighbour 5: 0 free (cycle 2)
+Neighbour 2: 1 free (cycle 2)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000001112 s
+
+----------------------------------------
+INCIDENT 34
+Timestamp: 2026-10-23 02:19:40.508
+Sender: 3
+Report valid: YES
+Cycle: 3
+Coordinates: (0,2)
+Local availability: 1/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001142475 s
+Neighbour 7: 1 free (cycle 3)
+Neighbour 2: 1 free (cycle 2)
+Neighbour 4: 1 free (cycle 3)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000013806 s
+
+----------------------------------------
+INCIDENT 35
+Timestamp: 2026-10-23 02:19:40.509
+Sender: 4
+Report valid: YES
+Cycle: 3
+Coordinates: (0,3)
+Local availability: 1/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002208060 s
+Neighbour 8: 1 free (cycle 2)
+Neighbour 3: 0 free (cycle 2)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000011211 s
+
+----------------------------------------
+INCIDENT 36
+Timestamp: 2026-10-23 02:19:40.509
+Sender: 5
+Report valid: YES
+Cycle: 3
+Coordinates: (1,0)
+Local availability: 1/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.002314431 s
+Neighbour 1: 1 free (cycle 3)
+Neighbour 9: 0 free (cycle 3)
+Neighbour 6: 0 free (cycle 3)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=2 reason=insufficient free ports
+REJECT node=3 reason=insufficient free ports
+REJECT node=4 reason=insufficient free ports
+REJECT node=7 reason=insufficient free ports
+REJECT node=8 reason=insufficient free ports
+REJECT node=10 reason=insufficient free ports
+REJECT node=11 reason=insufficient free ports
+REJECT node=12 reason=insufficient free ports
+Processing time: 0.000009789 s
+
+----------------------------------------
+INCIDENT 37
+Timestamp: 2026-10-23 02:19:40.509
+Sender: 6
+Report valid: YES
+Cycle: 3
+Coordinates: (1,1)
+Local availability: 0/6
+Neighbour messages: 8
+Neighbour payload bytes: 48
+Neighbour exchange: 0.003794979 s
+Neighbour 2: 1 free (cycle 2)
+Neighbour 10: 0 free (cycle 2)
+Neighbour 5: 0 free (cycle 2)
+Neighbour 7: 0 free (cycle 2)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000009347 s
+
+----------------------------------------
+INCIDENT 38
+Timestamp: 2026-10-23 02:19:40.509
+Sender: 9
+Report valid: YES
+Cycle: 3
+Coordinates: (2,0)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002256278 s
+Neighbour 5: 1 free (cycle 3)
+Neighbour 10: 0 free (cycle 3)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000008877 s
+
+----------------------------------------
+INCIDENT 39
+Timestamp: 2026-10-23 02:19:40.509
+Sender: 11
+Report valid: YES
+Cycle: 3
+Coordinates: (2,2)
+Local availability: 1/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.003354236 s
+Neighbour 7: 1 free (cycle 3)
+Neighbour 10: 0 free (cycle 3)
+Neighbour 12: 0 free (cycle 3)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+Processing time: 0.000008436 s
+
+----------------------------------------
+INCIDENT 40
+Timestamp: 2026-10-23 02:19:40.509
+Sender: 12
+Report valid: YES
+Cycle: 3
+Coordinates: (2,3)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.003318478 s
+Neighbour 8: 1 free (cycle 2)
+Neighbour 11: 1 free (cycle 3)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+Processing time: 0.000009949 s
+
+----------------------------------------
+INCIDENT 41
+Timestamp: 2026-10-23 02:19:40.510
+Sender: 7
+Report valid: YES
+Cycle: 3
+Coordinates: (1,2)
+Local availability: 1/6
+Neighbour messages: 8
+Neighbour payload bytes: 48
+Neighbour exchange: 0.004446127 s
+Neighbour 3: 1 free (cycle 3)
+Neighbour 11: 1 free (cycle 3)
+Neighbour 6: 0 free (cycle 3)
+Neighbour 8: 1 free (cycle 2)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000011121 s
+
+----------------------------------------
+INCIDENT 42
+Timestamp: 2026-10-23 02:19:40.511
+Sender: 10
+Report valid: YES
+Cycle: 3
+Coordinates: (2,1)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.004400351 s
+Neighbour 6: 0 free (cycle 3)
+Neighbour 9: 0 free (cycle 3)
+Neighbour 11: 1 free (cycle 3)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000010870 s
+
+----------------------------------------
+INCIDENT 43
+Timestamp: 2026-10-23 02:19:40.514
+Sender: 2
+Report valid: YES
+Cycle: 3
+Coordinates: (0,1)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001128588 s
+Neighbour 6: 0 free (cycle 3)
+Neighbour 1: 1 free (cycle 3)
+Neighbour 3: 1 free (cycle 3)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000026150 s
+
+----------------------------------------
+INCIDENT 44
+Timestamp: 2026-10-23 02:19:41.508
+Sender: 1
+Report valid: YES
+Cycle: 4
+Coordinates: (0,0)
+Local availability: 1/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002198172 s
+Neighbour 5: 1 free (cycle 3)
+Neighbour 2: 0 free (cycle 3)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000001102 s
+
+----------------------------------------
+INCIDENT 45
+Timestamp: 2026-10-23 02:19:41.509
+Sender: 11
+Report valid: YES
+Cycle: 4
+Coordinates: (2,2)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.002247335 s
+Neighbour 7: 1 free (cycle 4)
+Neighbour 10: 0 free (cycle 3)
+Neighbour 12: 0 free (cycle 4)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+Processing time: 0.000015248 s
+
+----------------------------------------
+INCIDENT 46
+Timestamp: 2026-10-23 02:19:41.510
+Sender: 3
+Report valid: YES
+Cycle: 4
+Coordinates: (0,2)
+Local availability: 1/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.002220808 s
+Neighbour 7: 1 free (cycle 4)
+Neighbour 2: 0 free (cycle 3)
+Neighbour 4: 0 free (cycle 4)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000012253 s
+
+----------------------------------------
+INCIDENT 47
+Timestamp: 2026-10-23 02:19:41.511
+Sender: 5
+Report valid: YES
+Cycle: 4
+Coordinates: (1,0)
+Local availability: 1/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.002273815 s
+Neighbour 1: 1 free (cycle 4)
+Neighbour 9: 0 free (cycle 4)
+Neighbour 6: 1 free (cycle 4)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000010500 s
+
+----------------------------------------
+INCIDENT 48
+Timestamp: 2026-10-23 02:19:41.510
+Sender: 6
+Report valid: YES
+Cycle: 4
+Coordinates: (1,1)
+Local availability: 1/6
+Neighbour messages: 8
+Neighbour payload bytes: 48
+Neighbour exchange: 0.003707905 s
+Neighbour 2: 0 free (cycle 3)
+Neighbour 10: 0 free (cycle 3)
+Neighbour 5: 1 free (cycle 3)
+Neighbour 7: 1 free (cycle 4)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000009528 s
+
+----------------------------------------
+INCIDENT 49
+Timestamp: 2026-10-23 02:19:41.510
+Sender: 9
+Report valid: YES
+Cycle: 4
+Coordinates: (2,0)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002247902 s
+Neighbour 5: 1 free (cycle 4)
+Neighbour 10: 0 free (cycle 4)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000009347 s
+
+----------------------------------------
+INCIDENT 50
+Timestamp: 2026-10-23 02:19:41.510
+Sender: 10
+Report valid: YES
+Cycle: 4
+Coordinates: (2,1)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.002231916 s
+Neighbour 6: 1 free (cycle 4)
+Neighbour 9: 0 free (cycle 4)
+Neighbour 11: 0 free (cycle 4)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000008516 s
+
+----------------------------------------
+INCIDENT 51
+Timestamp: 2026-10-23 02:19:41.516
+Sender: 2
+Report valid: YES
+Cycle: 4
+Coordinates: (0,1)
+Local availability: 1/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.002210699 s
+Neighbour 6: 1 free (cycle 4)
+Neighbour 1: 1 free (cycle 4)
+Neighbour 3: 1 free (cycle 4)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000013715 s
+
+----------------------------------------
+INCIDENT 52
+Timestamp: 2026-10-23 02:19:42.507
+Sender: 1
+Report valid: YES
+Cycle: 5
+Coordinates: (0,0)
+Local availability: 1/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.001130094 s
+Neighbour 5: 1 free (cycle 4)
+Neighbour 2: 1 free (cycle 4)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000001113 s
+
+----------------------------------------
+INCIDENT 53
+Timestamp: 2026-10-23 02:19:42.508
+Sender: 11
+Report valid: YES
+Cycle: 5
+Coordinates: (2,2)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001136356 s
+Neighbour 7: 1 free (cycle 5)
+Neighbour 10: 0 free (cycle 4)
+Neighbour 12: 0 free (cycle 4)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+Processing time: 0.000013996 s
+
+----------------------------------------
+INCIDENT 54
+Timestamp: 2026-10-23 02:19:42.509
+Sender: 10
+Report valid: YES
+Cycle: 5
+Coordinates: (2,1)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001163748 s
+Neighbour 6: 0 free (cycle 5)
+Neighbour 9: 0 free (cycle 4)
+Neighbour 11: 0 free (cycle 5)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000011571 s
+
+----------------------------------------
+INCIDENT 55
+Timestamp: 2026-10-23 02:19:42.511
+Sender: 3
+Report valid: YES
+Cycle: 5
+Coordinates: (0,2)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.002213485 s
+Neighbour 7: 1 free (cycle 5)
+Neighbour 2: 1 free (cycle 4)
+Neighbour 4: 0 free (cycle 5)
+All immediate neighbours reported within period: NO
+Nearest distance: 2
+Candidate count: 1
+ACCEPT node=8 coord=(1,3) free=2 distance=2
+REJECT node=1 reason=insufficient free ports
+REJECT node=5 reason=insufficient free ports
+REJECT node=6 reason=insufficient free ports
+REJECT node=9 reason=insufficient free ports
+REJECT node=10 reason=insufficient free ports
+REJECT node=11 reason=insufficient free ports
+REJECT node=12 reason=insufficient free ports
+Processing time: 0.000014287 s
+
+----------------------------------------
+INCIDENT 56
+Timestamp: 2026-10-23 02:19:42.510
+Sender: 6
+Report valid: YES
+Cycle: 5
+Coordinates: (1,1)
+Local availability: 0/6
+Neighbour messages: 8
+Neighbour payload bytes: 48
+Neighbour exchange: 0.003362733 s
+Neighbour 2: 1 free (cycle 4)
+Neighbour 10: 0 free (cycle 5)
+Neighbour 5: 1 free (cycle 4)
+Neighbour 7: 1 free (cycle 5)
+All immediate neighbours reported within period: NO
+Nearest distance: 2
+Candidate count: 1
+ACCEPT node=8 coord=(1,3) free=2 distance=2
+REJECT node=1 reason=insufficient free ports
+REJECT node=3 reason=insufficient free ports
+REJECT node=4 reason=insufficient free ports
+REJECT node=9 reason=insufficient free ports
+REJECT node=11 reason=insufficient free ports
+REJECT node=12 reason=insufficient free ports
+Processing time: 0.000012814 s
+
+----------------------------------------
+INCIDENT 57
+Timestamp: 2026-10-23 02:19:42.511
+Sender: 9
+Report valid: YES
+Cycle: 5
+Coordinates: (2,0)
+Local availability: 1/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002220070 s
+Neighbour 5: 1 free (cycle 4)
+Neighbour 10: 0 free (cycle 5)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000009788 s
+
+----------------------------------------
+INCIDENT 58
+Timestamp: 2026-10-23 02:19:42.511
+Sender: 5
+Report valid: YES
+Cycle: 5
+Coordinates: (1,0)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.002231385 s
+Neighbour 1: 1 free (cycle 5)
+Neighbour 9: 1 free (cycle 5)
+Neighbour 6: 0 free (cycle 5)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000011983 s
+
+----------------------------------------
+INCIDENT 59
+Timestamp: 2026-10-23 02:19:42.513
+Sender: 8
+Report valid: YES
+Cycle: 5
+Coordinates: (1,3)
+Local availability: 1/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001122449 s
+Neighbour 4: 0 free (cycle 5)
+Neighbour 12: 0 free (cycle 5)
+Neighbour 7: 1 free (cycle 5)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=insufficient free ports
+REJECT node=2 reason=insufficient free ports
+REJECT node=3 reason=insufficient free ports
+REJECT node=5 reason=insufficient free ports
+REJECT node=6 reason=insufficient free ports
+REJECT node=9 reason=insufficient free ports
+REJECT node=10 reason=insufficient free ports
+REJECT node=11 reason=insufficient free ports
+Processing time: 0.000012974 s
+
+----------------------------------------
+INCIDENT 60
+Timestamp: 2026-10-23 02:19:42.516
+Sender: 2
+Report valid: YES
+Cycle: 5
+Coordinates: (0,1)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001126104 s
+Neighbour 6: 0 free (cycle 5)
+Neighbour 1: 1 free (cycle 5)
+Neighbour 3: 0 free (cycle 5)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000025778 s
+
+----------------------------------------
+INCIDENT 61
+Timestamp: 2026-10-23 02:19:43.510
+Sender: 11
+Report valid: YES
+Cycle: 6
+Coordinates: (2,2)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.002235653 s
+Neighbour 7: 1 free (cycle 6)
+Neighbour 10: 0 free (cycle 5)
+Neighbour 12: 0 free (cycle 5)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=insufficient free ports
+REJECT node=2 reason=insufficient free ports
+REJECT node=3 reason=insufficient free ports
+REJECT node=4 reason=insufficient free ports
+REJECT node=5 reason=insufficient free ports
+REJECT node=6 reason=insufficient free ports
+REJECT node=8 reason=insufficient free ports
+REJECT node=9 reason=insufficient free ports
+Processing time: 0.000014167 s
+
+----------------------------------------
+INCIDENT 62
+Timestamp: 2026-10-23 02:19:43.510
+Sender: 1
+Report valid: YES
+Cycle: 6
+Coordinates: (0,0)
+Local availability: 1/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.003304121 s
+Neighbour 5: 0 free (cycle 5)
+Neighbour 2: 0 free (cycle 5)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000000801 s
+
+----------------------------------------
+INCIDENT 63
+Timestamp: 2026-10-23 02:19:43.509
+Sender: 7
+Report valid: YES
+Cycle: 6
+Coordinates: (1,2)
+Local availability: 1/6
+Neighbour messages: 8
+Neighbour payload bytes: 48
+Neighbour exchange: 0.002228112 s
+Neighbour 3: 0 free (cycle 5)
+Neighbour 11: 0 free (cycle 5)
+Neighbour 6: 0 free (cycle 5)
+Neighbour 8: 1 free (cycle 5)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000010009 s
+
+----------------------------------------
+INCIDENT 64
+Timestamp: 2026-10-23 02:19:43.510
+Sender: 10
+Report valid: YES
+Cycle: 6
+Coordinates: (2,1)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001138631 s
+Neighbour 6: 0 free (cycle 6)
+Neighbour 9: 1 free (cycle 5)
+Neighbour 11: 0 free (cycle 6)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000012414 s
+
+----------------------------------------
+INCIDENT 65
+Timestamp: 2026-10-23 02:19:43.511
+Sender: 12
+Report valid: YES
+Cycle: 6
+Coordinates: (2,3)
+Local availability: 1/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002188397 s
+Neighbour 8: 1 free (cycle 5)
+Neighbour 11: 0 free (cycle 6)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+Processing time: 0.000012413 s
+
+----------------------------------------
+INCIDENT 66
+Timestamp: 2026-10-23 02:19:43.511
+Sender: 3
+Report valid: YES
+Cycle: 6
+Coordinates: (0,2)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001117107 s
+Neighbour 7: 1 free (cycle 6)
+Neighbour 2: 0 free (cycle 5)
+Neighbour 4: 1 free (cycle 6)
+All immediate neighbours reported within period: NO
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=insufficient free ports
+REJECT node=5 reason=insufficient free ports
+REJECT node=6 reason=insufficient free ports
+REJECT node=8 reason=insufficient free ports
+REJECT node=9 reason=insufficient free ports
+REJECT node=10 reason=insufficient free ports
+REJECT node=11 reason=insufficient free ports
+REJECT node=12 reason=insufficient free ports
+Processing time: 0.000010219 s
+
+----------------------------------------
+INCIDENT 67
+Timestamp: 2026-10-23 02:19:43.511
+Sender: 4
+Report valid: YES
+Cycle: 6
+Coordinates: (0,3)
+Local availability: 1/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002195036 s
+Neighbour 8: 1 free (cycle 5)
+Neighbour 3: 0 free (cycle 5)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000009547 s
+
+----------------------------------------
+INCIDENT 68
+Timestamp: 2026-10-23 02:19:43.511
+Sender: 5
+Report valid: YES
+Cycle: 6
+Coordinates: (1,0)
+Local availability: 1/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001159519 s
+Neighbour 1: 1 free (cycle 6)
+Neighbour 9: 1 free (cycle 6)
+Neighbour 6: 0 free (cycle 6)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000009598 s
+
+----------------------------------------
+INCIDENT 69
+Timestamp: 2026-10-23 02:19:43.510
+Sender: 6
+Report valid: YES
+Cycle: 6
+Coordinates: (1,1)
+Local availability: 0/6
+Neighbour messages: 8
+Neighbour payload bytes: 48
+Neighbour exchange: 0.003382901 s
+Neighbour 2: 0 free (cycle 5)
+Neighbour 10: 0 free (cycle 6)
+Neighbour 5: 0 free (cycle 5)
+Neighbour 7: 1 free (cycle 6)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000009087 s
+
+----------------------------------------
+INCIDENT 70
+Timestamp: 2026-10-23 02:19:43.511
+Sender: 9
+Report valid: YES
+Cycle: 6
+Coordinates: (2,0)
+Local availability: 1/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.001141395 s
+Neighbour 5: 0 free (cycle 5)
+Neighbour 10: 0 free (cycle 6)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000008466 s
+
+----------------------------------------
+INCIDENT 71
+Timestamp: 2026-10-23 02:19:43.513
+Sender: 8
+Report valid: YES
+Cycle: 6
+Coordinates: (1,3)
+Local availability: 1/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001128369 s
+Neighbour 4: 1 free (cycle 6)
+Neighbour 12: 1 free (cycle 6)
+Neighbour 7: 1 free (cycle 6)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+Processing time: 0.000012093 s
+
+----------------------------------------
+INCIDENT 72
+Timestamp: 2026-10-23 02:19:43.518
+Sender: 2
+Report valid: YES
+Cycle: 6
+Coordinates: (0,1)
+Local availability: 1/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.002185201 s
+Neighbour 6: 0 free (cycle 6)
+Neighbour 1: 1 free (cycle 6)
+Neighbour 3: 0 free (cycle 6)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000011993 s
+
+----------------------------------------
+INCIDENT 73
+Timestamp: 2026-10-23 02:19:44.508
+Sender: 1
+Report valid: YES
+Cycle: 7
+Coordinates: (0,0)
+Local availability: 0/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.001174548 s
+Neighbour 5: 1 free (cycle 6)
+Neighbour 2: 1 free (cycle 6)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000001162 s
+
+----------------------------------------
+INCIDENT 74
+Timestamp: 2026-10-23 02:19:44.509
+Sender: 11
+Report valid: YES
+Cycle: 7
+Coordinates: (2,2)
+Local availability: 1/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001130846 s
+Neighbour 7: 0 free (cycle 7)
+Neighbour 10: 0 free (cycle 6)
+Neighbour 12: 1 free (cycle 6)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+Processing time: 0.000014047 s
+
+DONE node=1 (1/12)
+----------------------------------------
+INCIDENT 75
+Timestamp: 2026-10-23 02:19:44.510
+Sender: 7
+Report valid: YES
+Cycle: 7
+Coordinates: (1,2)
+Local availability: 0/6
+Neighbour messages: 8
+Neighbour payload bytes: 48
+Neighbour exchange: 0.002254442 s
+Neighbour 3: 0 free (cycle 6)
+Neighbour 11: 0 free (cycle 6)
+Neighbour 6: 0 free (cycle 6)
+Neighbour 8: 1 free (cycle 6)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000011952 s
+
+DONE node=4 (2/12)
+----------------------------------------
+INCIDENT 76
+Timestamp: 2026-10-23 02:19:44.511
+Sender: 6
+Report valid: YES
+Cycle: 7
+Coordinates: (1,1)
+Local availability: 0/6
+Neighbour messages: 8
+Neighbour payload bytes: 48
+Neighbour exchange: 0.002259412 s
+Neighbour 2: 1 free (cycle 6)
+Neighbour 10: 0 free (cycle 6)
+Neighbour 5: 1 free (cycle 6)
+Neighbour 7: 0 free (cycle 7)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000011132 s
+
+----------------------------------------
+INCIDENT 77
+Timestamp: 2026-10-23 02:19:44.511
+Sender: 9
+Report valid: YES
+Cycle: 7
+Coordinates: (2,0)
+Local availability: 1/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.001143799 s
+Neighbour 5: 1 free (cycle 6)
+Neighbour 10: 0 free (cycle 7)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000009237 s
+
+DONE node=11 (3/12)
+DONE node=3 (4/12)
+----------------------------------------
+INCIDENT 78
+Timestamp: 2026-10-23 02:19:44.512
+Sender: 5
+Report valid: YES
+Cycle: 7
+Coordinates: (1,0)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.001189868 s
+Neighbour 1: 0 free (cycle 7)
+Neighbour 9: 1 free (cycle 7)
+Neighbour 6: 0 free (cycle 7)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000011673 s
+
+DONE node=7 (5/12)
+----------------------------------------
+INCIDENT 79
+Timestamp: 2026-10-23 02:19:44.512
+Sender: 10
+Report valid: YES
+Cycle: 7
+Coordinates: (2,1)
+Local availability: 0/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.002233108 s
+Neighbour 6: 0 free (cycle 7)
+Neighbour 9: 1 free (cycle 6)
+Neighbour 11: 1 free (cycle 7)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000009448 s
+
+----------------------------------------
+INCIDENT 80
+Timestamp: 2026-10-23 02:19:44.512
+Sender: 12
+Report valid: YES
+Cycle: 7
+Coordinates: (2,3)
+Local availability: 1/6
+Neighbour messages: 4
+Neighbour payload bytes: 24
+Neighbour exchange: 0.002171615 s
+Neighbour 8: 1 free (cycle 6)
+Neighbour 11: 1 free (cycle 7)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=1 reason=all immediate neighbours reported
+REJECT node=2 reason=all immediate neighbours reported
+REJECT node=3 reason=all immediate neighbours reported
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=6 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+Processing time: 0.000008666 s
+
+DONE node=6 (6/12)
+DONE node=9 (7/12)
+DONE node=10 (8/12)
+DONE node=12 (9/12)
+DONE node=5 (10/12)
+DONE node=8 (11/12)
+----------------------------------------
+INCIDENT 81
+Timestamp: 2026-10-23 02:19:44.518
+Sender: 2
+Report valid: YES
+Cycle: 7
+Coordinates: (0,1)
+Local availability: 1/6
+Neighbour messages: 6
+Neighbour payload bytes: 36
+Neighbour exchange: 0.002214237 s
+Neighbour 6: 0 free (cycle 7)
+Neighbour 1: 0 free (cycle 7)
+Neighbour 3: 0 free (cycle 7)
+All immediate neighbours reported within period: YES
+Nearest distance: -1
+Candidate count: 0
+REJECT node=4 reason=all immediate neighbours reported
+REJECT node=5 reason=all immediate neighbours reported
+REJECT node=7 reason=all immediate neighbours reported
+REJECT node=8 reason=all immediate neighbours reported
+REJECT node=9 reason=all immediate neighbours reported
+REJECT node=10 reason=all immediate neighbours reported
+REJECT node=11 reason=all immediate neighbours reported
+REJECT node=12 reason=all immediate neighbours reported
+Processing time: 0.000026781 s
+
+DONE node=2 (12/12)
+
+========================================
+SIMULATION SUMMARY
+========================================
+Implementation: NONBLOCKING MPI
+Report history period: 2000 ms
+Seed: 3143
+Simulation time: 7.015726467 s
+EV nodes: 12
+Completed nodes: 12
+Status updates: 96
+Congestion alerts: 81
+Invalid reports: 0
+Reports with candidates: 2
+Reports without candidates: 79
+DONE messages: 12
+Redirect count messages: 81
+Redirect list messages: 2
+Termination messages: 12
+Messages received: 189
+Messages sent: 95
+Total base-station messages: 284
+Payload bytes received: 9624
+Payload bytes sent: 380
+Total payload bytes: 10004
+Total processing time: 0.000889598 s
+Average processing time per alert: 0.000010983 s

@@ -1,0 +1,17 @@
+[NODE 7 BLOCKING] Cycles=8 Alerts=6 AvgExchange=0.000160 s
+[NODE 1 BLOCKING] Cycles=8 Alerts=8 AvgExchange=0.001882 s
+[NODE 8 BLOCKING] Cycles=8 Alerts=5 AvgExchange=0.004317 s
+[NODE 14 BLOCKING] Cycles=8 Alerts=4 AvgExchange=0.000854 s
+[NODE 4 BLOCKING] Cycles=8 Alerts=5 AvgExchange=0.003386 s
+[NODE 12 BLOCKING] Cycles=8 Alerts=6 AvgExchange=0.004668 s
+[NODE 3 BLOCKING] Cycles=8 Alerts=7 AvgExchange=0.003546 s
+[NODE 16 BLOCKING] Cycles=8 Alerts=6 AvgExchange=0.002266 s
+[NODE 10 BLOCKING] Cycles=8 Alerts=5 AvgExchange=0.003630 s
+[BASE BLOCKING] Completed. Alerts=96 Time=7.050 s
+[NODE 15 BLOCKING] Cycles=8 Alerts=4 AvgExchange=0.001279 s
+[NODE 5 BLOCKING] Cycles=8 Alerts=8 AvgExchange=0.000732 s
+[NODE 9 BLOCKING] Cycles=8 Alerts=6 AvgExchange=0.002027 s
+[NODE 2 BLOCKING] Cycles=8 Alerts=8 AvgExchange=0.002911 s
+[NODE 11 BLOCKING] Cycles=8 Alerts=6 AvgExchange=0.002629 s
+[NODE 6 BLOCKING] Cycles=8 Alerts=7 AvgExchange=0.002940 s
+[NODE 13 BLOCKING] Cycles=8 Alerts=5 AvgExchange=0.000488 s

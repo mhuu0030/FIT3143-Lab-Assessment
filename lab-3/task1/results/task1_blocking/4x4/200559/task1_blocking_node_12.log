@@ -1,0 +1,106 @@
+IMPLEMENTATION: BLOCKING MPI BASELINE
+Deterministic seed: 3143
+World rank: 12
+Cartesian rank: 11
+Coordinates: (2,3)
+Neighbour count: 3
+Neighbour direction 0 = world rank 8
+Neighbour direction 1 = world rank 16
+Neighbour direction 2 = world rank 11
+
+[2026-10-23 02:13:19.346] CYCLE 0
+Available: 0/6
+Blocking neighbour exchange: 0.020978691 s
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 6
+Neighbour bytes: 24
+Exchange time: 0.020978691 s
+BASE STATION RESPONSE: 0 candidates
+
+[2026-10-23 02:13:20.369] CYCLE 1
+Available: 0/6
+Blocking neighbour exchange: 0.008035295 s
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 6
+Neighbour bytes: 24
+Exchange time: 0.008035295 s
+BASE STATION RESPONSE: 0 candidates
+
+[2026-10-23 02:13:21.377] CYCLE 2
+Available: 0/6
+Blocking neighbour exchange: 0.006132583 s
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 6
+Neighbour bytes: 24
+Exchange time: 0.006132583 s
+BASE STATION RESPONSE: 0 candidates
+
+[2026-10-23 02:13:22.384] CYCLE 3
+Available: 0/6
+Blocking neighbour exchange: 0.000477643 s
+LOCAL REDIRECTION
+Selected node: 8
+Direction: 0
+Available ports: 3
+Exchange time: 0.000477643 s
+
+[2026-10-23 02:13:23.386] CYCLE 4
+Available: 0/6
+Blocking neighbour exchange: 0.000521656 s
+LOCAL REDIRECTION
+Selected node: 8
+Direction: 0
+Available ports: 2
+Exchange time: 0.000521656 s
+
+[2026-10-23 02:13:24.387] CYCLE 5
+Available: 0/6
+Blocking neighbour exchange: 0.000379657 s
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages: 6
+Neighbour bytes: 24
+Exchange time: 0.000379657 s
+BASE STATION RESPONSE: 0 candidates
+
+[2026-10-23 02:13:25.388] CYCLE 6
+Available: 1/6
+Blocking neighbour exchange: 0.000392642 s
+CONGESTION ALERT SENT
+Free ports: 1/6
+Neighbour messages: 6
+Neighbour bytes: 24
+Exchange time: 0.000392642 s
+BASE STATION RESPONSE: 0 candidates
+
+[2026-10-23 02:13:26.389] CYCLE 7
+Available: 1/6
+Blocking neighbour exchange: 0.000428570 s
+CONGESTION ALERT SENT
+Free ports: 1/6
+Neighbour messages: 6
+Neighbour bytes: 24
+Exchange time: 0.000428570 s
+BASE STATION RESPONSE: 0 candidates
+All local cycles completed.
+Waiting for termination.
+
+========================================
+NODE SUMMARY
+========================================
+Implementation: BLOCKING MPI
+Cycles: 8
+Congestion reports sent: 6
+Local redirections: 2
+Neighbour exchanges: 8
+Neighbour messages: 48
+Neighbour payload bytes: 192
+Total neighbour exchange time: 0.037346737 s
+Average neighbour exchange time: 0.004668342 s
+Minimum neighbour exchange time: 0.000379657 s
+Maximum neighbour exchange time: 0.020978691 s
+Node simulation time: 7.044452898 s
+Graceful shutdown completed.

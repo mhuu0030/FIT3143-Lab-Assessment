@@ -1,0 +1,1101 @@
+TASK 1 NONBLOCKING MPI BASE STATION TEST HARNESS
+EV nodes: 12
+
+[2026-10-23 02:13:36.253] CONGESTION ALERT
+Node: 5
+Coordinates: (1,0)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.004429070 s
+Neighbour 1: 0 available
+Neighbour 9: 0 available
+Neighbour 6: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:36.254] CONGESTION ALERT
+Node: 1
+Coordinates: (0,0)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.005434584 s
+Neighbour 5: 0 available
+Neighbour 2: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:36.257] CONGESTION ALERT
+Node: 2
+Coordinates: (0,1)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.004417917 s
+Neighbour 6: 0 available
+Neighbour 1: 0 available
+Neighbour 3: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:36.257] CONGESTION ALERT
+Node: 4
+Coordinates: (0,3)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.003285872 s
+Neighbour 8: 0 available
+Neighbour 3: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:36.257] CONGESTION ALERT
+Node: 8
+Coordinates: (1,3)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.005481993 s
+Neighbour 4: 0 available
+Neighbour 12: 0 available
+Neighbour 7: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:36.258] CONGESTION ALERT
+Node: 9
+Coordinates: (2,0)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.006509084 s
+Neighbour 5: 0 available
+Neighbour 10: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:36.257] CONGESTION ALERT
+Node: 3
+Coordinates: (0,2)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002224157 s
+Neighbour 7: 0 available
+Neighbour 2: 0 available
+Neighbour 4: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:36.256] CONGESTION ALERT
+Node: 6
+Coordinates: (1,1)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 8
+Neighbour payload bytes: 32
+Neighbour exchange time: 0.007696862 s
+Neighbour 2: 0 available
+Neighbour 10: 0 available
+Neighbour 5: 0 available
+Neighbour 7: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:36.260] CONGESTION ALERT
+Node: 11
+Coordinates: (2,2)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002243668 s
+Neighbour 7: 0 available
+Neighbour 10: 0 available
+Neighbour 12: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:36.260] CONGESTION ALERT
+Node: 7
+Coordinates: (1,2)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 8
+Neighbour payload bytes: 32
+Neighbour exchange time: 0.008734465 s
+Neighbour 3: 0 available
+Neighbour 11: 0 available
+Neighbour 6: 0 available
+Neighbour 8: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:36.261] CONGESTION ALERT
+Node: 10
+Coordinates: (2,1)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.006507331 s
+Neighbour 6: 0 available
+Neighbour 9: 0 available
+Neighbour 11: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:36.262] CONGESTION ALERT
+Node: 12
+Coordinates: (2,3)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.013978995 s
+Neighbour 8: 0 available
+Neighbour 11: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:37.250] CONGESTION ALERT
+Node: 6
+Coordinates: (1,1)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 8
+Neighbour payload bytes: 32
+Neighbour exchange time: 0.001150997 s
+Neighbour 2: 0 available
+Neighbour 10: 0 available
+Neighbour 5: 0 available
+Neighbour 7: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:37.250] CONGESTION ALERT
+Node: 12
+Coordinates: (2,3)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.001134694 s
+Neighbour 8: 0 available
+Neighbour 11: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:37.251] CONGESTION ALERT
+Node: 1
+Coordinates: (0,0)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.002217188 s
+Neighbour 5: 1 available
+Neighbour 2: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:37.252] CONGESTION ALERT
+Node: 5
+Coordinates: (1,0)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002213337 s
+Neighbour 1: 0 available
+Neighbour 9: 0 available
+Neighbour 6: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:37.253] CONGESTION ALERT
+Node: 9
+Coordinates: (2,0)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.001127289 s
+Neighbour 5: 1 available
+Neighbour 10: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:37.253] CONGESTION ALERT
+Node: 7
+Coordinates: (1,2)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 8
+Neighbour payload bytes: 32
+Neighbour exchange time: 0.001141289 s
+Neighbour 3: 0 available
+Neighbour 11: 0 available
+Neighbour 6: 1 available
+Neighbour 8: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:37.253] CONGESTION ALERT
+Node: 8
+Coordinates: (1,3)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001131207 s
+Neighbour 4: 0 available
+Neighbour 12: 0 available
+Neighbour 7: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:37.254] CONGESTION ALERT
+Node: 2
+Coordinates: (0,1)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001128364 s
+Neighbour 6: 1 available
+Neighbour 1: 0 available
+Neighbour 3: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:37.257] CONGESTION ALERT
+Node: 3
+Coordinates: (0,2)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002199500 s
+Neighbour 7: 0 available
+Neighbour 2: 1 available
+Neighbour 4: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:37.257] CONGESTION ALERT
+Node: 4
+Coordinates: (0,3)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.002195925 s
+Neighbour 8: 0 available
+Neighbour 3: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:38.251] CONGESTION ALERT
+Node: 5
+Coordinates: (1,0)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001137166 s
+Neighbour 1: 0 available
+Neighbour 9: 1 available
+Neighbour 6: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:38.251] CONGESTION ALERT
+Node: 12
+Coordinates: (2,3)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.001137989 s
+Neighbour 8: 0 available
+Neighbour 11: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:38.252] CONGESTION ALERT
+Node: 1
+Coordinates: (0,0)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.002219792 s
+Neighbour 5: 1 available
+Neighbour 2: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:38.254] CONGESTION ALERT
+Node: 2
+Coordinates: (0,1)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001108287 s
+Neighbour 6: 0 available
+Neighbour 1: 0 available
+Neighbour 3: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:38.253] CONGESTION ALERT
+Node: 7
+Coordinates: (1,2)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 8
+Neighbour payload bytes: 32
+Neighbour exchange time: 0.001149004 s
+Neighbour 3: 0 available
+Neighbour 11: 0 available
+Neighbour 6: 0 available
+Neighbour 8: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:38.254] CONGESTION ALERT
+Node: 8
+Coordinates: (1,3)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001127189 s
+Neighbour 4: 0 available
+Neighbour 12: 0 available
+Neighbour 7: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:38.256] CONGESTION ALERT
+Node: 3
+Coordinates: (0,2)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001149344 s
+Neighbour 7: 0 available
+Neighbour 2: 1 available
+Neighbour 4: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:38.256] CONGESTION ALERT
+Node: 4
+Coordinates: (0,3)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.001113932 s
+Neighbour 8: 1 available
+Neighbour 3: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:38.258] CONGESTION ALERT
+Node: 10
+Coordinates: (2,1)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002173065 s
+Neighbour 6: 0 available
+Neighbour 9: 0 available
+Neighbour 11: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:38.261] CONGESTION ALERT
+Node: 11
+Coordinates: (2,2)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001106951 s
+Neighbour 7: 0 available
+Neighbour 10: 0 available
+Neighbour 12: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:39.252] CONGESTION ALERT
+Node: 12
+Coordinates: (2,3)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.001133681 s
+Neighbour 8: 1 available
+Neighbour 11: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:39.252] CONGESTION ALERT
+Node: 1
+Coordinates: (0,0)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.002245100 s
+Neighbour 5: 0 available
+Neighbour 2: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:39.253] CONGESTION ALERT
+Node: 5
+Coordinates: (1,0)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002258833 s
+Neighbour 1: 1 available
+Neighbour 9: 0 available
+Neighbour 6: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:39.253] CONGESTION ALERT
+Node: 6
+Coordinates: (1,1)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 8
+Neighbour payload bytes: 32
+Neighbour exchange time: 0.003326864 s
+Neighbour 2: 1 available
+Neighbour 10: 0 available
+Neighbour 5: 1 available
+Neighbour 7: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:39.254] CONGESTION ALERT
+Node: 7
+Coordinates: (1,2)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 8
+Neighbour payload bytes: 32
+Neighbour exchange time: 0.001125349 s
+Neighbour 3: 0 available
+Neighbour 11: 0 available
+Neighbour 6: 0 available
+Neighbour 8: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:39.254] CONGESTION ALERT
+Node: 9
+Coordinates: (2,0)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.001121207 s
+Neighbour 5: 1 available
+Neighbour 10: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:39.256] CONGESTION ALERT
+Node: 2
+Coordinates: (0,1)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001114849 s
+Neighbour 6: 0 available
+Neighbour 1: 1 available
+Neighbour 3: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:39.257] CONGESTION ALERT
+Node: 3
+Coordinates: (0,2)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002230730 s
+Neighbour 7: 1 available
+Neighbour 2: 0 available
+Neighbour 4: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:39.261] CONGESTION ALERT
+Node: 10
+Coordinates: (2,1)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.004337473 s
+Neighbour 6: 0 available
+Neighbour 9: 0 available
+Neighbour 11: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:39.261] CONGESTION ALERT
+Node: 11
+Coordinates: (2,2)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001116218 s
+Neighbour 7: 1 available
+Neighbour 10: 0 available
+Neighbour 12: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:40.252] CONGESTION ALERT
+Node: 1
+Coordinates: (0,0)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.002221656 s
+Neighbour 5: 1 available
+Neighbour 2: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:40.252] CONGESTION ALERT
+Node: 6
+Coordinates: (1,1)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 8
+Neighbour payload bytes: 32
+Neighbour exchange time: 0.002209259 s
+Neighbour 2: 0 available
+Neighbour 10: 0 available
+Neighbour 5: 1 available
+Neighbour 7: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:40.253] CONGESTION ALERT
+Node: 5
+Coordinates: (1,0)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001137326 s
+Neighbour 1: 1 available
+Neighbour 9: 0 available
+Neighbour 6: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:40.255] CONGESTION ALERT
+Node: 9
+Coordinates: (2,0)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.002195747 s
+Neighbour 5: 1 available
+Neighbour 10: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:40.256] CONGESTION ALERT
+Node: 2
+Coordinates: (0,1)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001120028 s
+Neighbour 6: 1 available
+Neighbour 1: 1 available
+Neighbour 3: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:40.258] CONGESTION ALERT
+Node: 3
+Coordinates: (0,2)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002210893 s
+Neighbour 7: 1 available
+Neighbour 2: 1 available
+Neighbour 4: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:40.259] CONGESTION ALERT
+Node: 10
+Coordinates: (2,1)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002185629 s
+Neighbour 6: 1 available
+Neighbour 9: 0 available
+Neighbour 11: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:40.262] CONGESTION ALERT
+Node: 11
+Coordinates: (2,2)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001114815 s
+Neighbour 7: 1 available
+Neighbour 10: 0 available
+Neighbour 12: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:41.253] CONGESTION ALERT
+Node: 1
+Coordinates: (0,0)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.002204533 s
+Neighbour 5: 1 available
+Neighbour 2: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:41.254] CONGESTION ALERT
+Node: 6
+Coordinates: (1,1)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 8
+Neighbour payload bytes: 32
+Neighbour exchange time: 0.003309321 s
+Neighbour 2: 1 available
+Neighbour 10: 0 available
+Neighbour 5: 1 available
+Neighbour 7: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:41.255] CONGESTION ALERT
+Node: 8
+Coordinates: (1,3)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001162115 s
+Neighbour 4: 0 available
+Neighbour 12: 0 available
+Neighbour 7: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:41.255] CONGESTION ALERT
+Node: 9
+Coordinates: (2,0)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.001116389 s
+Neighbour 5: 0 available
+Neighbour 10: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:41.255] CONGESTION ALERT
+Node: 5
+Coordinates: (1,0)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002227063 s
+Neighbour 1: 1 available
+Neighbour 9: 0 available
+Neighbour 6: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:41.257] CONGESTION ALERT
+Node: 7
+Coordinates: (1,2)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 8
+Neighbour payload bytes: 32
+Neighbour exchange time: 0.002214770 s
+Neighbour 3: 1 available
+Neighbour 11: 0 available
+Neighbour 6: 0 available
+Neighbour 8: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:41.258] CONGESTION ALERT
+Node: 10
+Coordinates: (2,1)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001105488 s
+Neighbour 6: 0 available
+Neighbour 9: 1 available
+Neighbour 11: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:41.258] CONGESTION ALERT
+Node: 2
+Coordinates: (0,1)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002181036 s
+Neighbour 6: 0 available
+Neighbour 1: 1 available
+Neighbour 3: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:41.258] CONGESTION ALERT
+Node: 3
+Coordinates: (0,2)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002214739 s
+Neighbour 7: 1 available
+Neighbour 2: 0 available
+Neighbour 4: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:41.258] CONGESTION ALERT
+Node: 4
+Coordinates: (0,3)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.001103924 s
+Neighbour 8: 1 available
+Neighbour 3: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:41.263] CONGESTION ALERT
+Node: 11
+Coordinates: (2,2)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002196368 s
+Neighbour 7: 1 available
+Neighbour 10: 0 available
+Neighbour 12: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:42.253] CONGESTION ALERT
+Node: 12
+Coordinates: (2,3)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.001131878 s
+Neighbour 8: 1 available
+Neighbour 11: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:42.254] CONGESTION ALERT
+Node: 1
+Coordinates: (0,0)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.003319139 s
+Neighbour 5: 0 available
+Neighbour 2: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:42.254] CONGESTION ALERT
+Node: 6
+Coordinates: (1,1)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 8
+Neighbour payload bytes: 32
+Neighbour exchange time: 0.002264985 s
+Neighbour 2: 0 available
+Neighbour 10: 0 available
+Neighbour 5: 0 available
+Neighbour 7: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:42.255] CONGESTION ALERT
+Node: 5
+Coordinates: (1,0)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002236741 s
+Neighbour 1: 1 available
+Neighbour 9: 1 available
+Neighbour 6: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:42.256] CONGESTION ALERT
+Node: 8
+Coordinates: (1,3)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001129894 s
+Neighbour 4: 0 available
+Neighbour 12: 1 available
+Neighbour 7: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:42.255] CONGESTION ALERT
+Node: 9
+Coordinates: (2,0)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.001112481 s
+Neighbour 5: 1 available
+Neighbour 10: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:42.257] CONGESTION ALERT
+Node: 7
+Coordinates: (1,2)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 8
+Neighbour payload bytes: 32
+Neighbour exchange time: 0.002233646 s
+Neighbour 3: 0 available
+Neighbour 11: 0 available
+Neighbour 6: 0 available
+Neighbour 8: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:42.258] CONGESTION ALERT
+Node: 10
+Coordinates: (2,1)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001109155 s
+Neighbour 6: 0 available
+Neighbour 9: 1 available
+Neighbour 11: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:42.258] CONGESTION ALERT
+Node: 2
+Coordinates: (0,1)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002200583 s
+Neighbour 6: 0 available
+Neighbour 1: 1 available
+Neighbour 3: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:42.258] CONGESTION ALERT
+Node: 3
+Coordinates: (0,2)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002203298 s
+Neighbour 7: 1 available
+Neighbour 2: 1 available
+Neighbour 4: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:42.259] CONGESTION ALERT
+Node: 4
+Coordinates: (0,3)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.001103122 s
+Neighbour 8: 1 available
+Neighbour 3: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:42.262] CONGESTION ALERT
+Node: 11
+Coordinates: (2,2)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001108694 s
+Neighbour 7: 1 available
+Neighbour 10: 0 available
+Neighbour 12: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:43.254] CONGESTION ALERT
+Node: 1
+Coordinates: (0,0)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.002286077 s
+Neighbour 5: 1 available
+Neighbour 2: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:43.254] CONGESTION ALERT
+Node: 6
+Coordinates: (1,1)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 8
+Neighbour payload bytes: 32
+Neighbour exchange time: 0.002204761 s
+Neighbour 2: 1 available
+Neighbour 10: 0 available
+Neighbour 5: 1 available
+Neighbour 7: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:43.256] CONGESTION ALERT
+Node: 9
+Coordinates: (2,0)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.001104827 s
+Neighbour 5: 0 available
+Neighbour 10: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:43.256] CONGESTION ALERT
+Node: 12
+Coordinates: (2,3)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 4
+Neighbour payload bytes: 16
+Neighbour exchange time: 0.002210175 s
+Neighbour 8: 1 available
+Neighbour 11: 0 available
+Placeholder response sent.
+Node 1 completed (1/12)
+
+[2026-10-23 02:13:43.256] CONGESTION ALERT
+Node: 5
+Coordinates: (1,0)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002229338 s
+Neighbour 1: 0 available
+Neighbour 9: 1 available
+Neighbour 6: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:43.257] CONGESTION ALERT
+Node: 7
+Coordinates: (1,2)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 8
+Neighbour payload bytes: 32
+Neighbour exchange time: 0.002207938 s
+Neighbour 3: 0 available
+Neighbour 11: 0 available
+Neighbour 6: 0 available
+Neighbour 8: 1 available
+Placeholder response sent.
+
+[2026-10-23 02:13:43.257] CONGESTION ALERT
+Node: 8
+Coordinates: (1,3)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001409321 s
+Neighbour 4: 1 available
+Neighbour 12: 1 available
+Neighbour 7: 0 available
+Placeholder response sent.
+Node 9 completed (2/12)
+Node 12 completed (3/12)
+Node 6 completed (4/12)
+Node 7 completed (5/12)
+Node 4 completed (6/12)
+Node 5 completed (7/12)
+Node 8 completed (8/12)
+
+[2026-10-23 02:13:43.260] CONGESTION ALERT
+Node: 10
+Coordinates: (2,1)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002183053 s
+Neighbour 6: 0 available
+Neighbour 9: 1 available
+Neighbour 11: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:43.259] CONGESTION ALERT
+Node: 2
+Coordinates: (0,1)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002209770 s
+Neighbour 6: 0 available
+Neighbour 1: 0 available
+Neighbour 3: 0 available
+Placeholder response sent.
+
+[2026-10-23 02:13:43.259] CONGESTION ALERT
+Node: 3
+Coordinates: (0,2)
+Available ports: 0/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.002196305 s
+Neighbour 7: 0 available
+Neighbour 2: 1 available
+Neighbour 4: 1 available
+Placeholder response sent.
+Node 10 completed (9/12)
+Node 2 completed (10/12)
+Node 3 completed (11/12)
+
+[2026-10-23 02:13:43.263] CONGESTION ALERT
+Node: 11
+Coordinates: (2,2)
+Available ports: 1/6
+Threshold: 1
+Neighbour messages: 6
+Neighbour payload bytes: 24
+Neighbour exchange time: 0.001117601 s
+Neighbour 7: 0 available
+Neighbour 10: 0 available
+Neighbour 12: 1 available
+Placeholder response sent.
+Node 11 completed (12/12)
+
+SIMULATION SUMMARY
+Implementation: NONBLOCKING MPI
+Simulation time: 7.017378 s
+Congestion alerts: 84
+Alert payload bytes: 7392
+Termination messages: 12

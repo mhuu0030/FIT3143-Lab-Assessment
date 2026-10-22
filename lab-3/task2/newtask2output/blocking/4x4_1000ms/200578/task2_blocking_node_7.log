@@ -1,0 +1,109 @@
+Implementation: BLOCKING MPI
+Deterministic seed: 3143
+OpenMP threads / charging ports: 6
+World rank: 7
+Cartesian rank: 6
+Coordinates: (1,2)
+Neighbour count: 4
+Neighbour 0 = world rank 3
+Neighbour 1 = world rank 11
+Neighbour 2 = world rank 6
+Neighbour 3 = world rank 8
+
+[2026-10-23 02:23:56.837] CYCLE 0
+Available: 0/6
+BASE RESPONSE: 0 candidates
+No nearby alternative found.
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages this exchange: 8
+Neighbour bytes this exchange: 64
+Exchange time: 0.000192053 s
+
+[2026-10-23 02:23:57.837] CYCLE 1
+Available: 0/6
+BASE RESPONSE: 0 candidates
+No nearby alternative found.
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages this exchange: 8
+Neighbour bytes this exchange: 64
+Exchange time: 0.003408975 s
+
+[2026-10-23 02:23:58.837] CYCLE 2
+Available: 0/6
+BASE RESPONSE: 0 candidates
+No nearby alternative found.
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages this exchange: 8
+Neighbour bytes this exchange: 64
+Exchange time: 0.000236867 s
+
+[2026-10-23 02:23:59.836] CYCLE 3
+Available: 1/6
+LOCAL REDIRECTION
+Selected node: 8
+Available ports: 3
+Exchange time: 0.000464878 s
+
+[2026-10-23 02:24:00.836] CYCLE 4
+Available: 1/6
+LOCAL REDIRECTION
+Selected node: 8
+Available ports: 2
+Exchange time: 0.009772888 s
+
+[2026-10-23 02:24:01.836] CYCLE 5
+Available: 1/6
+BASE RESPONSE: 0 candidates
+No nearby alternative found.
+CONGESTION ALERT SENT
+Free ports: 1/6
+Neighbour messages this exchange: 8
+Neighbour bytes this exchange: 64
+Exchange time: 0.001316725 s
+
+[2026-10-23 02:24:02.836] CYCLE 6
+Available: 1/6
+BASE RESPONSE: 0 candidates
+No nearby alternative found.
+CONGESTION ALERT SENT
+Free ports: 1/6
+Neighbour messages this exchange: 8
+Neighbour bytes this exchange: 64
+Exchange time: 0.000639016 s
+
+[2026-10-23 02:24:03.835] CYCLE 7
+Available: 0/6
+BASE RESPONSE: 2 candidates
+Alternative node: 4
+Alternative node: 15
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages this exchange: 8
+Neighbour bytes this exchange: 64
+Exchange time: 0.001168696 s
+DONE sent; waiting for termination.
+
+========================================
+NODE SUMMARY
+========================================
+Implementation: BLOCKING MPI
+Completed cycles: 8
+OpenMP threads / charging ports: 6
+Seed: 3143
+Report history period: 1000 ms
+Status updates sent: 8
+Blocking neighbour exchanges: 8
+Total neighbour messages: 64
+Neighbour payload bytes: 512
+Status payload bytes: 96
+Congestion report payload bytes: 624
+Local redirections: 2
+Congestion reports sent: 6
+Total neighbour exchange time: 0.017200098 s
+Average neighbour exchange time: 0.002150012 s
+Minimum neighbour exchange time: 0.000192053 s
+Maximum neighbour exchange time: 0.009772888 s
+Graceful shutdown completed.
