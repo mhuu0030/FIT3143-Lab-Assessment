@@ -9,6 +9,7 @@
 #include <time.h>
 #include <errno.h>
 #include <limits.h>
+#include <float.h>
 
 #define MAX_NEIGHBOURS 4
 
@@ -17,6 +18,7 @@
 #define DEFAULT_INTERVAL_MS 1000
 #define DEFAULT_THRESHOLD 1
 #define DEFAULT_REPORT_PERIOD_MS 2000
+#define DEFAULT_SEED 3143U
 
 /*
  * FIT3143 Lab 3 - Tasks 1 and 2
@@ -51,6 +53,7 @@ typedef struct {
     int threshold;
     int force_low;
     int report_period_ms;
+    unsigned int seed;
 } Config;
 
 /*
@@ -249,18 +252,26 @@ static void update_ports(
 ) {
     int free_probability = force_low ? 10 : 55;
 
-    #pragma omp parallel for schedule(static)
-    for (int i = 0; i < count; i++) {
+    /*
+     * Exactly one OpenMP thread is requested per charging port.
+     * Thread i owns port i for this update.
+     */
+    #pragma omp parallel num_threads(count) default(none) \
+        shared(ports, seeds, count, force_low, cycle, free_probability)
+    {
+        int i = omp_get_thread_num();
 
-        if (force_low && cycle == 0) {
-            ports[i] = 0;
-        } else {
-            unsigned int random_value =
-                rand_r(&seeds[i]) % 100U;
+        if (i < count) {
+            if (force_low && cycle == 0) {
+                ports[i] = 0;
+            } else {
+                unsigned int random_value =
+                    rand_r(&seeds[i]) % 100U;
 
-            ports[i] =
-                random_value <
-                (unsigned int)free_probability;
+                ports[i] =
+                    random_value <
+                    (unsigned int)free_probability;
+            }
         }
     }
 }
@@ -271,7 +282,6 @@ static int count_free_ports(
 ) {
     int free_count = 0;
 
-    #pragma omp parallel for reduction(+:free_count)
     for (int i = 0; i < count; i++) {
         free_count += ports[i];
     }
@@ -467,7 +477,7 @@ static int validate_report(
  * submitted a congestion report within
  * the predefined period.
  *
- * If yes, send no nearby alternatives.
+ * If yes, send no nearby alternatives, as required by Task 2.
  *
  * STEP 2
  * Otherwise, search beyond immediate
@@ -646,7 +656,7 @@ static void run_base_station(const Config *cfg)
     int node_count = cfg->rows * cfg->cols;
 
     FILE *log = fopen(
-        "task2_base_station.log", "w"
+        "task2_nonblocking_base_station.log", "w"
     );
 
     if (!log) {
@@ -690,6 +700,7 @@ static void run_base_station(const Config *cfg)
     fprintf(log,
         "========================================\n"
         "FIT3143 LAB 3 - TASK 2 BASE STATION\n"
+        "Implementation: NONBLOCKING MPI\n"
         "========================================\n"
         "Grid: %d x %d\n"
         "EV nodes: %d\n"
@@ -697,7 +708,8 @@ static void run_base_station(const Config *cfg)
         "Simulation cycles: %d\n"
         "Update interval: %d ms\n"
         "Threshold: %d\n"
-        "Report history period: %d ms\n\n",
+        "Report history period: %d ms\n"
+        "Deterministic seed: %u\n\n",
         cfg->rows,
         cfg->cols,
         node_count,
@@ -705,7 +717,8 @@ static void run_base_station(const Config *cfg)
         cfg->cycles,
         cfg->interval_ms,
         cfg->threshold,
-        cfg->report_period_ms
+        cfg->report_period_ms,
+        cfg->seed
     );
 
     /*
@@ -1128,6 +1141,9 @@ static void run_base_station(const Config *cfg)
         "\n========================================\n"
         "SIMULATION SUMMARY\n"
         "========================================\n"
+        "Implementation: NONBLOCKING MPI\n"
+        "Report history period: %d ms\n"
+        "Seed: %u\n"
         "Simulation time: %.9f s\n"
         "EV nodes: %d\n"
         "Completed nodes: %d\n"
@@ -1148,6 +1164,8 @@ static void run_base_station(const Config *cfg)
         "Total payload bytes: %lld\n"
         "Total processing time: %.9f s\n"
         "Average processing time per alert: %.9f s\n",
+        cfg->report_period_ms,
+        cfg->seed,
         total_time,
         node_count,
         done_count,
@@ -1206,7 +1224,6 @@ static void send_congestion_report(
     int neighbour_count,
     const int neighbours[MAX_NEIGHBOURS],
     const int neighbour_data[MAX_NEIGHBOURS][2],
-    long long detected_at,
     double exchange_seconds,
     int *redirect_count,
     MPI_Request *redirect_request
@@ -1234,7 +1251,7 @@ static void send_congestion_report(
     report.neighbour_bytes =
         3 * neighbour_count * (int)sizeof(int);
 
-    report.timestamp_ms = detected_at;
+    report.timestamp_ms = epoch_ms();
     report.neighbour_exchange_seconds =
         exchange_seconds;
 
@@ -1307,6 +1324,36 @@ static void run_charging_node(
     int neighbour_count =
         cart_neighbours(cart_comm, neighbours);
 
+    /*
+     * Require one OpenMP thread per charging port.
+     * The SLURM job should therefore request:
+     *     --cpus-per-task=<ports>
+     */
+    omp_set_dynamic(0);
+    omp_set_num_threads(cfg->ports);
+
+    int actual_threads = 0;
+
+    #pragma omp parallel num_threads(cfg->ports) shared(actual_threads)
+    {
+        #pragma omp single
+        actual_threads = omp_get_num_threads();
+    }
+
+    if (actual_threads != cfg->ports) {
+        fprintf(
+            stderr,
+            "Node %d: requested %d OpenMP threads for %d ports, "
+            "but runtime created %d threads.\n",
+            rank,
+            cfg->ports,
+            cfg->ports,
+            actual_threads
+        );
+
+        MPI_Abort(MPI_COMM_WORLD, 22);
+    }
+
     int *ports = malloc(
         (size_t)cfg->ports * sizeof(int)
     );
@@ -1324,7 +1371,7 @@ static void run_charging_node(
         ports[i] = 1;
 
         seeds[i] =
-            (unsigned int)time(NULL)
+            cfg->seed
             ^ ((unsigned int)rank * 1009U)
             ^ ((unsigned int)(i + 1) * 7919U);
     }
@@ -1334,7 +1381,7 @@ static void run_charging_node(
     snprintf(
         filename,
         sizeof(filename),
-        "task2_node_%d.log",
+        "task2_nonblocking_node_%d.log",
         rank
     );
 
@@ -1345,10 +1392,15 @@ static void run_charging_node(
     }
 
     fprintf(log,
+        "Implementation: NONBLOCKING MPI\n"
+        "Deterministic seed: %u\n"
+        "OpenMP threads / charging ports: %d\n"
         "World rank: %d\n"
         "Cartesian rank: %d\n"
         "Coordinates: (%d,%d)\n"
         "Neighbour count: %d\n",
+        cfg->seed,
+        actual_threads,
         rank,
         cart_rank,
         coords[0],
@@ -1385,13 +1437,18 @@ static void run_charging_node(
 
     int enquiry_cycle = -1;
     int enquiry_free = 0;
-    long long enquiry_timestamp = 0;
     double enquiry_start = 0.0;
 
     int requests_sent = 0;
     int responses_sent = 0;
     int alerts_sent = 0;
     int status_sent = 0;
+    int local_redirections = 0;
+    long long completed_queries = 0;
+
+    double total_exchange_time = 0.0;
+    double min_exchange_time = DBL_MAX;
+    double max_exchange_time = 0.0;
 
     MPI_Barrier(MPI_COMM_WORLD);
 
@@ -1507,6 +1564,15 @@ static void run_charging_node(
                 double exchange_seconds =
                     MPI_Wtime() - enquiry_start;
 
+                completed_queries++;
+                total_exchange_time += exchange_seconds;
+
+                if (exchange_seconds < min_exchange_time)
+                    min_exchange_time = exchange_seconds;
+
+                if (exchange_seconds > max_exchange_time)
+                    max_exchange_time = exchange_seconds;
+
                 int best_node = -1;
                 int best_free = -1;
 
@@ -1525,6 +1591,8 @@ static void run_charging_node(
                 }
 
                 if (best_node >= 0) {
+
+                    local_redirections++;
 
                     fprintf(log,
                         "LOCAL REDIRECTION\n"
@@ -1547,7 +1615,6 @@ static void run_charging_node(
                         neighbour_count,
                         neighbours,
                         (const int (*)[2])responses,
-                        enquiry_timestamp,
                         exchange_seconds,
                         &redirect_count,
                         &redirect_request
@@ -1716,7 +1783,6 @@ static void run_charging_node(
 
                 enquiry_cycle = current_cycle;
                 enquiry_free = current_free;
-                enquiry_timestamp = timestamp;
 
                 if (neighbour_count > 0) {
 
@@ -1785,7 +1851,6 @@ static void run_charging_node(
                         0,
                         empty_nodes,
                         (const int (*)[2])empty_responses,
-                        timestamp,
                         0.0,
                         &redirect_count,
                         &redirect_request
@@ -1826,19 +1891,72 @@ static void run_charging_node(
         sleep_ms(1);
     }
 
+    double average_exchange_time =
+        completed_queries > 0
+        ? total_exchange_time / (double)completed_queries
+        : 0.0;
+
+    if (completed_queries == 0)
+        min_exchange_time = 0.0;
+
+    long long neighbour_messages =
+        (long long)requests_sent +
+        (long long)responses_sent;
+
+    long long neighbour_payload_bytes =
+        (long long)requests_sent * (long long)sizeof(int) +
+        (long long)responses_sent * 2LL * (long long)sizeof(int);
+
+    long long status_payload_bytes =
+        (long long)status_sent *
+        (long long)sizeof(StatusUpdate);
+
+    long long report_payload_bytes =
+        (long long)alerts_sent *
+        (long long)sizeof(CongestionReport);
+
     fprintf(log,
-        "\nNODE SUMMARY\n"
+        "\n========================================\n"
+        "NODE SUMMARY\n"
+        "========================================\n"
+        "Implementation: NONBLOCKING MPI\n"
         "Completed cycles: %d\n"
+        "OpenMP threads / charging ports: %d\n"
+        "Seed: %u\n"
+        "Report history period: %d ms\n"
         "Status updates sent: %d\n"
         "Neighbour requests sent: %d\n"
         "Neighbour responses sent: %d\n"
+        "Total neighbour messages: %lld\n"
+        "Neighbour payload bytes: %lld\n"
+        "Status payload bytes: %lld\n"
+        "Congestion report payload bytes: %lld\n"
+        "Completed neighbour queries: %lld\n"
+        "Local redirections: %d\n"
         "Congestion reports sent: %d\n"
+        "Total neighbour exchange time: %.9f s\n"
+        "Average neighbour exchange time: %.9f s\n"
+        "Minimum neighbour exchange time: %.9f s\n"
+        "Maximum neighbour exchange time: %.9f s\n"
         "Graceful shutdown completed.\n",
         completed_cycles,
+        actual_threads,
+        cfg->seed,
+        cfg->report_period_ms,
         status_sent,
         requests_sent,
         responses_sent,
-        alerts_sent
+        neighbour_messages,
+        neighbour_payload_bytes,
+        status_payload_bytes,
+        report_payload_bytes,
+        completed_queries,
+        local_redirections,
+        alerts_sent,
+        total_exchange_time,
+        average_exchange_time,
+        min_exchange_time,
+        max_exchange_time
     );
 
     fclose(log);
@@ -1885,14 +2003,14 @@ int main(int argc, char **argv)
         MPI_Abort(MPI_COMM_WORLD, 30);
     }
 
-    if (argc < 3 || argc > 9) {
+    if (argc < 3 || argc > 10) {
 
         if (rank == 0) {
             fprintf(stderr,
                 "Usage: %s rows cols "
                 "[ports] [cycles] [interval_ms] "
                 "[threshold] [force_low] "
-                "[report_period_ms]\n",
+                "[report_period_ms] [seed]\n",
                 argv[0]
             );
         }
@@ -1928,6 +2046,11 @@ int main(int argc, char **argv)
     cfg.report_period_ms =
         argc > 8 ? atoi(argv[8]) :
         DEFAULT_REPORT_PERIOD_MS;
+
+    cfg.seed =
+        argc > 9
+        ? (unsigned int)strtoul(argv[9], NULL, 10)
+        : DEFAULT_SEED;
 
     long long total_nodes =
         (long long)cfg.rows * cfg.cols;

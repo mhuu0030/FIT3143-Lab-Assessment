@@ -1,0 +1,106 @@
+#!/bin/bash
+#SBATCH --job-name=t2nb_sample
+#SBATCH --partition=defq
+#SBATCH --time=00:05:00
+#SBATCH --ntasks=5
+#SBATCH --cpus-per-task=6
+#SBATCH --mem-per-cpu=100M
+#SBATCH --output=task2_nonblocking_sample-%j.out
+#SBATCH --error=task2_nonblocking_sample-%j.err
+
+set -euo pipefail
+
+echo "========================================"
+echo "TASK 2 NONBLOCKING - 2x2 SAMPLE RUN"
+echo "Job ID: $SLURM_JOB_ID"
+echo "Nodes: $SLURM_JOB_NODELIST"
+echo "MPI tasks: $SLURM_NTASKS"
+echo "CPUs per task: $SLURM_CPUS_PER_TASK"
+echo "========================================"
+
+module purge
+module load openmpi/4.1.5-gcc-11.2.0-ux65npg
+
+echo
+echo "=== TOOLCHAIN ==="
+which mpicc
+mpicc --version
+echo
+module list 2>&1
+
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export OMP_DYNAMIC=FALSE
+
+echo
+echo "=== OPENMP SETTINGS ==="
+echo "OMP_NUM_THREADS=$OMP_NUM_THREADS"
+echo "OMP_DYNAMIC=$OMP_DYNAMIC"
+
+echo
+echo "=== COMPILING ==="
+mpicc -O2 -std=c11 -fopenmp -Wall -Wextra \
+    lab3_task2_nonblocking.c \
+    -o task2_nonblocking
+
+echo "Compilation successful."
+
+echo
+echo "=== EXECUTABLE ==="
+ls -lh task2_nonblocking
+
+RESULT_DIR="results/task2_nonblocking/sample_2x2/$SLURM_JOB_ID"
+mkdir -p "$RESULT_DIR"
+
+echo
+echo "=== TASK PLACEMENT ==="
+srun hostname | sort | uniq -c
+
+echo
+echo "=== RUNNING 2x2 TEST ==="
+echo "rows=2 cols=2 ports=6 cycles=8 interval=1000 threshold=1 force_low=1 report_period=2000 seed=3143"
+
+srun ./task2_nonblocking \
+    2 2 \
+    6 \
+    8 \
+    1000 \
+    1 \
+    1 \
+    2000 \
+    3143
+
+echo
+echo "=== RUN COMPLETE ==="
+
+if [ -f task2_nonblocking_base_station.log ]; then
+    cp task2_nonblocking_base_station.log "$RESULT_DIR/"
+    echo
+    echo "=== BASE STATION LOG ==="
+    cat task2_nonblocking_base_station.log
+else
+    echo "WARNING: task2_nonblocking_base_station.log was not created."
+fi
+
+for f in task2_nonblocking_node_*.log; do
+    if [ -e "$f" ]; then
+        cp "$f" "$RESULT_DIR/"
+    fi
+done
+
+echo
+echo "=== GENERATED NODE LOGS ==="
+ls -1 task2_nonblocking_node_*.log 2>/dev/null || true
+
+echo
+echo "=== NODE SUMMARIES ==="
+for f in task2_nonblocking_node_*.log; do
+    if [ -e "$f" ]; then
+        echo
+        echo "--- $f ---"
+        sed -n '/NODE SUMMARY/,$p' "$f"
+    fi
+done
+
+echo
+echo "Results copied to: $RESULT_DIR"
+echo "Finished successfully."
