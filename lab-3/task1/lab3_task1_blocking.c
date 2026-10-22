@@ -14,6 +14,7 @@
 #define DEFAULT_CYCLES 8
 #define DEFAULT_INTERVAL_MS 1000
 #define DEFAULT_THRESHOLD 1
+#define DEFAULT_SEED 3143U
 
 /*
  * FIT3143 Lab 3 - Task 1
@@ -103,6 +104,7 @@ typedef struct {
     int interval_ms;
     int threshold;
     int force_low;
+    unsigned int seed;
 } Config;
 
 /* =========================================================
@@ -764,7 +766,7 @@ static void run_charging_node(
         port_status[i] = 1;
 
         seeds[i] =
-            (unsigned int)time(NULL)
+            cfg->seed
             ^ ((unsigned int)world_rank *
                1009U)
             ^ ((unsigned int)(i + 1) *
@@ -803,10 +805,12 @@ static void run_charging_node(
     fprintf(
         log,
         "IMPLEMENTATION: BLOCKING MPI BASELINE\n"
+        "Deterministic seed: %u\n"
         "World rank: %d\n"
         "Cartesian rank: %d\n"
         "Coordinates: (%d,%d)\n"
         "Neighbour count: %d\n",
+        cfg->seed,
         world_rank,
         cart_rank,
         coords[0],
@@ -1323,7 +1327,7 @@ int main(
     }
 
     if (argc < 3 ||
-        argc > 8) {
+        argc > 9) {
 
         if (rank == 0) {
 
@@ -1331,7 +1335,7 @@ int main(
                 stderr,
                 "Usage: %s rows cols "
                 "[ports] [cycles] [interval_ms] "
-                "[threshold] [force_low]\n",
+                "[threshold] [force_low] [seed]\n",
                 argv[0]
             );
         }
@@ -1373,6 +1377,11 @@ int main(
         argc > 7
         ? (atoi(argv[7]) != 0)
         : 0;
+
+    cfg.seed =
+        argc > 8
+        ? (unsigned int)strtoul(argv[8], NULL, 10)
+        : DEFAULT_SEED;
 
     long long nodes =
         (long long)cfg.rows *

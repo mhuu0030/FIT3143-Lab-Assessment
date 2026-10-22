@@ -14,6 +14,7 @@
 #define DEFAULT_CYCLES 8
 #define DEFAULT_INTERVAL_MS 1000
 #define DEFAULT_THRESHOLD 1
+#define DEFAULT_SEED 3143U
 
 /*
  * Base station: MPI_COMM_WORLD rank 0
@@ -66,6 +67,7 @@ typedef struct {
     int interval_ms;
     int threshold;
     int force_low;
+    unsigned int seed;
 } Config;
 
 static long long now_epoch_ms(void)
@@ -450,7 +452,7 @@ static void run_charging_node(
         port_status[i] = 1;
 
         seeds[i] =
-            (unsigned int)time(NULL)
+            cfg->seed
             ^ ((unsigned int)world_rank * 1009U)
             ^ ((unsigned int)(i + 1) * 7919U);
     }
@@ -472,10 +474,11 @@ static void run_charging_node(
     }
 
     fprintf(log,
-        "Implementation: NONBLOCKING MPI\nWorld rank: %d\n"
+        "Implementation: NONBLOCKING MPI\nDeterministic seed: %u\nWorld rank: %d\n"
         "Cartesian rank: %d\n"
         "Coordinates: (%d,%d)\n"
         "Neighbour count: %d\n",
+        cfg->seed,
         world_rank,
         cart_rank,
         coords[0],
@@ -505,6 +508,8 @@ static void run_charging_node(
 
     MPI_Request request_sends[MAX_NEIGHBOURS];
     MPI_Request response_receives[MAX_NEIGHBOURS];
+    MPI_Status request_send_statuses[MAX_NEIGHBOURS];
+    MPI_Status response_receive_statuses[MAX_NEIGHBOURS];
 
     MPI_Request redirect_recv = MPI_REQUEST_NULL;
 
@@ -613,21 +618,21 @@ static void run_charging_node(
          * C. Check whether all neighbour
          *    responses have arrived.
          */
-        if (querying) {
+        if (querying && neighbour_count > 0) {
             int complete = 0;
 
             MPI_Testall(
                 neighbour_count,
                 response_receives,
                 &complete,
-                MPI_STATUSES_IGNORE
+                response_receive_statuses
             );
 
             if (complete) {
                 MPI_Waitall(
                     neighbour_count,
                     request_sends,
-                    MPI_STATUSES_IGNORE
+                    request_send_statuses
                 );
 
                 double elapsed =
@@ -1039,12 +1044,12 @@ int main(int argc, char **argv)
         MPI_Abort(MPI_COMM_WORLD, 4);
     }
 
-    if (argc < 3 || argc > 8) {
+    if (argc < 3 || argc > 9) {
         if (rank == 0) {
             fprintf(stderr,
                 "Usage: %s rows cols "
                 "[ports] [cycles] [interval_ms] "
-                "[threshold] [force_low]\n",
+                "[threshold] [force_low] [seed]\n",
                 argv[0]
             );
         }
@@ -1076,6 +1081,11 @@ int main(int argc, char **argv)
 
     cfg.force_low =
         argc > 7 ? (atoi(argv[7]) != 0) : 0;
+
+    cfg.seed =
+        argc > 8
+        ? (unsigned int)strtoul(argv[8], NULL, 10)
+        : DEFAULT_SEED;
 
     long long nodes =
         (long long)cfg.rows * cfg.cols;

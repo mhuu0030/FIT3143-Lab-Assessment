@@ -1429,6 +1429,8 @@ static void run_charging_node(
 
     MPI_Request sends[MAX_NEIGHBOURS];
     MPI_Request receives[MAX_NEIGHBOURS];
+    MPI_Status send_statuses[MAX_NEIGHBOURS];
+    MPI_Status receive_statuses[MAX_NEIGHBOURS];
 
     MPI_Request redirect_request =
         MPI_REQUEST_NULL;
@@ -1542,7 +1544,7 @@ static void run_charging_node(
         /* --------------------------------------
          * C. PROCESS NEIGHBOUR RESPONSES
          * -------------------------------------- */
-        if (querying) {
+        if (querying && neighbour_count > 0) {
 
             int complete = 0;
 
@@ -1550,7 +1552,7 @@ static void run_charging_node(
                 neighbour_count,
                 receives,
                 &complete,
-                MPI_STATUSES_IGNORE
+                receive_statuses
             );
 
             if (complete) {
@@ -1558,7 +1560,7 @@ static void run_charging_node(
                 MPI_Waitall(
                     neighbour_count,
                     sends,
-                    MPI_STATUSES_IGNORE
+                    send_statuses
                 );
 
                 double exchange_seconds =

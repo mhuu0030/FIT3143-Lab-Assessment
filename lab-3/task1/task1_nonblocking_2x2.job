@@ -20,10 +20,10 @@ export OMP_DYNAMIC=FALSE
 mpicc -O2 -std=c11 -fopenmp -Wall -Wextra \
     lab3_task1_nonblocking.c -o task1_nonblocking
 
-RESULT_DIR="results/task1_nonblocking/2x2/$SLURM_JOB_ID"
+RESULT_DIR="newtask1output/results/task1_nonblocking/2x2/$SLURM_JOB_ID"
 mkdir -p "$RESULT_DIR"
 
-srun ./task1_nonblocking 2 2 6 8 1000 1 1
+srun ./task1_nonblocking 2 2 6 8 1000 1 1 3143
 
 mv task1_nonblocking_base_station.log "$RESULT_DIR"/
 

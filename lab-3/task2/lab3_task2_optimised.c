@@ -465,6 +465,13 @@ static int validate_report(
         r->neighbour_messages == 0 &&
         r->neighbour_bytes == 0;
 
+    if (cache_only) {
+        for (int i = 0; i < expected_count; i++) {
+            if (r->neighbour_cycle[i] != r->cycle)
+                return 0;
+        }
+    }
+
     if (!live_query && !cache_only)
         return 0;
 
@@ -1430,6 +1437,8 @@ static void run_charging_node(
 
     MPI_Request sends[MAX_NEIGHBOURS];
     MPI_Request receives[MAX_NEIGHBOURS];
+    MPI_Status send_statuses[MAX_NEIGHBOURS];
+    MPI_Status receive_statuses[MAX_NEIGHBOURS];
 
     MPI_Request redirect_request =
         MPI_REQUEST_NULL;
@@ -1554,7 +1563,7 @@ static void run_charging_node(
         /* --------------------------------------
          * C. PROCESS NEIGHBOUR RESPONSES
          * -------------------------------------- */
-        if (querying) {
+        if (querying && neighbour_count > 0) {
 
             int complete = query_from_cache ? 1 : 0;
 
@@ -1563,7 +1572,7 @@ static void run_charging_node(
                     neighbour_count,
                     receives,
                     &complete,
-                    MPI_STATUSES_IGNORE
+                    receive_statuses
                 );
             }
 
@@ -1575,7 +1584,7 @@ static void run_charging_node(
                     MPI_Waitall(
                         neighbour_count,
                         sends,
-                        MPI_STATUSES_IGNORE
+                        send_statuses
                     );
 
                     exchange_seconds = MPI_Wtime() - enquiry_start;
@@ -1820,7 +1829,8 @@ static void run_charging_node(
                     for (int i = 0; i < neighbour_count; i++) {
                         if (cache_time[i] < 0.0 ||
                             now < cache_time[i] ||
-                            now - cache_time[i] > cache_ttl) {
+                            now - cache_time[i] > cache_ttl ||
+                            cached_data[i][1] != current_cycle) {
                             cache_fresh = 0;
                             break;
                         }

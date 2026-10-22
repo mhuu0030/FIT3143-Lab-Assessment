@@ -14,6 +14,7 @@
 #define DEFAULT_CYCLES 8
 #define DEFAULT_INTERVAL_MS 1000
 #define DEFAULT_THRESHOLD 1
+#define DEFAULT_SEED 3143U
 #define DEFAULT_CACHE_MS 2000
 
 /*
@@ -111,10 +112,12 @@ typedef struct {
     int total_ports;
     int local_available;
     int threshold;
+    int cycle;
 
     int valid_neighbour_count;
     int neighbour_ranks[MAX_NEIGHBOURS];
     int neighbour_available[MAX_NEIGHBOURS];
+    int neighbour_cycle[MAX_NEIGHBOURS];
 
     /*
      * For this optimised version these values represent
@@ -149,11 +152,14 @@ typedef struct {
      * 0 disables cache reuse.
      */
     int cache_ms;
+    unsigned int seed;
 } Config;
 
 typedef struct {
     int valid;
     int available;
+    int cycle;
+    int decision_cycle;
     double received_at;
 } NeighbourCache;
 
@@ -373,12 +379,16 @@ static int discover_neighbours(
 static int cache_is_fresh(
     const NeighbourCache *entry,
     double now,
-    int cache_ms
+    int cache_ms,
+    int required_cycle
 ) {
     if (!entry->valid)
         return 0;
 
     if (cache_ms <= 0)
+        return 0;
+
+    if (entry->decision_cycle != required_cycle)
         return 0;
 
     double age =
@@ -402,6 +412,7 @@ static int best_fresh_cached_neighbour(
     const NeighbourCache cache[MAX_NEIGHBOURS],
     double now,
     int cache_ms,
+    int required_cycle,
     int threshold,
     int *best_available
 ) {
@@ -415,7 +426,8 @@ static int best_fresh_cached_neighbour(
         if (!cache_is_fresh(
                 &cache[i],
                 now,
-                cache_ms)) {
+                cache_ms,
+                required_cycle)) {
 
             continue;
         }
@@ -446,7 +458,8 @@ static int all_neighbour_cache_fresh(
     int neighbour_count,
     const NeighbourCache cache[MAX_NEIGHBOURS],
     double now,
-    int cache_ms
+    int cache_ms,
+    int required_cycle
 ) {
     if (neighbour_count <= 0)
         return 1;
@@ -458,7 +471,8 @@ static int all_neighbour_cache_fresh(
         if (!cache_is_fresh(
                 &cache[i],
                 now,
-                cache_ms)) {
+                cache_ms,
+                required_cycle)) {
 
             return 0;
         }
@@ -573,6 +587,7 @@ static void run_base_station(
                 "----------------------------------------\n"
                 "[%s] CONGESTION ALERT\n"
                 "Node: %d\n"
+                "Decision cycle: %d\n"
                 "Coordinates: (%d,%d)\n"
                 "Available ports: %d/%d\n"
                 "Threshold: %d\n"
@@ -581,6 +596,7 @@ static void run_base_station(
                 "Neighbour exchange time: %.9f s\n",
                 timestamp,
                 report.node_rank,
+                report.cycle,
                 report.coord_row,
                 report.coord_col,
                 report.local_available,
@@ -598,9 +614,10 @@ static void run_base_station(
 
                 fprintf(
                     log,
-                    "Neighbour %d: %d available\n",
+                    "Neighbour %d: %d available (cycle %d)\n",
                     report.neighbour_ranks[i],
-                    report.neighbour_available[i]
+                    report.neighbour_available[i],
+                    report.neighbour_cycle[i]
                 );
             }
 
@@ -728,6 +745,7 @@ static void prepare_congestion_report(
     int world_rank,
     const int coords[2],
     const Config *cfg,
+    int cycle,
     int local_available,
     int neighbour_count,
     const int neighbours[MAX_NEIGHBOURS],
@@ -759,6 +777,8 @@ static void prepare_congestion_report(
 
     report->threshold =
         cfg->threshold;
+
+    report->cycle = cycle;
 
     report->valid_neighbour_count =
         neighbour_count;
@@ -793,6 +813,11 @@ static void prepare_congestion_report(
                 ? cache[i].available
                 : -1;
 
+            report->neighbour_cycle[i] =
+                cache[i].valid
+                ? cache[i].cycle
+                : -1;
+
         } else {
 
             report->neighbour_ranks[i] =
@@ -800,6 +825,8 @@ static void prepare_congestion_report(
 
             report->neighbour_available[i] =
                 -1;
+
+            report->neighbour_cycle[i] = -1;
         }
     }
 }
@@ -873,7 +900,7 @@ static void run_charging_node(
         port_status[i] = 1;
 
         seeds[i] =
-            (unsigned int)time(NULL)
+            cfg->seed
             ^ ((unsigned int)world_rank *
                1009U)
             ^ ((unsigned int)(i + 1) *
@@ -912,11 +939,13 @@ static void run_charging_node(
     fprintf(
         log,
         "IMPLEMENTATION: OPTIMISED NON-BLOCKING MPI\n"
+        "Deterministic seed: %u\n"
         "World rank: %d\n"
         "Cartesian rank: %d\n"
         "Coordinates: (%d,%d)\n"
         "Neighbour count: %d\n"
         "Cache TTL: %d ms\n",
+        cfg->seed,
         world_rank,
         cart_rank,
         coords[0],
@@ -951,6 +980,8 @@ static void run_charging_node(
 
         cache[i].valid = 0;
         cache[i].available = -1;
+        cache[i].cycle = -1;
+        cache[i].decision_cycle = -1;
         cache[i].received_at = 0.0;
     }
 
@@ -970,13 +1001,16 @@ static void run_charging_node(
     int query_indices[MAX_NEIGHBOURS];
     int query_count = 0;
 
-    int response_values[MAX_NEIGHBOURS];
+    int response_values[MAX_NEIGHBOURS][2];
     int request_payload[MAX_NEIGHBOURS];
 
     MPI_Request query_sends[MAX_NEIGHBOURS];
     MPI_Request query_receives[MAX_NEIGHBOURS];
+    MPI_Status query_send_statuses[MAX_NEIGHBOURS];
+    MPI_Status query_receive_statuses[MAX_NEIGHBOURS];
 
     int enquiry_free_ports = 0;
+    int enquiry_cycle = -1;
     double enquiry_start = 0.0;
 
     /*
@@ -1001,7 +1035,7 @@ static void run_charging_node(
      * Non-blocking neighbour response sends
      * ----------------------------------------------------- */
 
-    int outgoing_response_value[MAX_NEIGHBOURS];
+    int outgoing_response_value[MAX_NEIGHBOURS][2];
 
     MPI_Request outgoing_response_send[MAX_NEIGHBOURS];
 
@@ -1191,12 +1225,17 @@ static void run_charging_node(
                         MPI_REQUEST_NULL;
                 }
 
-                outgoing_response_value[slot] =
+                outgoing_response_value[slot][0] =
                     current_available;
+
+                outgoing_response_value[slot][1] =
+                    completed_cycles > 0
+                    ? completed_cycles - 1
+                    : -1;
 
                 MPI_Isend(
                     &outgoing_response_value[slot],
-                    1,
+                    2,
                     MPI_INT,
                     status.MPI_SOURCE,
                     TAG_NEIGHBOUR_RESPONSE,
@@ -1207,14 +1246,15 @@ static void run_charging_node(
                 total_responses_sent++;
 
                 neighbour_payload_bytes_sent +=
-                    sizeof(int);
+                    2 * sizeof(int);
 
                 fprintf(
                     log,
                     "Responded asynchronously to node %d: "
-                    "%d free\n",
+                    "%d free at cycle %d\n",
                     status.MPI_SOURCE,
-                    current_available
+                    current_available,
+                    outgoing_response_value[slot][1]
                 );
             }
         }
@@ -1223,7 +1263,7 @@ static void run_charging_node(
          * D. CHECK OWN NEIGHBOUR QUERY
          * ================================================= */
 
-        if (querying) {
+        if (querying && query_count > 0) {
 
             int complete = 0;
 
@@ -1231,7 +1271,7 @@ static void run_charging_node(
                 query_count,
                 query_receives,
                 &complete,
-                MPI_STATUSES_IGNORE
+                query_receive_statuses
             );
 
             if (complete) {
@@ -1242,7 +1282,7 @@ static void run_charging_node(
                 MPI_Waitall(
                     query_count,
                     query_sends,
-                    MPI_STATUSES_IGNORE
+                    query_send_statuses
                 );
 
                 double now =
@@ -1284,13 +1324,19 @@ static void run_charging_node(
                     cache[i].valid = 1;
 
                     cache[i].available =
-                        response_values[j];
+                        response_values[j][0];
+
+                    cache[i].cycle =
+                        response_values[j][1];
+
+                    cache[i].decision_cycle =
+                        enquiry_cycle;
 
                     cache[i].received_at =
                         now;
 
                     neighbour_payload_bytes_received +=
-                        sizeof(int);
+                        2 * sizeof(int);
                 }
 
                 /*
@@ -1306,6 +1352,7 @@ static void run_charging_node(
                         cache,
                         now,
                         cfg->cache_ms,
+                        enquiry_cycle,
                         cfg->threshold,
                         &best_available
                     );
@@ -1342,6 +1389,7 @@ static void run_charging_node(
                         world_rank,
                         coords,
                         cfg,
+                        enquiry_cycle,
                         enquiry_free_ports,
                         neighbour_count,
                         neighbours,
@@ -1533,6 +1581,8 @@ static void run_charging_node(
                 enquiry_free_ports =
                     current_available;
 
+                enquiry_cycle = cycle;
+
                 now =
                     MPI_Wtime();
 
@@ -1553,6 +1603,7 @@ static void run_charging_node(
                         cache,
                         now,
                         cfg->cache_ms,
+                        enquiry_cycle,
                         cfg->threshold,
                         &cached_best_available
                     );
@@ -1574,7 +1625,8 @@ static void run_charging_node(
                         if (cache_is_fresh(
                                 &cache[i],
                                 now,
-                                cfg->cache_ms)) {
+                                cfg->cache_ms,
+                                enquiry_cycle)) {
 
                             requests_skipped_cache++;
                         }
@@ -1595,7 +1647,8 @@ static void run_charging_node(
                         neighbour_count,
                         cache,
                         now,
-                        cfg->cache_ms)) {
+                        cfg->cache_ms,
+                        enquiry_cycle)) {
 
                     /*
                      * -------- FAST PATH 2 ----------------
@@ -1616,6 +1669,7 @@ static void run_charging_node(
                         world_rank,
                         coords,
                         cfg,
+                        enquiry_cycle,
                         current_available,
                         neighbour_count,
                         neighbours,
@@ -1690,7 +1744,8 @@ static void run_charging_node(
                         if (cache_is_fresh(
                                 &cache[i],
                                 enquiry_start,
-                                cfg->cache_ms)) {
+                                cfg->cache_ms,
+                                enquiry_cycle)) {
 
                             /*
                              * Fresh cached congested
@@ -1704,11 +1759,12 @@ static void run_charging_node(
                             query_count++;
 
                         query_indices[j] = i;
-                        response_values[j] = -1;
+                        response_values[j][0] = -1;
+                        response_values[j][1] = -1;
 
                         MPI_Irecv(
                             &response_values[j],
-                            1,
+                            2,
                             MPI_INT,
                             neighbours[i],
                             TAG_NEIGHBOUR_RESPONSE,
@@ -1750,7 +1806,7 @@ static void run_charging_node(
                         2 * query_count;
 
                     enquiry_bytes =
-                        2 * query_count *
+                        3 * query_count *
                         (int)sizeof(int);
 
                     querying = 1;
@@ -1777,6 +1833,7 @@ static void run_charging_node(
                         world_rank,
                         coords,
                         cfg,
+                        cycle,
                         current_available,
                         0,
                         neighbours,
@@ -2024,7 +2081,7 @@ int main(
     }
 
     if (argc < 3 ||
-        argc > 9) {
+        argc > 10) {
 
         if (rank == 0) {
 
@@ -2032,7 +2089,7 @@ int main(
                 stderr,
                 "Usage: %s rows cols "
                 "[ports] [cycles] [interval_ms] "
-                "[threshold] [force_low] [cache_ms]\n",
+                "[threshold] [force_low] [cache_ms] [seed]\n",
                 argv[0]
             );
         }
@@ -2079,6 +2136,11 @@ int main(
         argc > 8
         ? atoi(argv[8])
         : DEFAULT_CACHE_MS;
+
+    cfg.seed =
+        argc > 9
+        ? (unsigned int)strtoul(argv[9], NULL, 10)
+        : DEFAULT_SEED;
 
     long long nodes =
         (long long)cfg.rows *

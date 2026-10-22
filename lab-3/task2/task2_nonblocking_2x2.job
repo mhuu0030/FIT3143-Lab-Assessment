@@ -48,7 +48,7 @@ echo
 echo "=== EXECUTABLE ==="
 ls -lh task2_nonblocking
 
-RESULT_DIR="results/task2_nonblocking/sample_2x2/$SLURM_JOB_ID"
+RESULT_DIR="newtask2output/task2_nonblocking/2x2/$SLURM_JOB_ID"
 mkdir -p "$RESULT_DIR"
 
 echo
