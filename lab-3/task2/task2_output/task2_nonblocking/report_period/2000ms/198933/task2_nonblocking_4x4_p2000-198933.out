@@ -1,0 +1,43 @@
+========================================
+TASK 2 NONBLOCKING - 4x4 REPORT PERIOD 2000 ms
+Job ID: 198933
+MPI tasks: 17
+CPUs per task: 6
+Result directory: results/task2_nonblocking/report_period/2000ms/198933
+========================================
+
+=== COMPILING ===
+Compilation successful.
+
+=== TASK PLACEMENT ===
+      2 student-caas-n05
+      2 student-caas-n06
+      2 student-caas-n07
+      2 student-caas-n08
+      2 student-caas-n09
+      2 student-caas-n10
+      2 student-caas-n11
+      2 student-caas-n12
+      1 student-caas-n14
+
+=== RUNNING 4x4 ===
+rows=4 cols=4 ports=6 cycles=8 interval=1000 threshold=1 force_low=1 report_period=2000 seed=3143
+[NODE 11] Cycles=8 Alerts=6
+[NODE 6] Cycles=8 Alerts=7
+[BASE] Alerts=97 Status=128 Completed=16/16 Time=7.009 s
+[NODE 13] Cycles=8 Alerts=5
+[NODE 2] Cycles=8 Alerts=8
+[NODE 16] Cycles=8 Alerts=6
+[NODE 4] Cycles=8 Alerts=5
+[NODE 15] Cycles=8 Alerts=3
+[NODE 8] Cycles=8 Alerts=6
+[NODE 10] Cycles=8 Alerts=5
+[NODE 5] Cycles=8 Alerts=8
+[NODE 12] Cycles=8 Alerts=5
+[NODE 14] Cycles=8 Alerts=4
+[NODE 9] Cycles=8 Alerts=7
+[NODE 1] Cycles=8 Alerts=8
+[NODE 7] Cycles=8 Alerts=6
+[NODE 3] Cycles=8 Alerts=8
+
+=== COPYING LOGS ===
