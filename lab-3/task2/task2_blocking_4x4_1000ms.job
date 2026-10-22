@@ -1,0 +1,88 @@
+#!/bin/bash
+#SBATCH --job-name=t2_blocking_4x4
+#SBATCH --partition=defq
+#SBATCH --time=00:05:00
+#SBATCH --ntasks=17
+#SBATCH --cpus-per-task=6
+#SBATCH --mem-per-cpu=100M
+#SBATCH --output=task2_blocking_4x4_1000ms-%j.out
+#SBATCH --error=task2_blocking_4x4_1000ms-%j.err
+
+set -euo pipefail
+
+module purge
+module load openmpi/4.1.5-gcc-11.2.0-ux65npg
+
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export OMP_DYNAMIC=FALSE
+
+RESULT_DIR="results/task2/blocking/4x4_1000ms/$SLURM_JOB_ID"
+mkdir -p "$RESULT_DIR"
+
+echo "========================================"
+echo "TASK 2 - BLOCKING - 4x4 / 1000 ms"
+echo "Job ID: $SLURM_JOB_ID"
+echo "MPI tasks: $SLURM_NTASKS"
+echo "CPUs per task: $SLURM_CPUS_PER_TASK"
+echo "Result directory: $RESULT_DIR"
+echo "========================================"
+
+echo
+echo "=== COMPILING ==="
+
+mpicc -O2 -std=c11 -fopenmp -Wall -Wextra \
+    lab3_task2_blocking.c \
+    -o task2_blocking
+
+echo "Compilation successful."
+
+echo
+echo "=== TASK PLACEMENT ==="
+srun hostname | sort | uniq -c
+
+echo
+echo "=== RUNNING ==="
+echo "rows=4 cols=4 ports=6 cycles=8 interval=1000 threshold=1 force_low=1 report_period=1000 seed=3143"
+
+srun ./task2_blocking \
+    4 4 \
+    6 \
+    8 \
+    1000 \
+    1 \
+    1 \
+    1000 \
+    3143
+
+echo
+echo "=== MOVING GENERATED LOGS ==="
+
+for f in task2_blocking_base_station.log task2_blocking_node_*.log; do
+    if [ -e "$f" ]; then
+        mv "$f" "$RESULT_DIR/"
+    fi
+done
+
+# Fallback in case the implementation uses a generic Task 2 filename.
+if [ -f task2_base_station.log ]; then
+    mv task2_base_station.log "$RESULT_DIR/task2_blocking_base_station.log"
+fi
+
+for f in task2_node_*.log; do
+    if [ -e "$f" ]; then
+        name=$(basename "$f")
+        suffix=${name#task2_}
+        mv "$f" "$RESULT_DIR/task2_blocking_${suffix}"
+    fi
+done
+
+cp "task2_blocking_4x4_1000ms-$SLURM_JOB_ID.out" "$RESULT_DIR/" 2>/dev/null || true
+cp "task2_blocking_4x4_1000ms-$SLURM_JOB_ID.err" "$RESULT_DIR/" 2>/dev/null || true
+
+echo
+echo "=== RESULT FILES ==="
+ls -lh "$RESULT_DIR"
+
+echo
+echo "Results saved to:"
+echo "$RESULT_DIR"

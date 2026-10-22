@@ -1,0 +1,93 @@
+Implementation: BLOCKING MPI
+Deterministic seed: 3143
+OpenMP threads / charging ports: 6
+World rank: 14
+Cartesian rank: 13
+Coordinates: (3,1)
+Neighbour count: 3
+Neighbour 0 = world rank 10
+Neighbour 1 = world rank 13
+Neighbour 2 = world rank 15
+
+[2026-10-22 19:58:47.651] CYCLE 0
+Available: 0/6
+BASE RESPONSE: 0 candidates
+No nearby alternative found.
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages this exchange: 6
+Neighbour bytes this exchange: 48
+Exchange time: 0.003831717 s
+
+[2026-10-22 19:58:48.651] CYCLE 1
+Available: 0/6
+LOCAL REDIRECTION
+Selected node: 10
+Available ports: 2
+Exchange time: 0.000506847 s
+
+[2026-10-22 19:58:49.651] CYCLE 2
+Available: 0/6
+BASE RESPONSE: 0 candidates
+No nearby alternative found.
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages this exchange: 6
+Neighbour bytes this exchange: 48
+Exchange time: 0.000584444 s
+
+[2026-10-22 19:58:50.651] CYCLE 3
+Available: 0/6
+BASE RESPONSE: 1 candidates
+Alternative node: 16
+CONGESTION ALERT SENT
+Free ports: 0/6
+Neighbour messages this exchange: 6
+Neighbour bytes this exchange: 48
+Exchange time: 0.000623978 s
+
+[2026-10-22 19:58:51.651] CYCLE 4
+Available: 2/6
+
+[2026-10-22 19:58:52.650] CYCLE 5
+Available: 3/6
+
+[2026-10-22 19:58:53.650] CYCLE 6
+Available: 1/6
+BASE RESPONSE: 0 candidates
+No nearby alternative found.
+CONGESTION ALERT SENT
+Free ports: 1/6
+Neighbour messages this exchange: 6
+Neighbour bytes this exchange: 48
+Exchange time: 0.000546091 s
+
+[2026-10-22 19:58:54.650] CYCLE 7
+Available: 0/6
+LOCAL REDIRECTION
+Selected node: 13
+Available ports: 2
+Exchange time: 0.000598770 s
+DONE sent; waiting for termination.
+
+========================================
+NODE SUMMARY
+========================================
+Implementation: BLOCKING MPI
+Completed cycles: 8
+OpenMP threads / charging ports: 6
+Seed: 3143
+Report history period: 1000 ms
+Status updates sent: 8
+Blocking neighbour exchanges: 8
+Total neighbour messages: 48
+Neighbour payload bytes: 384
+Status payload bytes: 96
+Congestion report payload bytes: 416
+Local redirections: 2
+Congestion reports sent: 4
+Total neighbour exchange time: 0.007828494 s
+Average neighbour exchange time: 0.000978562 s
+Minimum neighbour exchange time: 0.000506847 s
+Maximum neighbour exchange time: 0.003831717 s
+Graceful shutdown completed.
